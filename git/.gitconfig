@@ -1,0 +1,11 @@
+[user]
+	email = matthew.forrester@speechmarks.com
+	name = Matthew Forrester
+[push]
+	default = simple
+[url "ssh://git@"]
+	insteadOf = github://
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+	prompt = false
