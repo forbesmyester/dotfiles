@@ -338,7 +338,7 @@
     </keybind>
     <keybind key="W-l">
       <action name="Execute">
-        <command>xscreensaver-command -lock</command>
+        <command>gnome-screensaver-command --lock</command>
       </action>
     </keybind>
     <!-- Keybindings for window switching -->

@@ -21,7 +21,7 @@ fi
 export EDITOR http_proxy
 alias mysql='INPUTRC=~/.mysql_inputrc mysql'
 alias i3-lock=i3lock
-alias tnew='tmux new-session -As "`basename $PWD`"'
+alias tnew='tmux -f ~/.tmux.conf new-session -As "`basename $PWD`"'
 
 if [ -t 1 ]; then
     mesg n

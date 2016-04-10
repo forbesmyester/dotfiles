@@ -24,13 +24,13 @@ xrandr --dpi 96
 xsetroot -solid '#1D1D1D'
 # keychain ~/.ssh/id_?sa
 fbpanel &
-xscreensaver &
+gnome-screensaver &
 # ibus-daemon &
 $( sleep 10 && [ $(ps aux | grep fozz | grep ' \/.*ibus\-ui\-gtk3' | wc -l ) -eq 0 ] && /usr/lib/ibus/ibus-ui-gtk3 & ) &
 /usr/bin/pulseaudio --start --log-target=syslog
 # /usr/bin/gnome-sound-applet &
 /usr/lib/x86_64-linux-gnu/indicator-applet &
-# $(sleep 3600 keychain ~/.ssh/id_?sa && git-annex assistant --autostart) &
+$(sleep 3600 keychain ~/.ssh/id_?sa && git-annex assistant --autostart) &
 # ~/.x_scripts/keyboard_config
 
 # Gnome stuff

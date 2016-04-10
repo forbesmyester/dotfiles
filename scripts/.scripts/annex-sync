@@ -1,0 +1,13 @@
+#!/bin/bash
+git annex add
+tar -zcf dot_git.tgz -C .git --exclude './annex' .
+git annex sync
+for remote in $(git remote); do
+    if [ $(date +%d) == '1' ]; then
+        git annex copy --fast --auto --to $remote
+    else
+        git annex copy --auto --to $remote
+    fi
+    git annex get --auto --from $remote
+done
+git annex drop --auto

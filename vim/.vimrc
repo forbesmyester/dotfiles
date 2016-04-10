@@ -64,7 +64,8 @@ Plug 'mtth/scratch.vim'
 
 " Colours / Style
 Plug 'chriskempson/base16-vim'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " CSV
 Plug 'chrisbra/csv.vim'
@@ -84,13 +85,14 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 
 " Javascript
+Plug 'forbesmyester/simple-javascript-indenter'
 Plug 'jelera/vim-javascript-syntax'
 " Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim'
 
 " Typescript
-" Plug 'forbesmyester/tsuquyomi'
-" Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim'
 
 " Tmux
 Plug 'jgdavey/tslime.vim'
@@ -111,6 +113,11 @@ Plug 'stephpy/vim-yaml'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " " Plug 'web-indent'
 " Plug 'luochen1990/rainbow'
+
+Plug 'tmux-plugins/vim-tmux-focus-events'
+
+" Vader - Unit Tests
+Plug 'junegunn/vader.vim'
 
 call plug#end()
 
@@ -207,6 +214,7 @@ set diffopt+=iwhite
         au insertenter * set nocursorline
         au insertleave * set cursorline
     augroup end
+    let &colorcolumn="81"
 
 " else
 "     set background=dark
@@ -429,6 +437,8 @@ let g:markdown_enable_mappings = 0
 " let g:vim_markdown_no_default_key_mappings=1
 " autocmd FileType md set wrap|set linebreak|set nolist "|set textwidth=0|set wrapmargin=0|set formatoptions+=1
 
+" Plugin: forbesmyester/simple-javascript-indenter
+let g:SimpleJsIndenter_BriefMode = 1
 
 function SetClojureOptions()
 " Plugin: Rainbow
@@ -516,8 +526,8 @@ endfunction
 
 nmap <leader>R <Plug>SetTmuxVars
 nmap <leader><leader>R :unlet g:unittest<CR>
-vmap <leader><Enter> <ESC>:sleep 1<CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
-nmap <leader><Enter> <S-v><leader><Enter>
+vmap <leader><Enter> <ESC><CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
+nmap <leader><Enter> <S-v><ESC><CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
 vmap <leader>r :call <ESC>SendToTmux(@* . "\n\n")<CR>
 nmap <leader><leader>r :call SetUnitTest()<CR>
 nmap <leader>r :call RunUnitTest()<CR>
