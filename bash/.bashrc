@@ -50,7 +50,7 @@ SHELL=/bin/bash
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
 
 source ~/.nvm/nvm.sh
-PATH=~/.x_scripts:~/.scripts:~/.bin:~/.vendor/bin:~/.cabal/bin:node_modules/.bin:~/.linuxbrew/bin:${PATH}
+PATH=${PATH}:~/.x_scripts:~/.scripts:~/.bin:~/.vendor/bin:~/.cabal/bin:node_modules/.bin:~/.binaries/terraform
 
 export NODE_ENV=development
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

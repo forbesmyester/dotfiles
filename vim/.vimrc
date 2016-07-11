@@ -32,7 +32,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/neomru.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 " Plug 'kien/ctrlp.vim'
 " Plug 'tacahiroy/ctrlp-funky'
@@ -70,6 +70,9 @@ Plug 'vim-airline/vim-airline-themes'
 " CSV
 Plug 'chrisbra/csv.vim'
 
+" Terraform
+Plug 'hashivim/vim-terraform'
+
 " Jade
 " Plug 'digitaltoad/vim-jade'
 
@@ -85,8 +88,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 
 " Javascript
-Plug 'forbesmyester/simple-javascript-indenter'
-Plug 'jelera/vim-javascript-syntax'
+Plug 'jason0x43/vim-js-indent'
+" Plug 'jelera/vim-javascript-syntax' BEST
 " Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim'
 
@@ -104,15 +107,17 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'stephpy/vim-yaml'
 
 " Clojure
-" Plug 'tpope/vim-fireplace'
-" Plug 'guns/vim-clojure-highlight'
 " Plug 'guns/vim-clojure-static'
+" Plug 'kein/rainbow_parentheses'
+" Plug 'tpope/vim-fireplace'
+" Plug 'vim-scripts/paredit'
+
+" Plug 'guns/vim-clojure-highlight'
 " " Plug 'tpope/vim-fireplace'
 " " Plug 'typedclojure/vim-typedclojure'
 " Plug 'guns/vim-sexp'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " " Plug 'web-indent'
-" Plug 'luochen1990/rainbow'
 
 Plug 'tmux-plugins/vim-tmux-focus-events'
 
@@ -325,6 +330,9 @@ augroup LineNumberFlip
 	au insertleave * :call LineNumberFlipFunc(0)
 augroup end
 map <leader>: :set norelativenumber<CR>
+map <leader>td :TsuDefinition<CR>
+map <leader>tr :TsuReferences<CR>
+map <leader>tn :TsuRenameSymbolC<CR>
 
 " = Fugitive ======================================================
 
@@ -405,6 +413,8 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " = Typescript =====================================================
 let g:tsuquyomi_disable_default_mappings = 1
+let g:tsuquyomi_completion_detail = 1
+let g:tsuquyomi_disable_quickfix = 1
 
 " = Syntastic ======================================================
 let g:syntastic_always_populate_loc_list = 1
@@ -415,7 +425,7 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_javascript_checkers = ["eslint"]
-let g:syntastic_typescript_checkers = []
+let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:syntastic_dosini_checkers = ["dosini"]
 let g:syntastic_make_checkers = ["gnumake"]
 let g:syntastic_json_checkers = ["json_tool"]
