@@ -34,6 +34,8 @@ if [ -t 1 ]; then
     alias ffmpegcut=aliasffmpegcut
     alias crepl='cabal repl --ghc-options="-ignore-dot-ghci -fdefer-type-errors"'
 
+
     keychain --nogui ~/.ssh/id_?sa
     source ~/.keychain/$HOSTNAME-sh
+    source /home/fozz/.dvm/dvm.sh
 fi

@@ -198,112 +198,102 @@
         <menu>root-menu</menu>
       </action>
     </keybind>
-    <keybind key="C-A-Left">
+    <keybind key="W-Left">
       <action name="GoToDesktop">
         <to>left</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="C-A-Right">
+    <keybind key="W-Right">
       <action name="GoToDesktop">
         <to>right</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="C-A-Up">
+    <keybind key="W-Up">
       <action name="GoToDesktop">
         <to>up</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="C-A-Down">
+    <keybind key="W-Down">
       <action name="GoToDesktop">
         <to>down</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Left">
+    <keybind key="W-S-Left">
       <action name="SendToDesktop">
         <to>left</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Right">
+    <keybind key="W-S-Right">
       <action name="SendToDesktop">
         <to>right</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Up">
+    <keybind key="W-S-Up">
       <action name="SendToDesktop">
         <to>up</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Down">
+    <keybind key="W-S-Down">
       <action name="SendToDesktop">
         <to>down</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="W-F1">
+    <keybind key="W-1">
       <action name="GoToDesktop">
         <to>1</to>
       </action>
     </keybind>
-    <keybind key="W-F2">
+    <keybind key="W-2">
       <action name="GoToDesktop">
         <to>2</to>
       </action>
     </keybind>
-    <keybind key="W-F3">
+    <keybind key="W-3">
       <action name="GoToDesktop">
         <to>3</to>
       </action>
     </keybind>
-    <keybind key="W-F4">
+    <keybind key="W-4">
       <action name="GoToDesktop">
         <to>4</to>
       </action>
     </keybind>
-    <keybind key="W-F5">
+    <keybind key="W-5">
       <action name="GoToDesktop">
         <to>5</to>
       </action>
     </keybind>
-    <keybind key="W-F6">
+    <keybind key="W-6">
       <action name="GoToDesktop">
         <to>6</to>
       </action>
     </keybind>
-    <keybind key="W-F7">
+    <keybind key="W-7">
       <action name="GoToDesktop">
         <to>7</to>
       </action>
     </keybind>
-    <keybind key="W-F8">
+    <keybind key="W-8">
       <action name="GoToDesktop">
         <to>8</to>
       </action>
     </keybind>
-    <keybind key="W-F9">
+    <keybind key="W-9">
       <action name="GoToDesktop">
         <to>9</to>
       </action>
     </keybind>
-    <keybind key="W-F10">
+    <keybind key="W-0">
       <action name="GoToDesktop">
         <to>10</to>
-      </action>
-    </keybind>
-    <keybind key="W-F11">
-      <action name="GoToDesktop">
-        <to>11</to>
-      </action>
-    </keybind>
-    <keybind key="W-F12">
-      <action name="GoToDesktop">
-        <to>12</to>
       </action>
     </keybind>
     <keybind key="W-d">
@@ -320,7 +310,7 @@
       <action name="Unfocus"/>
     </keybind>
     -->
-    <keybind key="A-space">
+    <keybind key="W-space">
       <action name="ShowMenu">
         <menu>client-menu</menu>
       </action>
@@ -338,7 +328,7 @@
     </keybind>
     <keybind key="W-l">
       <action name="Execute">
-        <command>gnome-screensaver-command --lock</command>
+        <command>dm-tool lock</command>
       </action>
     </keybind>
     <!-- Keybindings for window switching -->

@@ -25,8 +25,8 @@ xsetroot -solid '#1D1D1D'
 # keychain ~/.ssh/id_?sa
 fbpanel &
 gnome-screensaver &
-# ibus-daemon &
-$( sleep 10 && [ $(ps aux | grep fozz | grep ' \/.*ibus\-ui\-gtk3' | wc -l ) -eq 0 ] && /usr/lib/ibus/ibus-ui-gtk3 & ) &
+ibus-daemon &
+$( sleep 10 && [ $(ps aux | grep fozz | grep ' \/.*ibus\-x11' | wc -l ) -eq 0 ] && /usr/lib/ibus/ibus-x11 & ) &
 /usr/bin/pulseaudio --start --log-target=syslog
 # /usr/bin/gnome-sound-applet &
 /usr/lib/x86_64-linux-gnu/indicator-applet &

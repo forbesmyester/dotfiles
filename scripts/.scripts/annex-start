@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sleep 1800
+
+if [ $(ssh-add -l | grep ssh | wc -l) -gt 0 ]; then
+    git annex assistant --autostart
+fi

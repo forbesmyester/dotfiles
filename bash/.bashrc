@@ -3,6 +3,7 @@
 # for examples
 
 # If running interactively, then:
+# source ~/.python-default-virtualenv/bin/activate
 if [ "$PS1" ]; then
 
 	# don't put duplicate lines in the history. See bash(1) for more options
@@ -50,6 +51,7 @@ SHELL=/bin/bash
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
 
 source ~/.nvm/nvm.sh
+
 PATH=${PATH}:~/.x_scripts:~/.scripts:~/.bin:~/.vendor/bin:~/.cabal/bin:node_modules/.bin:~/.binaries/terraform
 
 export NODE_ENV=development

@@ -68,10 +68,10 @@
   </item>
   <separator />
   <item label="Lock">
-      <action name="Execute"><execute>xscreensaver-command -lock</execute></action>
+      <action name="Execute"><execute>dm-tool lock</execute></action>
   </item>
   <item label="Suspend">
-      <action name="Execute"><execute>bash -c "xscreensaver-command -lock ; sudo /usr/sbin/pm-suspend"</execute></action>
+      <action name="Execute"><execute>bash -c "dm-tool lock ; sudo /usr/sbin/pm-suspend"</execute></action>
   </item>
   <item label="Exit">
     <action name="Exit" />
