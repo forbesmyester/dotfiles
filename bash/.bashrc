@@ -58,4 +58,3 @@ source ~/.nvm/nvm.sh
 PATH=${PATH}:~/.x_scripts:~/.scripts:~/.vendor/bin:node_modules/.bin
 
 export NODE_ENV=development
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
