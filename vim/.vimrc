@@ -278,11 +278,6 @@ endif
 
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 1
-
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
 
 " = Number Switching ================================================
 
@@ -592,3 +587,4 @@ fun! IgnoreCamelCaseSpell()
   syn match myXXX /\<[a-zA-Z]\+[A-Z][a-zA-Z0-9]\*\>/ contains=@NoSpell
 endfun
 autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
+

@@ -8,7 +8,7 @@ export LANG
 export LC_ALL
 export LC_CTYPE
 export PYTHONPATH
-. ~/.vendor/base16-shell/base16-default.dark.sh
+# . ~/.vendor/base16-shell/base16-default.dark.sh
 # if [[ -n "$DISPLAY" ]]; then
 # 	export TERM=xterm-256color
 # 	. ~/.vendor/base16-shell/base16-default.dark.sh

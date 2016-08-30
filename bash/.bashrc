@@ -3,7 +3,7 @@
 # for examples
 
 # If running interactively, then:
-# source ~/.python-default-virtualenv/bin/activate
+[ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
 if [ "$PS1" ]; then
 
 	# don't put duplicate lines in the history. See bash(1) for more options
@@ -50,9 +50,12 @@ LC_CTYPE=en_GB.UTF8
 SHELL=/bin/bash
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
 
+BASE16_SHELL=$HOME/.vendor/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
 source ~/.nvm/nvm.sh
 
-PATH=${PATH}:~/.x_scripts:~/.scripts:~/.bin:~/.vendor/bin:~/.cabal/bin:node_modules/.bin:~/.binaries/terraform
+PATH=${PATH}:~/.x_scripts:~/.scripts:~/.vendor/bin:node_modules/.bin
 
 export NODE_ENV=development
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
