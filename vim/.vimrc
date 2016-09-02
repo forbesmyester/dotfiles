@@ -67,7 +67,6 @@ endif
 " endif
 Plug 'junegunn/vim-easy-align'
 Plug 'mtth/scratch.vim'
-" Plug 'majutsushi/tagbar'
 
 " Colours / Style
 Plug 'chriskempson/base16-vim'
@@ -107,7 +106,7 @@ Plug 'leafgarland/typescript-vim'
 " Tmux
 Plug 'jgdavey/tslime.vim'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'mhinz/vim-tmuxify'
+Plug 'mhinz/vim-tmuxify'
 " Plug 'benmills/vimux'
 
 " Yaml
@@ -128,7 +127,7 @@ Plug 'venantius/vim-eastwood'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " " Plug 'web-indent'
 
-Plug 'tmux-plugins/vim-tmux-focus-events'
+" Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " Vader - Unit Tests
 Plug 'junegunn/vader.vim'
@@ -454,6 +453,7 @@ autocmd Filetype clojure call SetClojureOptions()
 " Vimux ===========================================================
 let g:VimuxOrientation = "h"
 let g:tslime_ensure_trailing_newlines = 1
+let g:VimuxRunnerType = "window"
 
 " function! TestFile_Set()
 " 	let g:testfile__file_to_test = @%
@@ -476,13 +476,13 @@ let g:tslime_ensure_trailing_newlines = 1
 function RunUnitTest()
     " exec 'Neomake'
     if (exists("g:unit_test_command"))
-        if &term == 'nvim'
-            exec "T " . g:unit_test_command
-            exec "vertical resize 86"
-        else
+        " if &term == 'nvim'
+        "     exec "T " . g:unit_test_command
+        "     exec "vertical resize 86"
+        " else
             call Send_keys_to_Tmux("enter")
             call SendToTmux(g:unit_test_command . "\n")
-        endif
+        " endif
     endif
 endfunction
 
@@ -491,6 +491,9 @@ function SetUnitTest()
         let g:unit_test_command = input("specify command: ", g:unit_test_command)
     else
         let g:unit_test_command = input("specify command: ", "")
+    endif
+    if empty(g:unit_test_command)
+        unlet g:unit_test_command
     endif
 endfunction
 
@@ -510,21 +513,20 @@ endfunction
 
 nmap <leader>r :call RunUnitTest()<CR>
 nmap <leader>R <Plug>SetTmuxVars
-nmap <leader><leader>R :unlet g:unit_test_command<CR>
 nmap <leader><leader>r :call SetUnitTest()<CR>
-nmap <leader>r :vertical resize 86<CR>
+" nmap <leader>r :vertical resize 86<CR>
 
-if &term == 'nvim'
-    nmap <leader>c :call neoterm#kill()<cr>
-    vmap <leader><Enter> :TREPLSend<cr>
-    nmap <leader><Enter> :TREPLSend<cr>
-    nmap <leader>m :TREPLSendFile<cr>
-else
+" if &term == 'nvim'
+"     nmap <leader>c :call neoterm#kill()<cr>
+"     vmap <leader><Enter> :TREPLSend<cr>
+"     nmap <leader><Enter> :TREPLSend<cr>
+"     nmap <leader>m :TREPLSendFile<cr>
+" else
     nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
     vmap <leader><Enter> <ESC><CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
     nmap <leader><Enter> <S-v><ESC><CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
     nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
-endif
+" endif
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 autocmd BufWritePost * :call RunUnitTest()
