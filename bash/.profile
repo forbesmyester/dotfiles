@@ -19,20 +19,20 @@ fi
 # 
 #export EDITOR JAVA_HOME JAVA_PATH JDK_HOME CLASSPATH http_proxy
 export EDITOR http_proxy
-alias mysql='INPUTRC=~/.mysql_inputrc mysql'
-alias i3-lock=i3lock
-alias tnew='tmux -f ~/.tmux.conf new-session -As "`basename $PWD`"'
+# alias mysql='INPUTRC=~/.mysql_inputrc mysql'
+# alias i3-lock=i3lock
+alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")'
 
 if [ -t 1 ]; then
     mesg n
     stty -ixon
     # stty stop undef 
 
-    function aliasffmpegcut() {
-        ffmpeg -ss $1 -i $3  -t $2 -acodec copy -vcodec copy -async 1 $4
-    }
-    alias ffmpegcut=aliasffmpegcut
-    alias crepl='cabal repl --ghc-options="-ignore-dot-ghci -fdefer-type-errors"'
+    # function aliasffmpegcut() {
+    #     ffmpeg -ss $1 -i $3  -t $2 -acodec copy -vcodec copy -async 1 $4
+    # }
+    # alias ffmpegcut=aliasffmpegcut
+    # alias crepl='cabal repl --ghc-options="-ignore-dot-ghci -fdefer-type-errors"'
 
 
     keychain --nogui ~/.ssh/id_?sa

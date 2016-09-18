@@ -523,8 +523,8 @@ nmap <leader><leader>r :call SetUnitTest()<CR>
 "     nmap <leader>m :TREPLSendFile<cr>
 " else
     nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
-    vmap <leader><Enter> <ESC><CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
-    nmap <leader><Enter> <S-v><ESC><CR>:call SendToTmux(StripCommentBeforeTmuxPost(@* . "\n\n"))<CR>
+    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n\n"))<CR>
+    nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n\n"))<CR>
     nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
 " endif
 
