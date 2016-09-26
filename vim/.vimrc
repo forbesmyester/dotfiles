@@ -72,6 +72,7 @@ Plug 'mtth/scratch.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/tmuxline.vim'
 
 " CSV
 Plug 'chrisbra/csv.vim'
@@ -214,11 +215,7 @@ set diffopt+=iwhite
     set noshowmode
     let base16colorspace=256
     set background=dark
-    if &term == 'nvim'
-        colorscheme base16-default-dark
-    else
-        colorscheme base16-default
-    endif
+    colorscheme base16-tomorrow-night
     if &listchars ==# 'eol:$'
         if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
             set list
