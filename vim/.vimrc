@@ -75,7 +75,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 
 " CSV
-Plug 'chrisbra/csv.vim'
+" Plug 'chrisbra/csv.vim'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
@@ -113,6 +113,9 @@ Plug 'mhinz/vim-tmuxify'
 " Yaml
 Plug 'stephpy/vim-yaml'
 
+" JSONNET
+Plug 'google/vim-jsonnet'
+
 " Clojure
 Plug 'guns/vim-clojure-static'
 Plug 'kien/rainbow_parentheses.vim'
@@ -129,9 +132,6 @@ Plug 'venantius/vim-eastwood'
 " " Plug 'web-indent'
 
 " Plug 'tmux-plugins/vim-tmux-focus-events'
-
-" Vader - Unit Tests
-Plug 'junegunn/vader.vim'
 
 call plug#end()
 
@@ -587,3 +587,6 @@ fun! IgnoreCamelCaseSpell()
 endfun
 autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
 
+hi MatchParen ctermfg=white
+hi MatchParen ctermbg=18
+hi MatchParan cterm=bold

@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+[ -n "$PS1" ] && source ~/.python-default/virtualenv/bin/activate
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -39,6 +41,7 @@ fi
 case "$TERM" in
     xterm-color) color_prompt=yes;;
     rxvt-unicode-256color) color_prompt=yes;;
+    screen-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -66,7 +69,7 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
+xterm*|rxvt*|screen*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -121,3 +124,18 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 EDITOR=vim
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
+
+export NVM_DIR="/home/fozz/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[[ -s "/home/fozz/.gvm/scripts/gvm" ]] && source "/home/fozz/.gvm/scripts/gvm"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /home/fozz/.vendor/google-cloud-sdk/path.bash.inc ]; then
+  source '/home/fozz/.vendor/google-cloud-sdk/path.bash.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
+  source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
+fi

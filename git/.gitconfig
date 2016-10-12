@@ -1,6 +1,6 @@
 [user]
 	email = matthew.forrester@speechmarks.com
-	name = Matthew Forrester
+	name = Matthew Forrester\n
 [push]
 	default = simple
 [url "ssh://git@"]

@@ -18,6 +18,4 @@ if [ -t 1 ]; then
 
 fi
 
-# keychain --nogui ~/.ssh/id_?sa
-source ~/.keychain/$HOSTNAME-sh
 source /home/fozz/.dvm/dvm.sh

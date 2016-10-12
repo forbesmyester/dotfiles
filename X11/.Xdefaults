@@ -13,4 +13,7 @@ URxvt*scrollBar: false
 URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
-URxvt*perl-ext-common: default,clipboard
+! URxvt*perl-ext-common: default,clipboard
+!!!
+URxvt.iso14755: False
+URxvt.mouseWheelScrollPage: false
