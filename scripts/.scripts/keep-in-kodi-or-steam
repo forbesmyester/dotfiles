@@ -1,0 +1,15 @@
+#!/bin/bash
+
+/usr/games/steam -silent &
+while true; do
+  COUNT=$(wmctrl -l | grep 'Kodi\|Steam' | wc -l)
+  if [ "$COUNT" -lt "1" ]; then
+    sleep 1
+    COUNT2=$(wmctrl -l | grep 'Kodi\|Steam' | wc -l)
+    if [ "$COUNT2" -lt "1" ]; then
+      kodi
+    fi
+  fi
+  sleep 5
+done
+
