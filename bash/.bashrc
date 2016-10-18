@@ -125,6 +125,7 @@ EDITOR=vim
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
 
+export GOOGLE_CHROME_USER_SETTINGS_DIRECTORY=~/.config/google-chrome/
 export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
