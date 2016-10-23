@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-[ -n "$PS1" ] && source ~/.python-default/virtualenv/bin/activate
+[ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
 
 # If not running interactively, don't do anything
 case $- in
