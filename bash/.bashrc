@@ -39,6 +39,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
+    xterm-256color) color_prompt=yes;;
     xterm-color) color_prompt=yes;;
     rxvt-unicode-256color) color_prompt=yes;;
     screen-256color) color_prompt=yes;;
