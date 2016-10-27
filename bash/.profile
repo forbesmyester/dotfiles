@@ -18,4 +18,4 @@ if [ -t 1 ]; then
 
 fi
 
-source /home/fozz/.dvm/dvm.sh
+# source /home/fozz/.dvm/dvm.sh
