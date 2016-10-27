@@ -127,6 +127,7 @@ PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
 
+export GOOGLE_CHROME_USER_SETTINGS_DIRECTORY=~/.config/google-chrome/
 export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
@@ -138,6 +139,6 @@ if [ -f /home/fozz/.vendor/google-cloud-sdk/path.bash.inc ]; then
 fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
-  source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
-fi
+# if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
+#   source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
+# fi

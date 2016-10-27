@@ -519,6 +519,7 @@ nmap <leader><leader>r :call SetUnitTest()<CR>
 " endif
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
+" autocmd BufWritePost *.clj :Require
 autocmd BufWritePost * :call RunUnitTest()
 au BufNewFile,BufRead *.raml set filetype=yaml
 
