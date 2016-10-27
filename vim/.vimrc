@@ -9,17 +9,6 @@ else
     call plug#begin('~/.vim/plugged')
 endif
 
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.sh
-  endif
-endfunction
-
-
 " Plug 'gmarik/Vundle'
 
 " Libs
@@ -60,7 +49,7 @@ Plug 'airblade/vim-gitgutter'
 "     let g:deoplete#enable_at_startup = 1
 " else
 if &term =~ '256color$' || has('gui_running') || &term == 'nvim'
-    Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+    Plug 'Valloric/YouCompleteMe'
 else
     Plug 'altercation/vim-colors-solarized.git'
 endif
@@ -99,6 +88,10 @@ Plug 'jason0x43/vim-js-indent'
 " Plug 'jelera/vim-javascript-syntax' BEST
 " Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim'
+
+" Flow
+
+Plug 'flowtype/vim-flow'
 
 " Typescript
 Plug 'Quramy/tsuquyomi'
@@ -307,7 +300,7 @@ set diffopt+=vertical
 " = YouCompleteMe ===================================================
 
 let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_semantic_triggers = {'haskell' : ['.'], 'javascript': ['.'], 'typescript' : ['.']}
+let g:ycm_semantic_triggers = {'haskell,javascript,typescript' : ['.']}
 
 
 "
