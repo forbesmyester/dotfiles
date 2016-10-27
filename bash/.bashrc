@@ -125,6 +125,7 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 EDITOR=vim
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
+HISTCONTROL=ignorespace
 
 export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
