@@ -296,6 +296,7 @@ map <leader>td :TsuDefinition<CR>
 map <leader>tr :TsuReferences<CR>
 map <leader>tn :TsuRenameSymbolC<CR>
 
+
 " = Fugitive ======================================================
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -388,6 +389,7 @@ let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
+autocmd BufReadPost buffergator://* set bufhidden=delete
 
 " = Syntastic ======================================================
 let g:syntastic_always_populate_loc_list = 1
