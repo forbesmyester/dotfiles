@@ -288,9 +288,6 @@ augroup LineNumberFlip
 	au insertleave * :call LineNumberFlipFunc(0)
 augroup end
 map <leader>: :set norelativenumber<CR>
-map <leader>td :TsuDefinition<CR>
-map <leader>tr :TsuReferences<CR>
-map <leader>tn :TsuRenameSymbolC<CR>
 
 " = Fugitive ======================================================
 
@@ -374,6 +371,10 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:tsuquyomi_disable_default_mappings = 1
 let g:tsuquyomi_completion_detail = 1
 let g:tsuquyomi_disable_quickfix = 1
+autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
+autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
+autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
+autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 
 " = vim-buffergator ================================================
 let g:buffergator_viewport_split_policy = 'N'
