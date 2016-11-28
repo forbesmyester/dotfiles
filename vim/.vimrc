@@ -384,11 +384,11 @@ let g:tsuquyomi_disable_quickfix = 1
 autocmd FileType typescript nmap <buffer> <Leader>t :echo tsuquyomi#hint()<CR>
 
 " = vim-buffergator ================================================
-let g:buffergator_viewport_split_policy = 'N'
+let g:buffergator_viewport_split_policy = 'B'
 let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
-map <C-b> :BuffergatorOpen<CR>
+nmap <C-b> :BuffergatorOpen<CR>
 autocmd BufReadPost buffergator://* set bufhidden=delete
 
 " = Syntastic ======================================================
