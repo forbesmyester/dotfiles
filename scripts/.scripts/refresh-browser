@@ -1,10 +1,15 @@
 #!/bin/sh
 CURRENT_WINDOW=`xdotool getactivewindow`
-WIDS=`xdotool search --name "$1"`
+DESKTOP=$(xdotool get_desktop)
+WIDS=`xdotool search --desktop $DESKTOP --name "$1"`
 for W in $WIDS
 do
     WID=$W
+    # WINDOWNAME=$(xdotool getwindowname $WID)
+    # echo "Found '$WINDOWNAME'"
+
 done
-xdotool windowactivate $WID
+xdotool windowactivate --sync $WID
+sleep 1
 xdotool key ctrl+r
-xdotool windowactivate $CURRENT_WINDOW
+xdotool windowactivate --sync $CURRENT_WINDOW
