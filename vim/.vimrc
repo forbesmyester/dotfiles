@@ -63,6 +63,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 
+" CSS
+Plug 'ap/vim-css-color'
+
 " CSV
 " Plug 'chrisbra/csv.vim'
 
@@ -95,7 +98,8 @@ Plug 'flowtype/vim-flow'
 
 " Typescript
 Plug 'Quramy/tsuquyomi'
-Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'leafgarland/typescript-vim'
 
 " Tmux
 Plug 'jgdavey/tslime.vim'
@@ -371,6 +375,8 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:tsuquyomi_disable_default_mappings = 1
 let g:tsuquyomi_completion_detail = 1
 let g:tsuquyomi_disable_quickfix = 1
+" set ballooneval
+" autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
 autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
 autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
 autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
@@ -382,6 +388,7 @@ let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
+autocmd BufReadPost buffergator://* set bufhidden=delete
 
 " = Syntastic ======================================================
 let g:syntastic_always_populate_loc_list = 1
