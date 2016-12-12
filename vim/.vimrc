@@ -98,8 +98,8 @@ Plug 'flowtype/vim-flow'
 
 " Typescript
 Plug 'Quramy/tsuquyomi'
-Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'leafgarland/typescript-vim'
+" Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
 
 " Tmux
 Plug 'jgdavey/tslime.vim'
@@ -383,7 +383,7 @@ autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
 autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 
 " = vim-buffergator ================================================
-let g:buffergator_viewport_split_policy = 'N'
+let g:buffergator_viewport_split_policy = 'D'
 let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
