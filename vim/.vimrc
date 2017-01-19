@@ -58,10 +58,15 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mtth/scratch.vim'
 
 " Colours / Style
-Plug 'chriskempson/base16-vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
+if &term == 'nvim'
+    Plug 'chriskempson/base16-vim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'edkolev/tmuxline.vim'
+endif
+
+" Bats
+Plug 'bats.vim'
 
 " CSS
 Plug 'ap/vim-css-color'
@@ -110,8 +115,9 @@ Plug 'mhinz/vim-tmuxify'
 " Yaml
 Plug 'stephpy/vim-yaml'
 
-" JSONNET
+" JSON / JSONNET
 Plug 'google/vim-jsonnet'
+Plug 'elzr/vim-json'
 
 " Clojure
 Plug 'guns/vim-clojure-static'
@@ -122,7 +128,6 @@ Plug 'tpope/vim-salve'
 Plug 'venantius/vim-eastwood'
 
 " Plug 'guns/vim-clojure-highlight'
-" " Plug 'tpope/vim-fireplace'
 " " Plug 'typedclojure/vim-typedclojure'
 " Plug 'guns/vim-sexp'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
@@ -187,8 +192,8 @@ set hlsearch
 set linebreak
 set breakat=\ 
 
-set backupdir=/tmp,~/tmp,/storage/emulated/legacy/tmp " backups (~)
-set directory=/tmp,~/tmp,/storage/emulated/legacy/tmp " swap files
+set backupdir=~/.tmp//,/tmp// " backups (~)
+set directory=~/.tmp//,/tmp// " swap files
 " set backup               " enable backups
 
 " Code Style
@@ -307,14 +312,14 @@ let g:ycm_semantic_triggers = {'haskell,javascript,typescript' : ['.']}
 "
 " = GUI Visual Style ================================================
 
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 12
-set guioptions-=T
-set guioptions-=r
-set guioptions-=t
-syntax on
-let g:Powerline_symbols = 'fancy'
-autocmd BufEnter * :syntax sync fromstart
-autocmd BufEnter * set mouse=
+" set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 12
+" set guioptions-=T
+" set guioptions-=r
+" set guioptions-=t
+" syntax on
+" let g:Powerline_symbols = 'fancy'
+" autocmd BufEnter * :syntax sync fromstart
+" autocmd BufEnter * set mouse=
 
 " = Tern ==============================================================
 
@@ -473,14 +478,28 @@ let g:VimuxRunnerType = "window"
 
 function RunUnitTest()
     " exec 'Neomake'
+    if (exists("g:pre_unit_test_command"))
+        silent exec g:pre_unit_test_command
+    endif
     if (exists("g:unit_test_command"))
         " if &term == 'nvim'
         "     exec "T " . g:unit_test_command
         "     exec "vertical resize 86"
         " else
+            call SendToTmux(g:unit_test_command)
             call Send_keys_to_Tmux("enter")
-            call SendToTmux(g:unit_test_command . "\n")
         " endif
+    endif
+endfunction
+
+function SetPreUnitTest()
+    if (exists("g:pre_unit_test_command"))
+        let g:pre_unit_test_command = input("specify vim command: ", g:pre_unit_test_command)
+    else
+        let g:pre_unit_test_command = input("specify vim command: ", "")
+    endif
+    if empty(g:pre_unit_test_command)
+        unlet g:pre_unit_test_command
     endif
 endfunction
 
@@ -512,6 +531,7 @@ endfunction
 nmap <leader>r :call RunUnitTest()<CR>
 nmap <leader>R <Plug>SetTmuxVars
 nmap <leader><leader>r :call SetUnitTest()<CR>
+nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
 " if &term == 'nvim'

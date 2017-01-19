@@ -138,6 +138,11 @@ if [ -f /home/fozz/.vendor/google-cloud-sdk/path.bash.inc ]; then
   source '/home/fozz/.vendor/google-cloud-sdk/path.bash.inc'
 fi
 
+
+if [ ! -d /home/fozz/.tmp ]; then
+    mkdir ~/.tmp
+fi
+
 # The next line enables shell command completion for gcloud.
 # if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
 #   source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
