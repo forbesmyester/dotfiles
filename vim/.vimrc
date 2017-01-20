@@ -217,7 +217,7 @@ set diffopt+=iwhite
     set noshowmode
     let base16colorspace=256
     set background=dark
-    colorscheme base16-tomorrow-night
+    colorscheme base16-oceanicnext
     if &listchars ==# 'eol:$'
         if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
             set list
@@ -479,7 +479,7 @@ let g:VimuxRunnerType = "window"
 function RunUnitTest()
     " exec 'Neomake'
     if (exists("g:pre_unit_test_command"))
-        silent exec g:pre_unit_test_command
+        normal g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
         " if &term == 'nvim'
