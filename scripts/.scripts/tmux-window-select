@@ -1,0 +1,5 @@
+#!/bin/bash
+
+read -t 10 -p "Switch to window: $1" -s -n 1 WIN
+
+tmux select-window -t $(echo "$1$WIN" | sed 's/^0//')
