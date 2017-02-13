@@ -610,3 +610,5 @@ autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
 hi MatchParen ctermfg=white
 hi MatchParen ctermbg=18
 hi MatchParan cterm=bold
+
+" TmuxlineSnapshot! "~/.tmux.tmuxline.conf"
