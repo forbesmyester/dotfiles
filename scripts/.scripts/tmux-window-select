@@ -1,5 +1,12 @@
 #!/bin/bash
 
+WIDS=$(tmux list-windows | sed 's/:.*//' | grep "^$1" | wc -l)
+
+if [ $WIDS -eq 1 ]; then
+    tmux select-window -t $1
+    exit 0
+fi
+
 read -t 10 -p "Switch to window: $1" -s -n 1 WIN
 
 tmux select-window -t $(echo "$1$WIN" | sed 's/^0//')
