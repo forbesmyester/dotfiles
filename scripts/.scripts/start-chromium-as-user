@@ -1,0 +1,65 @@
+#!/bin/bash
+
+shopt -s nullglob
+
+OPTIND=1
+PUSH=1
+BASE_STR="base."
+
+show_help() {
+    echo "-p = The Profile to search for"
+    echo "-c = The command to use from Chrome / Chromium"
+    echo "-d = The directory to the Chrome / Chromium user settings director"
+}
+
+while getopts "hd:c:p:" opt; do
+    case "$opt" in
+        h)
+            show_help
+            exit 0
+            ;;
+        d)  CHROMIUM_USER_SETTINGS_DIRECTORY=$OPTARG
+            ;;
+        c)  CHROMIUM_COMMAND=$OPTARG
+            ;;
+        p)  DESIRED_PROFILE=$OPTARG
+            ;;
+        *)  show_help
+            exit 1
+            ;;
+    esac
+done
+
+
+
+if [ "$CHROMIUM_COMMAND" = "" ]; then
+    show_help
+    exit 1
+fi
+if [ "$CHROMIUM_USER_SETTINGS_DIRECTORY" = "" ]; then
+    show_help
+    exit 1
+fi
+if [ "$DESIRED_PROFILE" = "" ]; then
+    show_help
+    exit 1
+fi
+
+POSSIBLE_PROFILE_PREFERENCES=($CHROMIUM_USER_SETTINGS_DIRECTORY/*/Preferences)
+
+for POSSIBLE_PREFERENCE in "${POSSIBLE_PROFILE_PREFERENCES[@]}"; do
+    NAME=$(cat "$POSSIBLE_PREFERENCE" | jq -r .profile.name)
+    echo "Checking directory \"$POSSIBLE_PREFERENCE\" for profile \"$DESIRED_PROFILE\""
+    echo ""
+    if [ "$NAME" = "$DESIRED_PROFILE" ]; then
+        CHROMIUM_PROFILE_DIRECTORY=$(echo "$POSSIBLE_PREFERENCE" | sed 'sI.*/\(.*\)\/.*I\1I')
+            if [ "$#" -gt "1" ]; then
+                $CHROMIUM_COMMAND --profile-directory="$CHROMIUM_PROFILE_DIRECTORY" "$7"
+            else
+                $CHROMIUM_COMMAND --profile-directory="$CHROMIUM_PROFILE_DIRECTORY"
+            fi
+        exit 0
+    fi
+done
+echo "Error: Could not find Google Chrome Profile '$DESIRED_PROFILE'"
+exit 1
