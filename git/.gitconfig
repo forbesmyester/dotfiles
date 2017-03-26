@@ -6,8 +6,10 @@
 [url "ssh://git@"]
 	insteadOf = github://
 [merge]
-    	tool = vimdiff
+    ; tool = vimdiff
+    tool = meld
 	conflictstyle = diff3
 	prompt = false
 [diff]
-	tool = vimdiff
+	; tool = vimdiff
+	tool = meld

@@ -9,17 +9,6 @@ else
     call plug#begin('~/.vim/plugged')
 endif
 
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.sh
-  endif
-endfunction
-
-
 " Plug 'gmarik/Vundle'
 
 " Libs
@@ -60,7 +49,7 @@ Plug 'airblade/vim-gitgutter'
 "     let g:deoplete#enable_at_startup = 1
 " else
 if &term =~ '256color$' || has('gui_running') || &term == 'nvim'
-    Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+    Plug 'Valloric/YouCompleteMe'
 else
     Plug 'altercation/vim-colors-solarized.git'
 endif
@@ -69,10 +58,18 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mtth/scratch.vim'
 
 " Colours / Style
-Plug 'chriskempson/base16-vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
+if &term == 'nvim'
+    Plug 'chriskempson/base16-vim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'edkolev/tmuxline.vim'
+endif
+
+" Bats
+Plug 'bats.vim'
+
+" CSS
+Plug 'ap/vim-css-color'
 
 " CSV
 " Plug 'chrisbra/csv.vim'
@@ -100,8 +97,13 @@ Plug 'jason0x43/vim-js-indent'
 " Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim'
 
+" Flow
+
+Plug 'flowtype/vim-flow'
+
 " Typescript
 Plug 'Quramy/tsuquyomi'
+" Plug 'HerringtonDarkholme/yats.vim'
 Plug 'leafgarland/typescript-vim'
 
 " Tmux
@@ -113,8 +115,9 @@ Plug 'mhinz/vim-tmuxify'
 " Yaml
 Plug 'stephpy/vim-yaml'
 
-" JSONNET
+" JSON / JSONNET
 Plug 'google/vim-jsonnet'
+Plug 'elzr/vim-json'
 
 " Clojure
 Plug 'guns/vim-clojure-static'
@@ -125,7 +128,6 @@ Plug 'tpope/vim-salve'
 Plug 'venantius/vim-eastwood'
 
 " Plug 'guns/vim-clojure-highlight'
-" " Plug 'tpope/vim-fireplace'
 " " Plug 'typedclojure/vim-typedclojure'
 " Plug 'guns/vim-sexp'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
@@ -190,8 +192,8 @@ set hlsearch
 set linebreak
 set breakat=\ 
 
-set backupdir=/tmp,~/tmp,/storage/emulated/legacy/tmp " backups (~)
-set directory=/tmp,~/tmp,/storage/emulated/legacy/tmp " swap files
+set backupdir=~/.tmp//,/tmp// " backups (~)
+set directory=~/.tmp//,/tmp// " swap files
 " set backup               " enable backups
 
 " Code Style
@@ -215,7 +217,7 @@ set diffopt+=iwhite
     set noshowmode
     let base16colorspace=256
     set background=dark
-    colorscheme base16-tomorrow-night
+    colorscheme base16-oceanicnext
     if &listchars ==# 'eol:$'
         if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
             set list
@@ -295,9 +297,6 @@ augroup LineNumberFlip
 	au insertleave * :call LineNumberFlipFunc(0)
 augroup end
 map <leader>: :set norelativenumber<CR>
-map <leader>td :TsuDefinition<CR>
-map <leader>tr :TsuReferences<CR>
-map <leader>tn :TsuRenameSymbolC<CR>
 
 " = Fugitive ======================================================
 
@@ -307,18 +306,18 @@ set diffopt+=vertical
 " = YouCompleteMe ===================================================
 
 let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_semantic_triggers = {'haskell' : ['.'], 'javascript': ['.'], 'typescript' : ['.']}
+let g:ycm_semantic_triggers = {'haskell,javascript,typescript' : ['.']}
 
 
 "
 " = GUI Visual Style ================================================
 
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 12
+" set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 12
 set guioptions-=T
 set guioptions-=r
 set guioptions-=t
-syntax on
-let g:Powerline_symbols = 'fancy'
+" syntax on
+" let g:Powerline_symbols = 'fancy'
 autocmd BufEnter * :syntax sync fromstart
 autocmd BufEnter * set mouse=
 
@@ -381,13 +380,20 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:tsuquyomi_disable_default_mappings = 1
 let g:tsuquyomi_completion_detail = 1
 let g:tsuquyomi_disable_quickfix = 1
+" set ballooneval
+" autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
+autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
+autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
+autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 
 " = vim-buffergator ================================================
-let g:buffergator_viewport_split_policy = 'N'
+let g:buffergator_viewport_split_policy = 'B'
 let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
+autocmd BufReadPost buffergator://* set bufhidden=delete
 
 " = Syntastic ======================================================
 let g:syntastic_always_populate_loc_list = 1
@@ -412,30 +418,28 @@ let g:markdown_enable_mappings = 0
 
 function SetClojureOptions()
     " Plugin: Rainbow
-    let g:rainbow_active = 1
 
-    let g:rainbow_conf = {
-    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-    \   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-    \   'operators': '_,_',
-    \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-    \   'separately': {
-    \       '*': {},
-    \       'tex': {
-    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-    \       },
-    \       'lisp': {
-    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-    \       },
-    \       'vim': {
-    \           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-    \       },
-    \       'html': {
-    \           'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-    \       },
-    \       'css': 0,
-    \   }
-    \}
+    let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+
+        " \ ['gray',        'RoyalBlue3'],
+        " \ ['black',       'SeaGreen3'],
+    let g:rbpt_max = 14
+    let g:rbpt_loadcmd_toggle = 0
 
     " nmap <Enter> :Eval<cr>
     " RainbowParenthesisToggle
@@ -472,14 +476,28 @@ let g:VimuxRunnerType = "window"
 
 function RunUnitTest()
     " exec 'Neomake'
+    if (exists("g:pre_unit_test_command"))
+        normal g:pre_unit_test_command
+    endif
     if (exists("g:unit_test_command"))
         " if &term == 'nvim'
         "     exec "T " . g:unit_test_command
         "     exec "vertical resize 86"
         " else
+            call SendToTmux(g:unit_test_command)
             call Send_keys_to_Tmux("enter")
-            call SendToTmux(g:unit_test_command . "\n")
         " endif
+    endif
+endfunction
+
+function SetPreUnitTest()
+    if (exists("g:pre_unit_test_command"))
+        let g:pre_unit_test_command = input("specify vim command: ", g:pre_unit_test_command)
+    else
+        let g:pre_unit_test_command = input("specify vim command: ", "")
+    endif
+    if empty(g:pre_unit_test_command)
+        unlet g:pre_unit_test_command
     endif
 endfunction
 
@@ -511,6 +529,7 @@ endfunction
 nmap <leader>r :call RunUnitTest()<CR>
 nmap <leader>R <Plug>SetTmuxVars
 nmap <leader><leader>r :call SetUnitTest()<CR>
+nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
 " if &term == 'nvim'
@@ -520,12 +539,13 @@ nmap <leader><leader>r :call SetUnitTest()<CR>
 "     nmap <leader>m :TREPLSendFile<cr>
 " else
     nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
-    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n\n"))<CR>
-    nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n\n"))<CR>
+    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
+    nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
     nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
 " endif
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
+" autocmd BufWritePost *.clj :Require
 autocmd BufWritePost * :call RunUnitTest()
 au BufNewFile,BufRead *.raml set filetype=yaml
 
@@ -590,3 +610,5 @@ autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
 hi MatchParen ctermfg=white
 hi MatchParen ctermbg=18
 hi MatchParan cterm=bold
+
+" TmuxlineSnapshot! "~/.tmux.tmuxline.conf"

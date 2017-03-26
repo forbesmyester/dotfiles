@@ -1,0 +1,11 @@
+[Unit]
+Description=Docker Logitech Media Server
+After=docker.service
+
+[Service]
+TimeoutSec=1800
+ExecStartPre=/usr/bin/docker pull larsks/logitech-media-server
+ExecStart=/bin/bash -c '[ $(docker ps -a  | grep libresonic | wc -l) -gt "0" ] && docker start -a logitech-media-server || docker run --name logitech-media-server -v /mnt/store/shared/Music/:/srv/music:ro -p 9000:9000 -p 3483:3483 -p 3483:3483/udp larsks/logitech-media-server'
+RestartSec=7
+Restart=always
+

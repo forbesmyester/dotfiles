@@ -1,0 +1,6 @@
+#!/bin/bash
+
+LIST_CMD=$1
+RUN_CMD=$2
+
+$RUN_CMD $("$LIST_CMD" | sed -n $(shuf -i1-$("$LIST_CMD" | wc -l) -n1)p)

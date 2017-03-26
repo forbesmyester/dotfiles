@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-[ -n "$PS1" ] && source ~/.python-default/virtualenv/bin/activate
+[ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
 
 # If not running interactively, don't do anything
 case $- in
@@ -39,6 +39,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
+    xterm-256color) color_prompt=yes;;
     xterm-color) color_prompt=yes;;
     rxvt-unicode-256color) color_prompt=yes;;
     screen-256color) color_prompt=yes;;
@@ -61,9 +62,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -118,13 +119,15 @@ fi
 
 # Below my customizations
 
-BASE16_SHELL=$HOME/.config/base16-shell/
+BASE16_SHELL=$HOME/.vendor/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 EDITOR=vim
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
+HISTCONTROL=ignorespace
 
+export GOOGLE_CHROME_USER_SETTINGS_DIRECTORY=~/.config/google-chrome/
 export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
@@ -135,7 +138,12 @@ if [ -f /home/fozz/.vendor/google-cloud-sdk/path.bash.inc ]; then
   source '/home/fozz/.vendor/google-cloud-sdk/path.bash.inc'
 fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
-  source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
+
+if [ ! -d /home/fozz/.tmp ]; then
+    mkdir ~/.tmp
 fi
+
+# The next line enables shell command completion for gcloud.
+# if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
+#   source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
+# fi

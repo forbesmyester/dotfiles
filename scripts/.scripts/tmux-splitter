@@ -1,0 +1,6 @@
+#!/bin/bash
+
+case $1 in 
+  h) tmux split-window -v -c '#{pane_current_path}';;
+  v) tmux split-window -h -c '#{pane_current_path}';;
+esac
