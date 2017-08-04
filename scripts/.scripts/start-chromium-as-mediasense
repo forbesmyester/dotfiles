@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./start-chromium-as-user -p MediaSense -c chromium -d ~/.config/chromium/ $1

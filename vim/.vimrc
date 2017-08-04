@@ -3,6 +3,7 @@
 " 
 " " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
+
 if &term == 'nvim'
     call plug#begin('~/.config/nvim/plugged')
 else
@@ -18,10 +19,16 @@ Plug 'tpope/timl'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
 " General
+" Plug 'wsdjeg/FlyGrep.vim'
+Plug 'yssl/QFEnter'
 Plug 'gorkunov/smartpairs.vim'
+Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'jeetsukumaran/vim-buffergator'
+" Plug 'Shougo/unite.vim'
+Plug 'simeji/winresizer'
+" Plug 'Shougo/denite.nvim'
 " Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -30,13 +37,14 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 if &term == 'nvim'
-    Plug 'kassio/neoterm'
+    Plug 'forbesmyester/neoterm'
     " Plug 'benekastah/neomake'
     " else
 endif
 Plug 'scrooloose/syntastic'
-" Plug 'gabrielelana/vim-markdown'
-Plug 'jtratner/vim-flavored-markdown'
+Plug 'gabrielelana/vim-markdown'
+" Plug 'junegunn/goyo.vim'
+" Plug 'jtratner/vim-flavored-markdown'
 Plug 'Soares/butane.vim' "BClose
 Plug 'tmhedberg/matchit'
 Plug 'editorconfig/editorconfig-vim'
@@ -65,8 +73,8 @@ if &term == 'nvim'
     Plug 'edkolev/tmuxline.vim'
 endif
 
-" Bats
-Plug 'bats.vim'
+" Bats - BASH unit testing!
+" Plug 'bats.vim'
 
 " CSS
 Plug 'ap/vim-css-color'
@@ -97,10 +105,6 @@ Plug 'jason0x43/vim-js-indent'
 " Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim'
 
-" Flow
-
-Plug 'flowtype/vim-flow'
-
 " Typescript
 Plug 'Quramy/tsuquyomi'
 " Plug 'HerringtonDarkholme/yats.vim'
@@ -110,7 +114,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'jgdavey/tslime.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mhinz/vim-tmuxify'
-" Plug 'benmills/vimux'
 
 " Yaml
 Plug 'stephpy/vim-yaml'
@@ -217,7 +220,7 @@ set diffopt+=iwhite
     set noshowmode
     let base16colorspace=256
     set background=dark
-    colorscheme base16-oceanicnext
+    colorscheme base16-default-dark
     if &listchars ==# 'eol:$'
         if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
             set list
@@ -260,8 +263,12 @@ let g:gitgutter_realtime=1
 set updatetime=750
 
 " = NeoTerm ======================================================
+let g:neoterm_no_auto_repl_cmd = 1
 let g:neoterm_shell = "bash"
+" let g:neoterm_repl_command = "bash"
+" let g:neoterm_direct_open_repl = 1
 let g:neoterm_position = "vertical"
+let g:neoterm_use_relative_path = 1
 
 " = Airline =======================================================
 
@@ -286,7 +293,6 @@ function! LineNumberFlipFunc(entered)
         set relativenumber
     endif
     if @% =~ '^term:'
-        set relativenumber
         set nocursorline
     endif
 endfunction
@@ -320,6 +326,7 @@ set guioptions-=t
 " let g:Powerline_symbols = 'fancy'
 autocmd BufEnter * :syntax sync fromstart
 autocmd BufEnter * set mouse=
+autocmd FileType qf wincmd J
 
 " = Tern ==============================================================
 
@@ -394,6 +401,42 @@ let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
 autocmd BufReadPost buffergator://* set bufhidden=delete
+autocmd FileType buffergator set ma
+
+
+
+" = Markdown =====================================================
+" function! s:auto_goyo()
+"     if &ft == 'markdown' && winnr('$') == 1
+"         Goyo 80
+"     elseif exists('#goyo')
+"         Goyo!
+"     endif
+" endfunction
+" 
+" function! s:goyo_leave()
+"     if winnr('$') < 2
+"         silent! :q
+"     endif
+" endfunction
+" 
+" augroup goyo_markdown
+"     autocmd!
+"     autocmd BufNewFile,BufRead * call s:auto_goyo()
+"     autocmd! User GoyoLeave nested call s:goyo_leave()
+" augroup END
+
+au BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['javascript', 'bash']
+let g:markdown_enable_folding=1
+let g:markdown_enable_mappings = 0
+
+
+" = NVIM Terminus ==================================================
+let g:terminus_default_prompt = '$'
+
+" = vim-json ======================================================
+let g:vim_json_syntax_conceal = 0
 
 " = Syntastic ======================================================
 let g:syntastic_always_populate_loc_list = 1
@@ -405,14 +448,12 @@ let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_javascript_checkers = ["eslint"]
 let g:syntastic_typescript_checkers = ["tsuquyomi"]
+" let g:syntastic_typescript_checkers = ["tsuquyomi", "tslint"]
 let g:syntastic_dosini_checkers = ["dosini"]
 let g:syntastic_make_checkers = ["gnumake"]
 let g:syntastic_json_checkers = ["json_tool"]
 let g:syntastic_yaml_checkers = ["pyyaml"]
 
-" Plugin: gabrielelana/vim-markdown
-let g:markdown_enable_folding=1
-let g:markdown_enable_mappings = 0
 " let g:vim_markdown_no_default_key_mappings=1
 " autocmd FileType md set wrap|set linebreak|set nolist "|set textwidth=0|set wrapmargin=0|set formatoptions+=1
 
@@ -477,16 +518,15 @@ let g:VimuxRunnerType = "window"
 function RunUnitTest()
     " exec 'Neomake'
     if (exists("g:pre_unit_test_command"))
-        normal g:pre_unit_test_command
+        exec "silent normal " . g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
-        " if &term == 'nvim'
-        "     exec "T " . g:unit_test_command
-        "     exec "vertical resize 86"
-        " else
+        if &term == 'nvim'
+            exec "T " . g:unit_test_command
+        else
             call SendToTmux(g:unit_test_command)
             call Send_keys_to_Tmux("enter")
-        " endif
+        endif
     endif
 endfunction
 
@@ -532,22 +572,21 @@ nmap <leader><leader>r :call SetUnitTest()<CR>
 nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
-" if &term == 'nvim'
-"     nmap <leader>c :call neoterm#kill()<cr>
-"     vmap <leader><Enter> :TREPLSend<cr>
-"     nmap <leader><Enter> :TREPLSend<cr>
-"     nmap <leader>m :TREPLSendFile<cr>
-" else
-    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
-    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
-    nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
-    nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
-" endif
+if &term == 'nvim'
+    nmap <leader>c :call neoterm#kill()<cr>
+    vmap <leader><Enter> :TREPLSendSelection<cr>:Topen<cr>
+    nmap <leader><Enter> :TREPLSendLine<cr>:Topen<cr>
+    nmap <leader>m :TREPLSendFile<cr>
+else
+   nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
+   vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
+   nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
+   nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
+endif
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
 autocmd BufWritePost * :call RunUnitTest()
-au BufNewFile,BufRead *.raml set filetype=yaml
 
 :com ToggleMenu if &go=~'m'|set go-=m|else|set go+=m|endif
 set go-=m
@@ -576,10 +615,11 @@ endfunction
 
 if &term == 'nvim'
     " if @% =~ '^term:'
-    tnoremap <ESC>: <c-\><c-n>:
-    tnoremap <ESC>/ <c-\><c-n>/
-    tnoremap <ESC><ESC> <c-\><c-n>
-    tnoremap <leader>\ <c-\><c-n>
+    " tnoremap <ESC>: <c-\><c-n>:
+    " tnoremap <ESC>/ <c-\><c-n>/
+    tnoremap <c-w><ESC> <c-\><c-n>
+    " tnoremap <ESC><ESC> <c-\><c-n>
+    " tnoremap <leader>\ <c-\><c-n>
     tnoremap <c-h> <c-\><c-n><c-w><c-h>
     tnoremap <c-j> <c-\><c-n><c-w><c-j>
     tnoremap <c-k> <c-\><c-n><c-w><c-k>

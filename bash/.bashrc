@@ -127,7 +127,8 @@ PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
 
-export GOOGLE_CHROME_USER_SETTINGS_DIRECTORY=~/.config/google-chrome/
+export CHROMIUM_USER_SETTINGS_DIRECTORY=~/.config/chromium/
+export CHROMIUM_COMMAND=chromium
 export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
