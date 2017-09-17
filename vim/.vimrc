@@ -37,7 +37,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 if &term == 'nvim'
-    Plug 'forbesmyester/neoterm'
+    Plug 'kassio/neoterm'
     " Plug 'benekastah/neomake'
     " else
 endif
@@ -64,6 +64,8 @@ endif
 " endif
 Plug 'junegunn/vim-easy-align'
 Plug 'mtth/scratch.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
 if &term == 'nvim'
@@ -124,7 +126,7 @@ Plug 'elzr/vim-json'
 
 " Clojure
 Plug 'guns/vim-clojure-static'
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-salve'
 " Plug 'vim-scripts/paredit.vim'
@@ -263,7 +265,7 @@ let g:gitgutter_realtime=1
 set updatetime=750
 
 " = NeoTerm ======================================================
-let g:neoterm_no_auto_repl_cmd = 1
+let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_shell = "bash"
 " let g:neoterm_repl_command = "bash"
 " let g:neoterm_direct_open_repl = 1
@@ -283,8 +285,12 @@ endif
 
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
-
-" = Number Switching ================================================
+" let g:airline_skip_empty_sections = 1
+let g:airline_section_y = ''
+let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
+let g:airline_section_b = ''
+let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
+"= Number Switching ================================================
 
 function! LineNumberFlipFunc(entered)
     if a:entered
@@ -457,40 +463,31 @@ let g:syntastic_yaml_checkers = ["pyyaml"]
 " let g:vim_markdown_no_default_key_mappings=1
 " autocmd FileType md set wrap|set linebreak|set nolist "|set textwidth=0|set wrapmargin=0|set formatoptions+=1
 
-function SetClojureOptions()
-    " Plugin: Rainbow
-
-    let g:rbpt_colorpairs = [
-        \ ['brown',       'RoyalBlue3'],
-        \ ['Darkblue',    'SeaGreen3'],
-        \ ['darkgray',    'DarkOrchid3'],
-        \ ['darkgreen',   'firebrick3'],
-        \ ['darkcyan',    'RoyalBlue3'],
-        \ ['darkred',     'SeaGreen3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['brown',       'firebrick3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['Darkblue',    'firebrick3'],
-        \ ['darkgreen',   'RoyalBlue3'],
-        \ ['darkcyan',    'SeaGreen3'],
-        \ ['darkred',     'DarkOrchid3'],
-        \ ['red',         'firebrick3'],
-        \ ]
-
-        " \ ['gray',        'RoyalBlue3'],
-        " \ ['black',       'SeaGreen3'],
-    let g:rbpt_max = 14
-    let g:rbpt_loadcmd_toggle = 0
-
-    " nmap <Enter> :Eval<cr>
-    " RainbowParenthesisToggle
-    " au VimEnter * RainbowParenthesesToggle
-    " au Syntax * RainbowParenthesesLoadRound
-    " au Syntax * RainbowParenthesesLoadSquare
-    " au Syntax * RainbowParenthesesLoadBraces
-    " let g:paredit_leader = '\'
-endfunction
-autocmd Filetype clojure call SetClojureOptions()
+let g:rainbow_active = 1
+let g:rainbow_conf =
+    \{
+	\	'guifgs': ['brown', 'Darkblue', 'darkgray', 'darkgreen', 'darkcyan', 'darkred', 'darkmagenta', 'brown', 'darkmagenta', 'Darkblue', 'darkgreen', 'darkcyan', 'darkred', 'red'],
+	\	'ctermfgs': ['brown', 'Darkblue', 'darkgray', 'darkgreen', 'darkcyan', 'darkred', 'darkmagenta', 'brown', 'darkmagenta', 'Darkblue', 'darkgreen', 'darkcyan', 'darkred', 'red'],
+	\	'operators': '_,_',
+	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+	\	'separately': {
+	\		'*': 0,
+	\		'clojure': {},
+	\		'_tex': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+	\		},
+	\		'_lisp': {
+	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+	\		},
+	\		'_vim': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+	\		},
+	\		'_html': {
+	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+	\		},
+	\		'_css': 0,
+	\	}
+    \}
 
 " Vimux ===========================================================
 let g:VimuxOrientation = "h"
