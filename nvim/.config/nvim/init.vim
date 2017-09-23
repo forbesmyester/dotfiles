@@ -203,6 +203,7 @@ set directory=~/.tmp//,/tmp// " swap files
 
 " Code Style
 set tabstop=4
+set numberwidth=3
 set shiftwidth=4
 set softtabstop=4
 set expandtab
@@ -260,7 +261,8 @@ if exists("&breakindent")
 endif
 
 " = GitGutter  ====================================================
-let g:gitgutter_sign_column_always=1
+set signcolumn=yes
+" let g:gitgutter_sign_column_always=1
 let g:gitgutter_realtime=1
 set updatetime=750
 

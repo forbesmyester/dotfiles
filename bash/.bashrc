@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-[ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
+# [ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
 
 # If not running interactively, don't do anything
 case $- in
@@ -119,10 +119,10 @@ fi
 
 # Below my customizations
 
-BASE16_SHELL=$HOME/.vendor/base16-shell/
+BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-EDITOR=vim
+EDITOR=nvim
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
@@ -148,3 +148,4 @@ fi
 # if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
 #   source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
 # fi
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
