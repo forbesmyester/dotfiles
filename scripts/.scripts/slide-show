@@ -1,15 +1,16 @@
 #!/bin/bash
 
-find | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > /tmp/index.slide-show
-COUNT=$(wc -l /tmp/index.slide-show|sed 's/ .*//')
+find | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > .slide-show
+COUNT=$(cat .slide-show | wc -l | sed 's/ .*//')
+echo $COUNT
 
 I=0
-while [ $I -lt $1 ]
+while [ $I -lt $1 ];
 do
     ((I++))
-    NUM=$((1+(RANDOM%$COUNT)))
-    IMG=$(sed "${NUM}q;d" /tmp/index.slide-show)
-     feh -F -Z "$IMG" &
+    NUM=$((1+($RANDOM%$COUNT)))
+    IMG=$(sed "${NUM}q;d" .slide-show)
+    feh -F -Z "$IMG" &
     sleep 5
     echo $IMG
     killall feh
