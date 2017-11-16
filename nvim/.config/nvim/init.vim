@@ -1,6 +1,6 @@
 " set nocompatible              " be iMproved, required
 " filetype off                  " required
-" 
+"
 " " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -58,8 +58,6 @@ Plug 'airblade/vim-gitgutter'
 " else
 if &term =~ '256color$' || has('gui_running') || &term == 'nvim'
     Plug 'Valloric/YouCompleteMe'
-else
-    Plug 'altercation/vim-colors-solarized.git'
 endif
 " endif
 Plug 'junegunn/vim-easy-align'
@@ -72,7 +70,7 @@ if &term == 'nvim'
     Plug 'chriskempson/base16-vim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'edkolev/tmuxline.vim'
+    " Plug 'edkolev/tmuxline.vim'
 endif
 
 " Bats - BASH unit testing!
@@ -85,7 +83,7 @@ Plug 'ap/vim-css-color'
 " Plug 'chrisbra/csv.vim'
 
 " Terraform
-Plug 'hashivim/vim-terraform'
+" Plug 'hashivim/vim-terraform'
 
 " Jade
 " Plug 'digitaltoad/vim-jade'
