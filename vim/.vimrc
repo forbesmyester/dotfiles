@@ -383,8 +383,8 @@ let g:tern_show_argument_hints='on_move'
 " = Key Bindings ======================================================
 " let mapleader = "\<space>"
 map U <C-r>
-map <C-o> ]c
-map <C-i> [c
+map <C-o> <PageDown>
+map <C-i> <PageUp>
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 nmap <silent> <leader>/ :nohlsearch<ESC>
 imap <Home> <esc>^i

@@ -123,7 +123,8 @@ BASE16_SHELL=$HOME/.vendor/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 EDITOR=vim
-PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin
+PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin
+export AWS_PROFILE=keyboardwritescode
 NODE_ENV=development
 HISTCONTROL=ignorespace
 
@@ -148,3 +149,5 @@ fi
 # if [ -f /home/fozz/.vendor/google-cloud-sdk/completion.bash.inc ]; then
 #   source '/home/fozz/.vendor/google-cloud-sdk/completion.bash.inc'
 # fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
