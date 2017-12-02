@@ -3,6 +3,7 @@
 " 
 " " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
+
 if &term == 'nvim'
     call plug#begin('~/.config/nvim/plugged')
 else
@@ -17,11 +18,28 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'tpope/timl'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
+" FZF
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+
+
 " General
+" Plug 'wsdjeg/FlyGrep.vim'
+Plug 'yssl/QFEnter'
 Plug 'gorkunov/smartpairs.vim'
+Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'jeetsukumaran/vim-buffergator'
+" Plug 'Shougo/unite.vim'
+Plug 'simeji/winresizer'
+" Plug 'Shougo/denite.nvim'
 " Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -30,13 +48,14 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 if &term == 'nvim'
-    Plug 'kassio/neoterm'
+     Plug 'forbesmyester/neoterm'
     " Plug 'benekastah/neomake'
     " else
 endif
 Plug 'scrooloose/syntastic'
-" Plug 'gabrielelana/vim-markdown'
-Plug 'jtratner/vim-flavored-markdown'
+Plug 'gabrielelana/vim-markdown'
+" Plug 'junegunn/goyo.vim'
+" Plug 'jtratner/vim-flavored-markdown'
 Plug 'Soares/butane.vim' "BClose
 Plug 'tmhedberg/matchit'
 Plug 'editorconfig/editorconfig-vim'
@@ -56,6 +75,8 @@ endif
 " endif
 Plug 'junegunn/vim-easy-align'
 Plug 'mtth/scratch.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
 if &term == 'nvim'
@@ -65,8 +86,8 @@ if &term == 'nvim'
     Plug 'edkolev/tmuxline.vim'
 endif
 
-" Bats
-Plug 'bats.vim'
+" Bats - BASH unit testing!
+" Plug 'bats.vim'
 
 " CSS
 Plug 'ap/vim-css-color'
@@ -75,7 +96,7 @@ Plug 'ap/vim-css-color'
 " Plug 'chrisbra/csv.vim'
 
 " Terraform
-Plug 'hashivim/vim-terraform'
+" Plug 'hashivim/vim-terraform'
 
 " Jade
 " Plug 'digitaltoad/vim-jade'
@@ -95,11 +116,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'jason0x43/vim-js-indent'
 " Plug 'jelera/vim-javascript-syntax' BEST
 " Plug 'pangloss/vim-javascript'
-Plug 'marijnh/tern_for_vim'
-
-" Flow
-
-Plug 'flowtype/vim-flow'
+" Plug 'marijnh/tern_for_vim'
 
 " Typescript
 Plug 'Quramy/tsuquyomi'
@@ -107,13 +124,12 @@ Plug 'Quramy/tsuquyomi'
 Plug 'leafgarland/typescript-vim'
 
 " Tmux
-Plug 'jgdavey/tslime.vim'
+" Plug 'jgdavey/tslime.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'mhinz/vim-tmuxify'
-" Plug 'benmills/vimux'
+" Plug 'mhinz/vim-tmuxify'
 
 " Yaml
-Plug 'stephpy/vim-yaml'
+" Plug 'tarekbeker/vim-yaml-formatter'
 
 " JSON / JSONNET
 Plug 'google/vim-jsonnet'
@@ -121,7 +137,7 @@ Plug 'elzr/vim-json'
 
 " Clojure
 Plug 'guns/vim-clojure-static'
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-salve'
 " Plug 'vim-scripts/paredit.vim'
@@ -217,7 +233,7 @@ set diffopt+=iwhite
     set noshowmode
     let base16colorspace=256
     set background=dark
-    colorscheme base16-oceanicnext
+    colorscheme base16-default-dark
     if &listchars ==# 'eol:$'
         if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
             set list
@@ -260,8 +276,13 @@ let g:gitgutter_realtime=1
 set updatetime=750
 
 " = NeoTerm ======================================================
+let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_shell = "bash"
+" let g:neoterm_repl_command = "bash"
+" let g:neoterm_direct_open_repl = 1
+" let g:neoterm_autoscroll = 1
 let g:neoterm_position = "vertical"
+let g:neoterm_use_relative_path = 1
 
 " = Airline =======================================================
 
@@ -276,8 +297,12 @@ endif
 
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
-
-" = Number Switching ================================================
+" let g:airline_skip_empty_sections = 1
+let g:airline_section_y = ''
+let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
+let g:airline_section_b = ''
+let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
+"= Number Switching ================================================
 
 function! LineNumberFlipFunc(entered)
     if a:entered
@@ -286,7 +311,6 @@ function! LineNumberFlipFunc(entered)
         set relativenumber
     endif
     if @% =~ '^term:'
-        set relativenumber
         set nocursorline
     endif
 endfunction
@@ -320,6 +344,7 @@ set guioptions-=t
 " let g:Powerline_symbols = 'fancy'
 autocmd BufEnter * :syntax sync fromstart
 autocmd BufEnter * set mouse=
+autocmd FileType qf wincmd J
 
 " = Tern ==============================================================
 
@@ -358,8 +383,8 @@ let g:tern_show_argument_hints='on_move'
 " = Key Bindings ======================================================
 " let mapleader = "\<space>"
 map U <C-r>
-map <C-o> ]c
-map <C-i> [c
+map <C-o> <PageDown>
+map <C-i> <PageUp>
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 nmap <silent> <leader>/ :nohlsearch<ESC>
 imap <Home> <esc>^i
@@ -393,7 +418,44 @@ let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
+map <C-f> :FZF<CR>
 autocmd BufReadPost buffergator://* set bufhidden=delete
+autocmd FileType buffergator set ma
+
+
+
+" = Markdown =====================================================
+" function! s:auto_goyo()
+"     if &ft == 'markdown' && winnr('$') == 1
+"         Goyo 80
+"     elseif exists('#goyo')
+"         Goyo!
+"     endif
+" endfunction
+" 
+" function! s:goyo_leave()
+"     if winnr('$') < 2
+"         silent! :q
+"     endif
+" endfunction
+" 
+" augroup goyo_markdown
+"     autocmd!
+"     autocmd BufNewFile,BufRead * call s:auto_goyo()
+"     autocmd! User GoyoLeave nested call s:goyo_leave()
+" augroup END
+
+au BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['javascript', 'bash']
+let g:markdown_enable_folding=1
+let g:markdown_enable_mappings = 0
+
+
+" = NVIM Terminus ==================================================
+let g:terminus_default_prompt = '$'
+
+" = vim-json ======================================================
+let g:vim_json_syntax_conceal = 0
 
 " = Syntastic ======================================================
 let g:syntastic_always_populate_loc_list = 1
@@ -405,51 +467,40 @@ let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_javascript_checkers = ["eslint"]
 let g:syntastic_typescript_checkers = ["tsuquyomi"]
+" let g:syntastic_typescript_checkers = ["tsuquyomi", "tslint"]
 let g:syntastic_dosini_checkers = ["dosini"]
 let g:syntastic_make_checkers = ["gnumake"]
 let g:syntastic_json_checkers = ["json_tool"]
 let g:syntastic_yaml_checkers = ["pyyaml"]
 
-" Plugin: gabrielelana/vim-markdown
-let g:markdown_enable_folding=1
-let g:markdown_enable_mappings = 0
 " let g:vim_markdown_no_default_key_mappings=1
 " autocmd FileType md set wrap|set linebreak|set nolist "|set textwidth=0|set wrapmargin=0|set formatoptions+=1
 
-function SetClojureOptions()
-    " Plugin: Rainbow
-
-    let g:rbpt_colorpairs = [
-        \ ['brown',       'RoyalBlue3'],
-        \ ['Darkblue',    'SeaGreen3'],
-        \ ['darkgray',    'DarkOrchid3'],
-        \ ['darkgreen',   'firebrick3'],
-        \ ['darkcyan',    'RoyalBlue3'],
-        \ ['darkred',     'SeaGreen3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['brown',       'firebrick3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['Darkblue',    'firebrick3'],
-        \ ['darkgreen',   'RoyalBlue3'],
-        \ ['darkcyan',    'SeaGreen3'],
-        \ ['darkred',     'DarkOrchid3'],
-        \ ['red',         'firebrick3'],
-        \ ]
-
-        " \ ['gray',        'RoyalBlue3'],
-        " \ ['black',       'SeaGreen3'],
-    let g:rbpt_max = 14
-    let g:rbpt_loadcmd_toggle = 0
-
-    " nmap <Enter> :Eval<cr>
-    " RainbowParenthesisToggle
-    " au VimEnter * RainbowParenthesesToggle
-    " au Syntax * RainbowParenthesesLoadRound
-    " au Syntax * RainbowParenthesesLoadSquare
-    " au Syntax * RainbowParenthesesLoadBraces
-    " let g:paredit_leader = '\'
-endfunction
-autocmd Filetype clojure call SetClojureOptions()
+let g:rainbow_active = 1
+let g:rainbow_conf =
+    \{
+	\	'guifgs': ['brown', 'Darkblue', 'darkgray', 'darkgreen', 'darkcyan', 'darkred', 'darkmagenta', 'brown', 'darkmagenta', 'Darkblue', 'darkgreen', 'darkcyan', 'darkred', 'red'],
+	\	'ctermfgs': ['brown', 'Darkblue', 'darkgray', 'darkgreen', 'darkcyan', 'darkred', 'darkmagenta', 'brown', 'darkmagenta', 'Darkblue', 'darkgreen', 'darkcyan', 'darkred', 'red'],
+	\	'operators': '_,_',
+	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+	\	'separately': {
+	\		'*': 0,
+	\		'clojure': {},
+	\		'_tex': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+	\		},
+	\		'_lisp': {
+	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+	\		},
+	\		'_vim': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+	\		},
+	\		'_html': {
+	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+	\		},
+	\		'_css': 0,
+	\	}
+    \}
 
 " Vimux ===========================================================
 let g:VimuxOrientation = "h"
@@ -477,16 +528,15 @@ let g:VimuxRunnerType = "window"
 function RunUnitTest()
     " exec 'Neomake'
     if (exists("g:pre_unit_test_command"))
-        normal g:pre_unit_test_command
+        exec "silent normal " . g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
-        " if &term == 'nvim'
-        "     exec "T " . g:unit_test_command
-        "     exec "vertical resize 86"
-        " else
+        if &term == 'nvim'
+            exec "T " . g:unit_test_command
+        else
             call SendToTmux(g:unit_test_command)
             call Send_keys_to_Tmux("enter")
-        " endif
+        endif
     endif
 endfunction
 
@@ -532,22 +582,22 @@ nmap <leader><leader>r :call SetUnitTest()<CR>
 nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
-" if &term == 'nvim'
-"     nmap <leader>c :call neoterm#kill()<cr>
-"     vmap <leader><Enter> :TREPLSend<cr>
-"     nmap <leader><Enter> :TREPLSend<cr>
-"     nmap <leader>m :TREPLSendFile<cr>
-" else
-    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
-    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
-    nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
-    nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
-" endif
+if &term == 'nvim'
+    nmap <leader>c :call neoterm#kill()<cr>
+    vmap <leader><Enter> :TREPLSendSelection<cr>:Topen<cr>
+    nmap <leader><Enter> :TREPLSendLine<cr>:Topen<cr>
+    nmap <leader>m :TREPLSendFile<cr>
+else
+   nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
+   vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
+   nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
+   nmap <leader>%<Enter> v%<leader><CR>
+   nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
+endif
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
 autocmd BufWritePost * :call RunUnitTest()
-au BufNewFile,BufRead *.raml set filetype=yaml
 
 :com ToggleMenu if &go=~'m'|set go-=m|else|set go+=m|endif
 set go-=m
@@ -576,10 +626,15 @@ endfunction
 
 if &term == 'nvim'
     " if @% =~ '^term:'
-    tnoremap <ESC>: <c-\><c-n>:
-    tnoremap <ESC>/ <c-\><c-n>/
-    tnoremap <ESC><ESC> <c-\><c-n>
-    tnoremap <leader>\ <c-\><c-n>
+    " tnoremap <ESC>: <c-\><c-n>:
+    " tnoremap <ESC>/ <c-\><c-n>/
+    tnoremap <c-w><ESC> <c-\><c-n>
+    tnoremap <c-w>h <c-\><c-n><c-w><c-h>
+    tnoremap <c-w>j <c-\><c-n><c-w><c-j>
+    tnoremap <c-w>k <c-\><c-n><c-w><c-k>
+    tnoremap <c-w>l <c-\><c-n><c-w><c-l>
+    " tnoremap <ESC><ESC> <c-\><c-n>
+    " tnoremap <leader>\ <c-\><c-n>
     tnoremap <c-h> <c-\><c-n><c-w><c-h>
     tnoremap <c-j> <c-\><c-n><c-w><c-j>
     tnoremap <c-k> <c-\><c-n><c-w><c-k>
