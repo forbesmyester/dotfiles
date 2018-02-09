@@ -4,7 +4,7 @@
 " " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
 
-if &term == 'nvim'
+if has('nvim')
     call plug#begin('~/.config/nvim/plugged')
 else
     call plug#begin('~/.vim/plugged')
@@ -17,6 +17,17 @@ Plug 'tomtom/tlib_vim'
 Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'tpope/timl'
 Plug 'MarcWeber/vim-addon-mw-utils'
+
+" FZF
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+
 
 " General
 " Plug 'wsdjeg/FlyGrep.vim'
@@ -36,8 +47,8 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-if &term == 'nvim'
-    Plug 'kassio/neoterm'
+if has('nvim')
+     Plug 'forbesmyester/neoterm'
     " Plug 'benekastah/neomake'
     " else
 endif
@@ -49,14 +60,14 @@ Plug 'Soares/butane.vim' "BClose
 Plug 'tmhedberg/matchit'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
-" if &term == 'nvim'
+" if has('nvim')
 "     function! DoRemote(arg)
 "         UpdateRemotePlugins
 "     endfunction
 "     Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 "     let g:deoplete#enable_at_startup = 1
 " else
-if &term =~ '256color$' || has('gui_running') || &term == 'nvim'
+if &term =~ '256color$' || has('gui_running') || has('nvim')
     Plug 'Valloric/YouCompleteMe'
 endif
 " endif
@@ -66,7 +77,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
-if &term == 'nvim'
+if has('nvim')
     Plug 'chriskempson/base16-vim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -103,7 +114,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'jason0x43/vim-js-indent'
 " Plug 'jelera/vim-javascript-syntax' BEST
 " Plug 'pangloss/vim-javascript'
-Plug 'marijnh/tern_for_vim'
+" Plug 'marijnh/tern_for_vim'
 
 " Typescript
 Plug 'Quramy/tsuquyomi'
@@ -111,12 +122,12 @@ Plug 'Quramy/tsuquyomi'
 Plug 'leafgarland/typescript-vim'
 
 " Tmux
-Plug 'jgdavey/tslime.vim'
+" Plug 'jgdavey/tslime.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'mhinz/vim-tmuxify'
+" Plug 'mhinz/vim-tmuxify'
 
 " Yaml
-Plug 'stephpy/vim-yaml'
+" Plug 'tarekbeker/vim-yaml-formatter'
 
 " JSON / JSONNET
 Plug 'google/vim-jsonnet'
@@ -215,7 +226,7 @@ set diffopt+=iwhite
 
 " Visual Style
 " let z=$COLORTERM
-" if &term =~ '256color$' || has('gui_running') || &term == 'nvim' || $COLORTERM =~ "."
+" if &term =~ '256color$' || has('gui_running') || has('nvim') || $COLORTERM =~ "."
     set t_Co=256
     set laststatus=2
     set noshowmode
@@ -269,6 +280,7 @@ let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_shell = "bash"
 " let g:neoterm_repl_command = "bash"
 " let g:neoterm_direct_open_repl = 1
+" let g:neoterm_autoscroll = 1
 let g:neoterm_position = "vertical"
 let g:neoterm_use_relative_path = 1
 
@@ -371,8 +383,8 @@ let g:tern_show_argument_hints='on_move'
 " = Key Bindings ======================================================
 " let mapleader = "\<space>"
 map U <C-r>
-map <C-o> ]c
-map <C-i> [c
+map <C-o> <PageDown>
+map <C-i> <PageUp>
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 nmap <silent> <leader>/ :nohlsearch<ESC>
 imap <Home> <esc>^i
@@ -406,6 +418,7 @@ let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
+map <C-f> :FZF<CR>
 autocmd BufReadPost buffergator://* set bufhidden=delete
 autocmd FileType buffergator set ma
 
@@ -518,7 +531,7 @@ function RunUnitTest()
         exec "silent normal " . g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
-        if &term == 'nvim'
+        if has('nvim')
             exec "T " . g:unit_test_command
         else
             call SendToTmux(g:unit_test_command)
@@ -569,7 +582,7 @@ nmap <leader><leader>r :call SetUnitTest()<CR>
 nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
-if &term == 'nvim'
+if has('nvim')
     nmap <leader>c :call neoterm#kill()<cr>
     vmap <leader><Enter> :TREPLSendSelection<cr>:Topen<cr>
     nmap <leader><Enter> :TREPLSendLine<cr>:Topen<cr>
@@ -578,6 +591,7 @@ else
    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
    nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
+   nmap <leader>%<Enter> v%<leader><CR>
    nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
 endif
 
@@ -610,11 +624,15 @@ function! Gpullrequest()
 endfunction
 
 
-if &term == 'nvim'
+if has('nvim')
     " if @% =~ '^term:'
     " tnoremap <ESC>: <c-\><c-n>:
     " tnoremap <ESC>/ <c-\><c-n>/
     tnoremap <c-w><ESC> <c-\><c-n>
+    tnoremap <c-w>h <c-\><c-n><c-w><c-h>
+    tnoremap <c-w>j <c-\><c-n><c-w><c-j>
+    tnoremap <c-w>k <c-\><c-n><c-w><c-k>
+    tnoremap <c-w>l <c-\><c-n><c-w><c-l>
     " tnoremap <ESC><ESC> <c-\><c-n>
     " tnoremap <leader>\ <c-\><c-n>
     tnoremap <c-h> <c-\><c-n><c-w><c-h>
