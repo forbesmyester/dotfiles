@@ -1,6 +1,6 @@
 #!/bin/bash
 
-find | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > .slide-show
+find | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > /tmp/.slide-show
 COUNT=$(cat .slide-show | wc -l | sed 's/ .*//')
 echo $COUNT
 
@@ -15,3 +15,4 @@ do
     echo $IMG
     killall feh
 done
+rm /tmp/.slide-show

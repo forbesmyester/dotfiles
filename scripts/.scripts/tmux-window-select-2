@@ -5,7 +5,14 @@ BACK_TO=$(tmux list-windows | grep '\- (' | sed 's/:.*//')
 if [ $? -ne 0 ]; then
     exit 1
 fi
-GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -q $1)
+
+GO_TO=""
+if [[ $1 == "_" ]]; then
+    GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -1)
+else
+    GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -1 -q $1)
+fi
+
 if [ $? -ne 0 ]; then
     tmux select-window -t $BACK_TO
     exit 0

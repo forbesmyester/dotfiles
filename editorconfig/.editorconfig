@@ -8,7 +8,20 @@ indent_size = 4
 [Makefile]
 indent_style = tab
 
+[*.go]
+indent_size = 4
+indent_style = tab
+
+[*.yaml]
+indent_size = 2
+
+[*.yml]
+indent_size = 2
+
 [*.html]
+indent_size = 2
+
+[*.tf]
 indent_size = 2
 
 [*.json]
@@ -24,9 +37,6 @@ indent_size = 2
 indent_size = 2
 
 [*.cljs]
-indent_size = 2
-
-[*.yml]
 indent_size = 2
 
 [*.less]
