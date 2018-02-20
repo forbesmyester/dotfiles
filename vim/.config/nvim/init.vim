@@ -271,7 +271,7 @@ if exists("&breakindent")
 endif
 
 " = GitGutter  ====================================================
-let g:gitgutter_sign_column_always=1
+set signcolumn=yes
 let g:gitgutter_realtime=1
 set updatetime=750
 
