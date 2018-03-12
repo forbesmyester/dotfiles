@@ -127,6 +127,7 @@ PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-reposi
 NODE_ENV=development
 HISTCONTROL=ignorespace
 
+export TIME_STYLE=long-iso
 export CHROMIUM_USER_SETTINGS_DIRECTORY=~/.config/chromium/
 export CHROMIUM_COMMAND=chromium
 export NVM_DIR="/home/fozz/.nvm"
