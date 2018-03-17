@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gzdoom bd21testdec16.pk3 DoomMetalVol4.wad
