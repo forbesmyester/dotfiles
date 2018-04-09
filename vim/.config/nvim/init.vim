@@ -18,15 +18,15 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'tpope/timl'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
-" FZF
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
-  \ -g "!{.git,node_modules,vendor}/*" '
+" " FZF
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+" let g:rg_command = '
+"   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+"   \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+"   \ -g "!{.git,node_modules,vendor}/*" '
 
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+" command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 
 " General
@@ -142,6 +142,8 @@ Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-salve'
 " Plug 'vim-scripts/paredit.vim'
 Plug 'venantius/vim-eastwood'
+
+Plug 'tpope/vim-dadbod'
 
 " Plug 'guns/vim-clojure-highlight'
 " " Plug 'typedclojure/vim-typedclojure'
@@ -271,7 +273,7 @@ if exists("&breakindent")
 endif
 
 " = GitGutter  ====================================================
-let g:gitgutter_sign_column_always=1
+set signcolumn=yes
 let g:gitgutter_realtime=1
 set updatetime=750
 
@@ -413,12 +415,12 @@ autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
 autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 
 " = vim-buffergator ================================================
-let g:buffergator_viewport_split_policy = 'B'
+let g:buffergator_viewport_split_policy = 'N'
 let g:buffergator_sort_regime = 'mru'
 let g:buffergator_display_regime = 'bufname'
 let g:buffergator_suppress_keymaps = 1
 map <C-b> :BuffergatorOpen<CR>
-map <C-f> :FZF<CR>
+" map <C-f> :FZF<CR>
 autocmd BufReadPost buffergator://* set bufhidden=delete
 autocmd FileType buffergator set ma
 
@@ -634,7 +636,7 @@ if &term == 'nvim'
     tnoremap <c-j> <c-\><c-n><c-w><c-j>
     tnoremap <c-k> <c-\><c-n><c-w><c-k>
     tnoremap <c-l> <c-\><c-n><c-w><c-l>
-    " autocmd BufWinEnter,WinEnter term://* startinsert
+    autocmd BufWinEnter,WinEnter term://* set signcolumn=no
 endif
 
 imap <C-j> <ESC><C-j>

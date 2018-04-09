@@ -1,5 +1,13 @@
 #!/bin/bash
 
+fzf --help
+
+if [[ $? -ne 0 ]]; then
+    echo "FZF is not installed"
+    sleep 5
+    exit 1
+fi
+
 HIDE_SWICTHER=$(tmux list-windows | grep '\* (' | sed 's/:.*/:/')
 BACK_TO=$(tmux list-windows | grep '\- (' | sed 's/:.*//')
 if [ $? -ne 0 ]; then
