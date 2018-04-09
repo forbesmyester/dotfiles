@@ -19,8 +19,8 @@ Plug 'tpope/timl'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
 " " FZF
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " let g:rg_command = '
 "   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
 "   \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
@@ -414,15 +414,23 @@ autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
 autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
 autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 
-" = vim-buffergator ================================================
-let g:buffergator_viewport_split_policy = 'N'
-let g:buffergator_sort_regime = 'mru'
-let g:buffergator_display_regime = 'bufname'
-let g:buffergator_suppress_keymaps = 1
-map <C-b> :BuffergatorOpen<CR>
-" map <C-f> :FZF<CR>
-autocmd BufReadPost buffergator://* set bufhidden=delete
-autocmd FileType buffergator set ma
+" = FZF ================================================
+" let g:buffergator_viewport_split_policy = 'N'
+" let g:buffergator_sort_regime = 'mru'
+" let g:buffergator_display_regime = 'bufname'
+" let g:buffergator_suppress_keymaps = 1
+let g:fzf_buffers_jump = 1
+map <C-d>f :Files<CR>
+map <C-d>b :Buffers<CR>
+map <C-d>s :Rg<CR>
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:90%')
+  \           : fzf#vim#with_preview('right:90%:hidden', '?'),
+  \   <bang>0)
+" autocmd BufReadPost buffergator://* set bufhidden=delete
+" autocmd FileType buffergator set ma
 
 
 
