@@ -36,7 +36,7 @@ Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'jeetsukumaran/vim-buffergator'
+" Plug 'jeetsukumaran/vim-buffergator'
 " Plug 'Shougo/unite.vim'
 Plug 'simeji/winresizer'
 " Plug 'Shougo/denite.nvim'
@@ -48,7 +48,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 if &term == 'nvim'
-     Plug 'forbesmyester/neoterm'
+     Plug 'kassio/neoterm'
     " Plug 'benekastah/neomake'
     " else
 endif
@@ -480,7 +480,6 @@ let g:syntastic_typescript_checkers = ["tsuquyomi"]
 " let g:syntastic_typescript_checkers = ["tsuquyomi", "tslint"]
 let g:syntastic_dosini_checkers = ["dosini"]
 let g:syntastic_make_checkers = ["gnumake"]
-let g:syntastic_json_checkers = ["json_tool"]
 let g:syntastic_yaml_checkers = ["pyyaml"]
 
 " let g:vim_markdown_no_default_key_mappings=1

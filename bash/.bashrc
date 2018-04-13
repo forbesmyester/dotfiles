@@ -123,10 +123,12 @@ BASE16_SHELL=$HOME/.vendor/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 EDITOR=vim
-PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin
+PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
+JAVA_HOME=/usr
 
+export JAVA_HOME
 export TIME_STYLE=long-iso
 export CHROMIUM_USER_SETTINGS_DIRECTORY=~/.config/chromium/
 export CHROMIUM_COMMAND=chromium
