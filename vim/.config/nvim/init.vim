@@ -540,12 +540,7 @@ function RunUnitTest()
         exec "silent normal " . g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
-        if &term == 'nvim'
             exec "T " . g:unit_test_command
-        else
-            call SendToTmux(g:unit_test_command)
-            call Send_keys_to_Tmux("enter")
-        endif
     endif
 endfunction
 
