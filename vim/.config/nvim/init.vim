@@ -47,13 +47,14 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dotenv'
 if &term == 'nvim'
      Plug 'kassio/neoterm'
     " Plug 'benekastah/neomake'
     " else
 endif
 Plug 'scrooloose/syntastic'
-Plug 'gabrielelana/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
 " Plug 'junegunn/goyo.vim'
 " Plug 'jtratner/vim-flavored-markdown'
 Plug 'Soares/butane.vim' "BClose
@@ -283,7 +284,7 @@ let g:neoterm_shell = "bash"
 " let g:neoterm_repl_command = "bash"
 " let g:neoterm_direct_open_repl = 1
 " let g:neoterm_autoscroll = 1
-let g:neoterm_position = "vertical"
+let g:neoterm_default_mod = "below"
 let g:neoterm_use_relative_path = 1
 
 " = Airline =======================================================
