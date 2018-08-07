@@ -133,6 +133,7 @@ Plug 'tpope/vim-salve'
 " Plug 'vim-scripts/paredit.vim'
 Plug 'venantius/vim-eastwood'
 
+Plug 'tpope/vim-dotenv'
 Plug 'tpope/vim-dadbod'
 
 " Plug 'guns/vim-clojure-highlight'

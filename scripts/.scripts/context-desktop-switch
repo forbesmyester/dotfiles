@@ -1,0 +1,9 @@
+#!/bin/bash
+
+REQUESTED_DESKTOP=$2
+DESKTOP_CONTEXT_SIZE=$1
+CURR=$(wmctrl -d | grep '^[0-9]\+\s\+\*' | sed 's/\s.*//')
+CURRSET=$(expr $CURR / 3)
+FINAL_DESKTOP=$(((CURRSET * 3) + $REQUESTED_DESKTOP))
+echo $FINAL_DESKTOP
+wmctrl -s $FINAL_DESKTOP
