@@ -59,21 +59,10 @@ Plug 'scrooloose/syntastic'
 " Plug 'jtratner/vim-flavored-markdown'
 Plug 'Soares/butane.vim' "BClose
 Plug 'tmhedberg/matchit'
+Plug 'RRethy/vim-illuminate'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
-" if &term == 'nvim'
-"     function! DoRemote(arg)
-"         UpdateRemotePlugins
-"     endfunction
-"     Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-"     let g:deoplete#enable_at_startup = 1
-" else
-if &term =~ '256color$' || has('gui_running') || &term == 'nvim'
-    Plug 'Valloric/YouCompleteMe'
-else
-    Plug 'altercation/vim-colors-solarized.git'
-endif
-" endif
+Plug 'Valloric/YouCompleteMe'
 Plug 'junegunn/vim-easy-align'
 Plug 'mtth/scratch.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -263,6 +252,21 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" = Tmux Clipboard  ===============================================
+
+" let g:clipboard = {
+"       \   'name': 'myClipboard',
+"       \   'copy': {
+"       \      '+': 'tmux load-buffer -',
+"       \      '*': 'tmux load-buffer -',
+"       \    },
+"       \   'paste': {
+"       \      '+': 'tmux save-buffer -',
+"       \      '*': 'tmux save-buffer -',
+"       \   },
+"       \   'cache_enabled': 1,
+"       \ }
+
 " = Sexp ==========================================================
 let g:sexp_filetypes = ''
 
@@ -279,13 +283,13 @@ let g:gitgutter_realtime=1
 set updatetime=750
 
 " = NeoTerm ======================================================
-let g:neoterm_auto_repl_cmd = 0
-let g:neoterm_shell = "bash"
-" let g:neoterm_repl_command = "bash"
-" let g:neoterm_direct_open_repl = 1
-" let g:neoterm_autoscroll = 1
-let g:neoterm_default_mod = "below"
-let g:neoterm_use_relative_path = 1
+" let g:neoterm_auto_repl_cmd = 0
+" let g:neoterm_shell = "bash"
+" " let g:neoterm_repl_command = "bash"
+" " let g:neoterm_direct_open_repl = 1
+" " let g:neoterm_autoscroll = 1
+let g:neoterm_default_mod = "botright vertical"
+" let g:neoterm_use_relative_path = 1
 
 " = Airline =======================================================
 
@@ -300,11 +304,11 @@ endif
 
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
-" let g:airline_skip_empty_sections = 1
+let g:airline_skip_empty_sections = 1
 let g:airline_section_y = ''
 let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
 let g:airline_section_b = ''
-let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
+" let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
 "= Number Switching ================================================
 
 function! LineNumberFlipFunc(entered)
@@ -397,19 +401,18 @@ vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 omap s :normal vs<CR>
 
-" Plugin: vim-multiple-cursors
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-A-n>'
-let g:multi_cursor_prev_key='<C-n>'
-let g:multi_cursor_skip_key='<C-A-m>'
-let g:multi_cursor_quit_key='<Esc>'
-
 " = Typescript =====================================================
+let g:tsuquyomi_use_dev_node_module = 2
+let g:tsuquyomi_tsserver_path = './node_modules/typescript/lib/tsserver.js'
 let g:tsuquyomi_disable_default_mappings = 1
+let g:tsuquyomi_case_sensitive_imports = 1
+let g:tsuquyomi_ignore_missing_modules = 1
 let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_disable_quickfix = 0
+" let g:tsuquyomi_definition_split = 1
 " set ballooneval
 " autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+let g:tsuquyomi_use_vimproc = 1
 autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
 autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
 autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
@@ -421,9 +424,12 @@ autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 " let g:buffergator_display_regime = 'bufname'
 " let g:buffergator_suppress_keymaps = 1
 let g:fzf_buffers_jump = 1
-map <C-d>f :Files<CR>
-map <C-d>b :Buffers<CR>
-map <C-d>s :Rg<CR>
+map <C-s><C-f> :Files<CR>
+map <C-s><C-d> :Buffers<CR>
+map <C-s><C-s> :Rg<CR>
+map <C-s>f :Files<CR>
+map <C-s>d :Buffers<CR>
+map <C-s>s :Rg<CR>
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -456,14 +462,16 @@ command! -bang -nargs=* Rg
 "     autocmd! User GoyoLeave nested call s:goyo_leave()
 " augroup END
 
-au BufNewFile,BufReadPost *.md set filetype=markdown
-let g:markdown_fenced_languages = ['javascript', 'bash']
-let g:markdown_enable_folding=1
-let g:markdown_enable_mappings = 0
+" au BufNewFile,BufReadPost *.md set filetype=markdown
+" let g:markdown_fenced_languages = ['javascript', 'bash']
+" let g:markdown_enable_folding=1
+" let g:markdown_enable_mappings = 0
 
 
-" = NVIM Terminus ==================================================
-let g:terminus_default_prompt = '$'
+" = vim-illuminate ================================================
+"
+let g:Illuminate_ftblacklist = ['markdown']
+let g:Illuminate_highlightUnderCursor = 0
 
 " = vim-json ======================================================
 let g:vim_json_syntax_conceal = 0
@@ -512,28 +520,6 @@ let g:rainbow_conf =
 	\	}
     \}
 
-" Vimux ===========================================================
-let g:VimuxOrientation = "h"
-let g:tslime_ensure_trailing_newlines = 1
-let g:VimuxRunnerType = "window"
-
-" function! TestFile_Set()
-" 	let g:testfile__file_to_test = @%
-" 	let g:testfile__filetype_to_test = &ft
-" 	echo "Test file set to " . @%
-" endfunction
-" 
-" function! TestFile_Run()
-" 	if exists("g:testfile__file_to_test")
-" 		echo "js test file: " . g:testfile__file_to_test
-" 		call SendToTmux("./node_modules/.bin/test-this-file '" . g:testfile__file_to_test . "'\n")
-" 	endif
-" endfunction
-
-
-" let curwin = winnr()
-" let wins=[] 
-" windo call add(wins, [winnr(), bufname('%')]) 
 
 function RunUnitTest()
     " exec 'Neomake'
@@ -588,7 +574,7 @@ nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
 if &term == 'nvim'
-    nmap <leader>c :call neoterm#kill()<cr>
+    nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] }) 
     vmap <leader><Enter> :TREPLSendSelection<cr>:Topen<cr>
     nmap <leader><Enter> :TREPLSendLine<cr>:Topen<cr>
     nmap <leader>m :TREPLSendFile<cr>
@@ -644,7 +630,8 @@ if &term == 'nvim'
     tnoremap <c-j> <c-\><c-n><c-w><c-j>
     tnoremap <c-k> <c-\><c-n><c-w><c-k>
     tnoremap <c-l> <c-\><c-n><c-w><c-l>
-    autocmd BufWinEnter,WinEnter term://* set signcolumn=no
+    " autocmd BufWinEnter,WinEnter term://* set signcolumn=no
+    autocmd BufEnter term://* set signcolumn=no
 endif
 
 imap <C-j> <ESC><C-j>
@@ -670,5 +657,9 @@ autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
 hi MatchParen ctermfg=white
 hi MatchParen ctermbg=18
 hi MatchParan cterm=bold
+highlight clear SpellBad
+highlight SpellBad cterm=underline,bold
+highlight clear Error
+highlight Error cterm=underline,bold
 
 " TmuxlineSnapshot! "~/.tmux.tmuxline.conf"
