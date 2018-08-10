@@ -31,8 +31,9 @@ Plug 'junegunn/fzf.vim'
 
 " General
 " Plug 'wsdjeg/FlyGrep.vim'
+Plug 'andymass/vim-tradewinds'
 Plug 'yssl/QFEnter'
-Plug 'gorkunov/smartpairs.vim'
+" Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
@@ -473,6 +474,7 @@ command! -bang -nargs=* Rg
 "
 let g:Illuminate_ftblacklist = ['markdown']
 let g:Illuminate_highlightUnderCursor = 0
+hi illuminatedWord cterm=bold gui=bold
 
 " = vim-json ======================================================
 let g:vim_json_syntax_conceal = 0
