@@ -20,9 +20,9 @@ URxvt*background: #181818
 URxvt*loginShell: true
 URxvt*scrollBar: false
 URxvt*scrollTtyOutput: false
-URxvt*scrollWithBuffer: true
+URxvt*scrollWithBuffer: false
 URxvt*scrollTtyKeypress: true
-URxvt*saveLines:8092
+URxvt*saveLines:2048
 ! URxvt*perl-ext-common: default,clipboard
 !!!
 URxvt.iso14755: False
