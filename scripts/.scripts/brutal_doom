@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gzdoom bd21testApr25.pk3 DoomMetalVol4.wad
+gzdoom bd21testApr25.pk3 DoomMetalVol4.wad  ~/.config/gzdoom/dhtp/\(X\)-DHTP\ Alterations.pk3 ~/.config/gzdoom/dhtp/Brightmaps/\(Y\)-HR_Brightmaps.pk3 HRRP_BRUTALDOOM_v013.pk3
