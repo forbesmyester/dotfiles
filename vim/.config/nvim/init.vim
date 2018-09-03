@@ -473,7 +473,7 @@ command! -bang -nargs=* Rg
 " = vim-illuminate ================================================
 "
 let g:Illuminate_ftblacklist = ['markdown']
-let g:Illuminate_highlightUnderCursor = 0
+let g:Illuminate_highlightUnderCursor = 1
 hi illuminatedWord cterm=bold gui=bold
 
 " = vim-json ======================================================
