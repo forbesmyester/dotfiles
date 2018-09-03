@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CONTEXT_REQUEST=$2
+DESKTOP_CONTEXT_SIZE=$1
+CURR=$(wmctrl -d | grep '^[0-9]\+\s\+\*' | sed 's/\s.*//')
+if [ $CONTEXT_REQUEST == 'n' ]; then
+    RESULT=$((CURR + $DESKTOP_CONTEXT_SIZE))
+else
+    RESULT=$((CURR - $DESKTOP_CONTEXT_SIZE))
+fi
+echo result
+wmctrl -s $RESULT
