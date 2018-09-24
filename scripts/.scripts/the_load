@@ -1,0 +1,10 @@
+#!/bin/bash
+
+CPU_COUNT=$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
+
+for l in $(uptime | sed 's/.*\://' | sed 's/,//g'); do
+printf -v jlh "%0.2f" $(echo "scale=2; $l / $CPU_COUNT" | bc -l)
+echo -n $jlh
+echo -n " "
+done
+
