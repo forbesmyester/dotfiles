@@ -49,6 +49,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dotenv'
+Plug 'tpope/vim-dadbod'
 if &term == 'nvim'
      Plug 'kassio/neoterm'
     " Plug 'benekastah/neomake'
@@ -65,8 +66,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/YouCompleteMe'
 Plug 'junegunn/vim-easy-align'
-Plug 'mtth/scratch.vim'
-Plug 'ntpeters/vim-better-whitespace'
+" Plug 'mtth/scratch.vim'
+" Plug 'ntpeters/vim-better-whitespace'
 Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
@@ -74,7 +75,7 @@ if &term == 'nvim'
     Plug 'chriskempson/base16-vim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'edkolev/tmuxline.vim'
+    " Plug 'edkolev/tmuxline.vim'
 endif
 
 " Bats - BASH unit testing!
@@ -123,19 +124,27 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'tarekbeker/vim-yaml-formatter'
 
 " JSON / JSONNET
-Plug 'google/vim-jsonnet'
-Plug 'elzr/vim-json'
+" Plug 'google/vim-jsonnet'
+" Plug 'elzr/vim-json'
 
 " Clojure
-Plug 'guns/vim-clojure-static'
-Plug 'luochen1990/rainbow'
-Plug 'tpope/vim-fireplace'
-Plug 'tpope/vim-salve'
-" Plug 'vim-scripts/paredit.vim'
-Plug 'venantius/vim-eastwood'
+" Plug 'guns/vim-clojure-static'
+" Plug 'luochen1990/rainbow'
+" Plug 'tpope/vim-fireplace'
+" Plug 'tpope/vim-salve'
+" Plug 'venantius/vim-eastwood'
 
-Plug 'tpope/vim-dotenv'
-Plug 'tpope/vim-dadbod'
+" ReasonJS
+Plug 'reasonml-editor/vim-reason-plus'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:LanguageClient_serverCommands = {
+    \ 'reason': ['reason-language-server/reason-language-server.exe']
+    \ }
+let g:deoplete#enable_at_startup = 1
 
 " Plug 'guns/vim-clojure-highlight'
 " " Plug 'typedclojure/vim-typedclojure'
@@ -143,7 +152,7 @@ Plug 'tpope/vim-dadbod'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " " Plug 'web-indent'
 
-" Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 
 call plug#end()
 
