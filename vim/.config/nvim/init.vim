@@ -33,7 +33,7 @@ Plug 'junegunn/fzf.vim'
 " Plug 'wsdjeg/FlyGrep.vim'
 Plug 'andymass/vim-tradewinds'
 Plug 'yssl/QFEnter'
-" Plug 'gorkunov/smartpairs.vim'
+Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
@@ -60,8 +60,9 @@ Plug 'scrooloose/syntastic'
 " Plug 'junegunn/goyo.vim'
 " Plug 'jtratner/vim-flavored-markdown'
 Plug 'Soares/butane.vim' "BClose
-Plug 'tmhedberg/matchit'
+" Plug 'tmhedberg/matchit'
 Plug 'RRethy/vim-illuminate'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/YouCompleteMe'
@@ -151,8 +152,6 @@ let g:deoplete#enable_at_startup = 1
 " Plug 'guns/vim-sexp'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " " Plug 'web-indent'
-
-Plug 'tmux-plugins/vim-tmux-focus-events'
 
 call plug#end()
 
