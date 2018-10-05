@@ -43,6 +43,7 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
     rxvt-unicode-256color) color_prompt=yes;;
     screen-256color) color_prompt=yes;;
+    xterm-kitty) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -158,3 +159,4 @@ export FZF_DEFAULT_OPTS_INNER='[[ $(file --mime {}) =~ binary ]] && echo {} is a
 export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 alias todo="todo-txt -d ~/.config/todo.txt/todo.cfg"
+alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")'

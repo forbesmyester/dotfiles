@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+IN_SQL=""
+while read line
+do
+    echo $line
+    IN_SQL="${IN_SQL} $line"
+done < "${1:-/dev/stdin}"
+
+
+if [ -z $IN_SQL ]; then
+    IN_SQL=$1
+fi
+
+set -euo pipefail
+IFS=$'\n\t'
+
+
+UUID=$(uuidgen | sed 's/\-//g')
+
+SQL="select(jsonb_agg(x$UUID)) from ( $IN_SQL ) x$UUID" 
+
+echo "$SQL" |  psql -t | jq -S -c '.[]' | json2csv | tail -n +2 | termgraph 

@@ -2,9 +2,11 @@
 
 CPU_COUNT=$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
 
+OUT="100"
 for l in $(uptime | sed 's/.*\://' | sed 's/,//g'); do
-printf -v jlh "%0.2f" $(echo "scale=2; $l / $CPU_COUNT" | bc -l)
-echo -n $jlh
-echo -n " "
+    printf -v jlh "%0.0f" $(echo "scale=2; ($l / $CPU_COUNT) * 100" | bc -l)
+    OUT="$OUT $jlh"
 done
+GRAPH=$(echo $OUT | spark)
+echo ${GRAPH:1}
 
