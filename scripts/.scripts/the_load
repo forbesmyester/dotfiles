@@ -8,5 +8,5 @@ for l in $(uptime | sed 's/.*\://' | sed 's/,//g'); do
     OUT="$OUT $jlh"
 done
 GRAPH=$(echo $OUT | spark)
-echo ${GRAPH:1}
+echo "${GRAPH:1} $(free -w | awk '/Mem:/ { total=$2 } /Mem:/ { used=$8 } END { print (used / total) * 100}' | sed 's/\..*//')%/$(free -w | awk '/Swap:/ { total=$2 } /Swap:/ { used=$3 } END { print (used / total) * 100}' | sed 's/[\.].*//')%"
 
