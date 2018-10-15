@@ -21,3 +21,8 @@ UUID=$(uuidgen | sed 's/\-//g')
 SQL="select(jsonb_agg(x$UUID)) from ( $IN_SQL ) x$UUID" 
 
 echo "$SQL" |  psql -t | jq -S -c '.[]' | json2csv | sed '1 sI[^,]*,I@ I' | termgraph --stacked
+
+if [ $? -ne 0 ]; then
+    echo "Error building graph!"
+    echo "$SQL" |  psql -t | jq -S -c '.[]' | json2csv | sed '1 sI[^,]*,I@ I' | cat
+fi
