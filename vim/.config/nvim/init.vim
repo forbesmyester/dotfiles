@@ -586,9 +586,9 @@ nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 
 if &term == 'nvim'
     nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] }) 
-    vmap <leader><Enter> :TREPLSendSelection<cr>:Topen<cr>
-    nmap <leader><Enter> :TREPLSendLine<cr>:Topen<cr>
-    nmap <leader>m :TREPLSendFile<cr>
+    vmap <leader><Enter> :Topen<cr>:TREPLSendSelection<cr>
+    nmap <leader><Enter> :Topen<cr>:TREPLSendLine<cr>
+    nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 else
    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
    vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
