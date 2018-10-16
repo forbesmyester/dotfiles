@@ -69,6 +69,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'junegunn/vim-easy-align'
 " Plug 'mtth/scratch.vim'
 " Plug 'ntpeters/vim-better-whitespace'
+Plug 'thirtythreeforty/lessspace.vim'
 Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
