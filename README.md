@@ -12,3 +12,6 @@ cd ~/.config/nvim/plugged/YouCompleteMe/
 sudo apt install cmake build-essential
 sudo apt install python-dev
 # https://github.com/powerline/fonts
+sudo apt install openjdk-11-jdk
+# https://www.quaddicted.com/tools/quake_injector
+sudo update-alternatives --config java
