@@ -148,6 +148,9 @@ let g:LanguageClient_serverCommands = {
     \ }
 let g:deoplete#enable_at_startup = 1
 
+" Rust
+Plug 'rust-lang/rust.vim'
+
 " Plug 'guns/vim-clojure-highlight'
 " " Plug 'typedclojure/vim-typedclojure'
 " Plug 'guns/vim-sexp'
