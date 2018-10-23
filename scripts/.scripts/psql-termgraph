@@ -5,24 +5,11 @@ IN_SQL=""
 while read line
 do
     IN_SQL="${IN_SQL} $line"
-done < "${1:-/dev/stdin}"
-
-
-if [ -z "$IN_SQL" ]; then
-    IN_SQL=$1
-fi
+done < "/dev/stdin"
 
 set -euo pipefail
 IFS=$'\n\t'
 
+echo "$IN_SQL" |  psql-out -f csv | sed '1 sI[^,]*,I@ I' | termgraph "$@"
 
-UUID=$(uuidgen | sed 's/\-//g')
-
-SQL="select(jsonb_agg(x$UUID)) from ( $IN_SQL ) x$UUID" 
-
-echo "$SQL" |  psql -t | jq -S -c '.[]' | json2csv | sed '1 sI[^,]*,I@ I' | termgraph --stacked
-
-if [ $? -ne 0 ]; then
-    echo "Error building graph!"
-    echo "$SQL" |  psql -t | jq -S -c '.[]' | json2csv | sed '1 sI[^,]*,I@ I' | cat
-fi
+exit $?
