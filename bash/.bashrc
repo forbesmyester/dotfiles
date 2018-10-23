@@ -64,6 +64,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
+    source ~/.vendor/bash-git-prompt/gitprompt.sh
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi
@@ -163,3 +164,5 @@ export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
 alias todo="todo-txt -d ~/.config/todo.txt/todo.cfg"
 alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")'
 alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*//'"'"')'
+export PATH="$HOME/.cargo/bin:$PATH"
+
