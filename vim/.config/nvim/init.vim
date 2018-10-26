@@ -589,9 +589,11 @@ nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
 if &term == 'nvim'
+    nmap gxnt <Plug>(neoterm-repl-send)
     nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
     vmap <leader><Enter> :TREPLSendSelection<cr>
-    nmap <leader><Enter> :TREPLSendLine<cr>
+    nmap <leader><leader><Enter> :TREPLSendLine<cr>
+    nmap <leader><Enter> gxntip
     nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 else
    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
