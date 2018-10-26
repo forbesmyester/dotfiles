@@ -68,8 +68,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/YouCompleteMe'
 Plug 'junegunn/vim-easy-align'
 " Plug 'mtth/scratch.vim'
-" Plug 'ntpeters/vim-better-whitespace'
-Plug 'thirtythreeforty/lessspace.vim'
+Plug 'ntpeters/vim-better-whitespace'
+" Plug 'thirtythreeforty/lessspace.vim'
 Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
@@ -589,9 +589,9 @@ nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
 if &term == 'nvim'
-    nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] }) 
-    vmap <leader><Enter> :Topen<cr>:TREPLSendSelection<cr>
-    nmap <leader><Enter> :Topen<cr>:TREPLSendLine<cr>
+    nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
+    vmap <leader><Enter> :TREPLSendSelection<cr>
+    nmap <leader><Enter> :TREPLSendLine<cr>
     nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 else
    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
