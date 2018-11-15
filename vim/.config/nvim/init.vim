@@ -594,7 +594,7 @@ if &term == 'nvim'
     nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
     vmap <leader><Enter> :TREPLSendSelection<cr>
     nmap <leader><leader><Enter> :TREPLSendLine<cr>
-    nmap <leader><Enter> gotip
+    nmap <leader><Enter> goip
     nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 else
    nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
