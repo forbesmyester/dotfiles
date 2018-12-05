@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## To ensure Ubuntu does not break!
 
     sudo apt install cryptsetup lvm2
