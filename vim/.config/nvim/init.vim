@@ -119,7 +119,7 @@ Plug 'leafgarland/typescript-vim'
 
 " Tmux
 " Plug 'jgdavey/tslime.vim'
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 " Plug 'mhinz/vim-tmuxify'
 
 " Yaml
@@ -297,13 +297,16 @@ let g:gitgutter_realtime=1
 set updatetime=750
 
 " = NeoTerm ======================================================
-" let g:neoterm_auto_repl_cmd = 0
 " let g:neoterm_shell = "bash"
 " " let g:neoterm_repl_command = "bash"
 " " let g:neoterm_direct_open_repl = 1
 " " let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = "botright vertical"
 " let g:neoterm_use_relative_path = 1
+
+" Changes
+let g:neoterm_auto_repl_cmd = 0
+let g:neoterm_autoscroll = 1
 
 " = Airline =======================================================
 
@@ -582,27 +585,15 @@ endfunction
 " vmap <leader>r :call <ESC>SendToTmux(@* . "\n\n")<CR>
 
 
-nmap <leader>r :call RunUnitTest()<CR>
-nmap <leader>R <Plug>SetTmuxVars
 nmap <leader><leader>r :call SetUnitTest()<CR>
 nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
-if &term == 'nvim'
-    nmap goo <Plug>(neoterm-repl-send-line)
-    nmap go <Plug>(neoterm-repl-send)
-    nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
-    vmap <leader><Enter> :TREPLSendSelection<cr>
-    nmap <leader><leader><Enter> :TREPLSendLine<cr>
-    nmap <leader><Enter> goip
-    nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
-else
-   nmap <leader>c :call Send_keys_to_Tmux("C-c")<CR>
-   vmap <leader><Enter> "zy<ESC>:call SendToTmux(StripCommentBeforeTmuxPost(@z . "\n"))<CR>
-   nmap <leader><Enter> <S-v>"zy:call SendToTmux(StripCommentBeforeTmuxPost(@z . ""))<CR>
-   nmap <leader>%<Enter> v%<leader><CR>
-   nmap <leader>m mMgg"zyG:call SendToTmux(@z . "\n\n")<CR>'M
-endif
+nmap <leader>rr <Plug>(neoterm-repl-send-line)
+nmap <leader>r <Plug>(neoterm-repl-send)
+nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
+nmap <leader><Enter> grtip
+nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
@@ -652,6 +643,11 @@ if &term == 'nvim'
     autocmd BufEnter term://* set signcolumn=no
 endif
 
+nmap <C-j> <C-w>j
+nmap <C-h> <C-w>h
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+
 imap <C-j> <ESC><C-j>
 imap <C-h> <ESC><C-h>
 imap <C-k> <ESC><C-k>
@@ -681,3 +677,11 @@ highlight clear Error
 highlight Error cterm=underline,bold
 
 " TmuxlineSnapshot! "~/.tmux.tmuxline.conf"
+
+call textobj#user#plugin('nicecodeblock', {
+\   'code': {
+\     'pattern': ['\n\n', '\n\n'],
+\     'select-a': 'aP',
+\     'select-i': 'iP',
+\   },
+\ })
