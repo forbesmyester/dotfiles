@@ -9,6 +9,7 @@ if [[ $LINE =~ $REGEX ]]; then
     export PGPORT="${BASH_REMATCH[2]}"
     export PGDATABASE="${BASH_REMATCH[3]}"
     export PGUSER="${BASH_REMATCH[4]}"
+    export DATABASE_URL="postgres://$PGUSER@$PGHOST:$PGPORT/$PGDATABASE"
 else
     echo "No match"
     exit 1
