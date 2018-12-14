@@ -582,17 +582,15 @@ endfunction
 
 
 
-" vmap <leader>r :call <ESC>SendToTmux(@* . "\n\n")<CR>
-
 
 nmap <leader><leader>r :call SetUnitTest()<CR>
 nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
 " nmap <leader>r :vertical resize 86<CR>
 
-nmap <leader>rr <Plug>(neoterm-repl-send-line)
-nmap <leader>r <Plug>(neoterm-repl-send)
+nmap gr <Plug>(neoterm-repl-send)
+nmap grr <Plug>(neoterm-repl-send-line)
 nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
-nmap <leader><Enter> grtip
+nmap <leader><Enter> grip
 nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
