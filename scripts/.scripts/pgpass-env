@@ -1,0 +1,16 @@
+#!/bin/bash
+
+REGEX="([^:]+):([^:]+):([^:]+):([^:]+):([^:]+)"
+
+LINE=$(cat ~/.pgpass  | grep '\s\+#\s*'"$1\\s*$")
+echo "> $LINE"
+if [[ $LINE =~ $REGEX ]]; then
+    export PGHOST="${BASH_REMATCH[1]}"
+    export PGPORT="${BASH_REMATCH[2]}"
+    export PGDATABASE="${BASH_REMATCH[3]}"
+    export PGUSER="${BASH_REMATCH[4]}"
+    export DATABASE_URL="postgres://$PGUSER@$PGHOST:$PGPORT/$PGDATABASE"
+else
+    echo "No match"
+    exit 1
+fi
