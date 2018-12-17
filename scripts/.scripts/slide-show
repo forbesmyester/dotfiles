@@ -2,7 +2,7 @@
 
 if [ ! -f /tmp/.slide-show ]; then
     echo "BUILDING"
-    find | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > /tmp/.slide-show
+    find $@ | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > /tmp/.slide-show
 fi
 COUNT=$(cat /tmp/.slide-show | wc -l | sed 's/ .*//')
 echo $COUNT
