@@ -64,7 +64,11 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
-    source ~/.vendor/bash-git-prompt/gitprompt.sh
+    if [ -f ~/.vendor/bash-git-prompt/gitprompt.sh ]; then
+        # git@github.com:magicmonty/bash-git-prompt.git
+        export __GIT_PROMPT_DIR=~/.vendor/bash-git-prompt
+        source ~/.vendor/bash-git-prompt/gitprompt.sh
+    fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi

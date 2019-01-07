@@ -1,0 +1,9 @@
+
+# Base16 Shell
+if status --is-interactive
+    set BASE16_SHELL "$HOME/.vendor/base16-shell/"
+    source "$BASE16_SHELL/profile_helper.fish"
+end
+
+fundle plugin 'edc/bass'
+fundle init
