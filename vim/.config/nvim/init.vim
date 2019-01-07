@@ -280,6 +280,7 @@ nmap ga <Plug>(EasyAlign)
 "       \   },
 "       \   'cache_enabled': 1,
 "       \ }
+" set clipboard+=unnamedplus
 
 " = Sexp ==========================================================
 let g:sexp_filetypes = ''
