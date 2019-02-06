@@ -31,7 +31,7 @@ Plug 'junegunn/fzf.vim'
 
 " General
 " Plug 'wsdjeg/FlyGrep.vim'
-Plug 'andymass/vim-tradewinds'
+" Plug 'andymass/vim-tradewinds'
 Plug 'yssl/QFEnter'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
@@ -48,7 +48,8 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-dotenv'
+" Plug 'tpope/vim-dotenv'
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-dadbod'
 if &term == 'nvim'
      Plug 'kassio/neoterm'
@@ -59,13 +60,13 @@ Plug 'scrooloose/syntastic'
 " Plug 'gabrielelana/vim-markdown'
 " Plug 'junegunn/goyo.vim'
 " Plug 'jtratner/vim-flavored-markdown'
-Plug 'Soares/butane.vim' "BClose
+" Plug 'Soares/butane.vim' "BClose
 " Plug 'tmhedberg/matchit'
 Plug 'RRethy/vim-illuminate'
-Plug 'tmux-plugins/vim-tmux-focus-events'
+" Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 Plug 'junegunn/vim-easy-align'
 " Plug 'mtth/scratch.vim'
 Plug 'ntpeters/vim-better-whitespace'
@@ -148,6 +149,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:LanguageClient_serverCommands = {
+    \ 'typescript': ['javascript-typescript-stdio'],
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'reason': ['reason-language-server/reason-language-server.exe']
     \ }
 let g:deoplete#enable_at_startup = 1
@@ -204,6 +207,7 @@ set hls
 set timeoutlen=10000
 set nofoldenable
 filetype plugin on
+let g:netrw_banner = 0
 
 if &encoding ==# 'latin1' && has('gui_running')
 	set encoding=utf-8
@@ -302,9 +306,9 @@ let g:gitgutter_realtime=1
 set updatetime=750
 
 " = NeoTerm ======================================================
-" let g:neoterm_shell = "bash"
-" " let g:neoterm_repl_command = "bash"
-" " let g:neoterm_direct_open_repl = 1
+" let g:neoterm_shell = "fish -l"
+" let g:neoterm_repl_command = "fish -l"
+" let g:neoterm_direct_open_repl = 1
 " " let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = "botright vertical"
 " let g:neoterm_use_relative_path = 1
@@ -362,7 +366,6 @@ let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_semantic_triggers = {'haskell,javascript,typescript' : ['.']}
 
 
-"
 " = GUI Visual Style ================================================
 
 " set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 12
@@ -596,7 +599,6 @@ nmap gr <Plug>(neoterm-repl-send)
 nmap grr <Plug>(neoterm-repl-send-line)
 nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
 nmap <leader><Enter> grip
-nmap <leader>m :Topen<cr>:TREPLSendFile<cr>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
@@ -656,14 +658,14 @@ imap <C-h> <ESC><C-h>
 imap <C-k> <ESC><C-k>
 imap <C-l> <ESC><C-l>
 
-" Allow lowercase commands
-function! CommandCabbr(abbreviation, expansion)
-  execute 'cabbr ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
-endfunction
-command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
-
-" Map `:bc` ex command to Bclose (to close buffers with multiple windows
-CommandCabbr bc Bclose
+" " Allow lowercase commands
+" function! CommandCabbr(abbreviation, expansion)
+"   execute 'cabbr ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
+" endfunction
+" command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
+" 
+" " Map `:bc` ex command to Bclose (to close buffers with multiple windows
+" CommandCabbr bc Bclose
 
 " Ignore spellcheck of words that have a capital after the first letter
 fun! IgnoreCamelCaseSpell()
