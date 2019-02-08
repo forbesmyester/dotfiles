@@ -62,7 +62,6 @@ Plug 'scrooloose/syntastic'
 " Plug 'jtratner/vim-flavored-markdown'
 " Plug 'Soares/butane.vim' "BClose
 " Plug 'tmhedberg/matchit'
-Plug 'RRethy/vim-illuminate'
 " Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
@@ -143,26 +142,45 @@ Plug 'leafgarland/typescript-vim'
 
 " ReasonJS
 Plug 'reasonml-editor/vim-reason-plus'
+
+" LanguageClient
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',
 "     \ 'do': 'bash install.sh',
 "     \ }
-let g:LanguageClient_serverCommands = {
-    \ 'typescript': ['javascript-typescript-stdio'],
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'reason': ['reason-language-server/reason-language-server.exe']
-    \ }
+" let g:LanguageClient_serverCommands = {
+"     \ 'typescript': ['javascript-typescript-stdio'],
+"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+"     \ 'reason': ['reason-language-server/reason-language-server.exe']
+"     \ }
 
-
+" == LSC =============================================
 Plug 'natebosch/vim-lsc'
 let g:lsc_server_commands = {
     \ 'typescript': 'javascript-typescript-stdio',
     \ 'rust': '~/.cargo/bin/rustup run stable rls',
     \ 'reason': 'reason-language-server/reason-language-server.exe'
     \ }
+let g:lsc_auto_map = {
+    \ 'GoToDefinition': '<C-]>',
+    \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
+    \ 'FindReferences': 'gr',
+    \ 'NextReference': '<C-n>',
+    \ 'PreviousReference': '<C-p>',
+    \ 'FindImplementations': 'gI',
+    \ 'FindCodeActions': 'ga',
+    \ 'Rename': 'gR',
+    \ 'ShowHover': v:true,
+    \ 'DocumentSymbol': 'go',
+    \ 'WorkspaceSymbol': 'gS',
+    \ 'SignatureHelp': '<C-m>',
+    \ 'Completion': 'completefunc',
+    \}
+hi lscReference  cterm=bold gui=bold
+" ====================================================
+
+" deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-
 let g:deoplete#enable_at_startup = 1
 
 " Rust
@@ -505,9 +523,10 @@ command! -bang -nargs=* Rg
 
 " = vim-illuminate ================================================
 "
-let g:Illuminate_ftblacklist = ['markdown']
-let g:Illuminate_highlightUnderCursor = 1
-hi illuminatedWord cterm=bold gui=bold
+" Plug 'RRethy/vim-illuminate'
+" let g:Illuminate_ftblacklist = ['markdown']
+" let g:Illuminate_highlightUnderCursor = 1
+" hi illuminatedWord cterm=bold gui=bold
 
 " = vim-json ======================================================
 let g:vim_json_syntax_conceal = 0
