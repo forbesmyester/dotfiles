@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# set -euo pipefail
+# IFS=$'\n\t'
+
+function __prompt_command() {
+    local PS1_EXIT_STATUS="$?" 
+
+    local GREY="\[\e[0m\]"
+    local CYAN="\[\e[0;36m\]"
+    local YELLOW="\[\e[0;33m\]"
+    local GREEN="\[\e[0;32m\]"
+    local RED="\[\e[0;31m\]"
+    local BLUE="\[\e[0;34m\]"
+
+    local PS1_USER="\u@\h"
+    PS1_EXIT="${RED}[$PS1_EXIT_STATUS]"
+    if [ $PS1_EXIT_STATUS -eq 0 ]; then
+        PS1_EXIT="${GREEN}[$PS1_EXIT_STATUS]"
+    fi
+    local PS1_BRANCH_OUT=`__git_ps1`
+    local PS1_BRANCH=''
+    if [ -n $PS1_BRANCH_OUT ]; then
+        local PS1_BRANCH=$PS1_BRANCH_OUT
+    fi
+    local PS1_PATH="$GREEN\w"
+    PS1="$PS1_EXIT ${BLUE}$PS1_USER$GREY:${GREEN}$PS1_PATH${GREY}$PS1_BRANCH \n$ "
+}
+
+export PROMPT_COMMAND=__prompt_command

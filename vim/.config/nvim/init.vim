@@ -143,16 +143,26 @@ Plug 'leafgarland/typescript-vim'
 
 " ReasonJS
 Plug 'reasonml-editor/vim-reason-plus'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
 let g:LanguageClient_serverCommands = {
     \ 'typescript': ['javascript-typescript-stdio'],
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'reason': ['reason-language-server/reason-language-server.exe']
     \ }
+
+
+Plug 'natebosch/vim-lsc'
+let g:lsc_server_commands = {
+    \ 'typescript': 'javascript-typescript-stdio',
+    \ 'rust': '~/.cargo/bin/rustup run stable rls',
+    \ 'reason': 'reason-language-server/reason-language-server.exe'
+    \ }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+
 let g:deoplete#enable_at_startup = 1
 
 " Rust
