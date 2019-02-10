@@ -162,20 +162,21 @@ let g:lsc_server_commands = {
     \ 'reason': 'reason-language-server/reason-language-server.exe'
     \ }
 let g:lsc_auto_map = {
-    \ 'GoToDefinition': '<C-]>',
-    \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
-    \ 'FindReferences': 'gr',
+    \ 'GoToDefinition': 'gfd',
+    \ 'GoToDefinitionSplit': '<C-W>gfd',
+    \ 'FindReferences': '<C-W>gfr',
     \ 'NextReference': '<C-n>',
     \ 'PreviousReference': '<C-p>',
-    \ 'FindImplementations': 'gI',
-    \ 'FindCodeActions': 'ga',
-    \ 'Rename': 'gR',
+    \ 'FindImplementations': '<C-W>gfi',
+    \ 'FindCodeActions': 'gfA',
+    \ 'Rename': 'gfR',
     \ 'ShowHover': v:true,
-    \ 'DocumentSymbol': 'go',
-    \ 'WorkspaceSymbol': 'gS',
-    \ 'SignatureHelp': '<C-m>',
+    \ 'DocumentSymbol': '<C-W>gfF',
+    \ 'WorkspaceSymbol': '<C-W>gff',
+    \ 'SignatureHelp': '<C-w>gfs',
     \ 'Completion': 'completefunc',
     \}
+nmap <C-W>gfh :LSClientShowHover<CR>
 hi lscReference  cterm=bold gui=bold
 " ====================================================
 
