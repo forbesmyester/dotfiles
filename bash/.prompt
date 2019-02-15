@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# set -euo pipefail
+# IFS=$'\n\t'
+
+function __prompt_command() {
+    local PS1_EXIT_STATUS="$?" 
+
+    local GREY="\[\e[0m\]"
+    local CYAN="\[\e[0;36m\]"
+    local YELLOW="\[\e[0;33m\]"
+    local GREEN="\[\e[0;32m\]"
+    local RED="\[\e[0;31m\]"
+    local BLUE="\[\e[0;34m\]"
+
+    local PS1_USER="\u@\h"
+    PS1_EXIT="${RED}[$PS1_EXIT_STATUS]"
+    if [ $PS1_EXIT_STATUS -eq 0 ]; then
+        PS1_EXIT="${GREEN}[$PS1_EXIT_STATUS]"
+    fi
+    local PS1_GIT_BRANCH=''
+    git status 2>/dev/null > /dev/null
+    if [ $? -eq 0 ]; then
+        local PS1_GIT_BRANCH_OUT=`__git_ps1`
+        if [ -n $PS1_GIT_BRANCH_OUT ]; then
+            local PS1_GIT_DIRTY=$([[ -z $(git status --porcelain) ]] || echo "*")
+            local PS1_GIT_BEHIND=$([[ -z $(git status --porcelain --branch | grep '\[ahead .\]$') ]] || echo "^")
+            local PS1_GIT_BRANCH="${PS1_GIT_BRANCH_OUT} ${PS1_GIT_DIRTY} ${PS1_GIT_BEHIND}"
+
+        fi
+    fi
+    local PS1_PATH="$GREEN\w"
+    PS1="$PS1_EXIT ${BLUE}$PS1_USER$GREY:${GREEN}$PS1_PATH${GREY}$PS1_GIT_BRANCH \n$ "
+}
+
+export PROMPT_COMMAND=__prompt_command
