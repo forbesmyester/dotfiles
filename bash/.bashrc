@@ -132,6 +132,7 @@ BASE16_SHELL=$HOME/.vendor/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 EDITOR=vim
+GIT_EDITOR=$EDITOR
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
