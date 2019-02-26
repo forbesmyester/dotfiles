@@ -1,75 +1,42 @@
-" set nocompatible              " be iMproved, required
-" filetype off                  " required
-" 
-" " set the runtime path to include Vundle and initialize
-" set rtp+=~/.vim/bundle/Vundle.vim
-
 if &term == 'nvim'
     call plug#begin('~/.config/nvim/plugged')
 else
     call plug#begin('~/.vim/plugged')
 endif
 
-" Plug 'gmarik/Vundle'
 
 " Libs
 Plug 'tomtom/tlib_vim'
-Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'tpope/timl'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
 " " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" let g:rg_command = '
-"   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-"   \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
-"   \ -g "!{.git,node_modules,vendor}/*" '
-
-" command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
-
 
 " General
-" Plug 'wsdjeg/FlyGrep.vim'
-" Plug 'andymass/vim-tradewinds'
 Plug 'yssl/QFEnter'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
-" Plug 'jeetsukumaran/vim-buffergator'
-" Plug 'Shougo/unite.vim'
 Plug 'simeji/winresizer'
-" Plug 'Shougo/denite.nvim'
-" Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-dotenv'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-dadbod'
 if &term == 'nvim'
      Plug 'kassio/neoterm'
-    " Plug 'benekastah/neomake'
-    " else
 endif
 Plug 'scrooloose/syntastic'
-" Plug 'gabrielelana/vim-markdown'
-" Plug 'junegunn/goyo.vim'
-" Plug 'jtratner/vim-flavored-markdown'
-" Plug 'Soares/butane.vim' "BClose
-" Plug 'tmhedberg/matchit'
-" Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
-" Plug 'Valloric/YouCompleteMe'
 Plug 'junegunn/vim-easy-align'
-" Plug 'mtth/scratch.vim'
 Plug 'ntpeters/vim-better-whitespace'
-" Plug 'thirtythreeforty/lessspace.vim'
 Plug 'drzel/vim-line-no-indicator'
 
 " Colours / Style
@@ -80,9 +47,6 @@ if &term == 'nvim'
     " Plug 'edkolev/tmuxline.vim'
 endif
 
-" Bats - BASH unit testing!
-" Plug 'bats.vim'
-
 " CSS
 Plug 'ap/vim-css-color'
 
@@ -90,7 +54,7 @@ Plug 'ap/vim-css-color'
 " Plug 'chrisbra/csv.vim'
 
 " Terraform
-" Plug 'hashivim/vim-terraform'
+Plug 'hashivim/vim-terraform'
 
 " Jade
 " Plug 'digitaltoad/vim-jade'
@@ -117,7 +81,7 @@ Plug 'jason0x43/vim-js-indent'
 " Plug 'marijnh/tern_for_vim'
 
 " Typescript
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 " Plug 'HerringtonDarkholme/yats.vim'
 Plug 'leafgarland/typescript-vim'
 
@@ -182,8 +146,7 @@ hi lscReference  cterm=bold gui=bold
 
 " deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-
+" let g:deoplete#enable_at_startup = 1
 " Rust
 Plug 'rust-lang/rust.vim'
 
@@ -194,6 +157,13 @@ Plug 'rust-lang/rust.vim'
 " " Plug 'web-indent'
 
 call plug#end()
+
+call deoplete#custom#option({
+    \ 'smart_case': v:true,
+    \ 'min_pattern_length': 1,
+    \ 'auto_complete_delay': 200,
+\ })
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " call vundle#end()
 " filetype plugin indent on
@@ -215,8 +185,8 @@ set scrolloff=5
 set sidescrolloff=5
 set display+=lastline
 set autoindent
-set complete-=i
-set completeopt-=preview
+" set complete-=i
+" set completeopt-=preview
 set shiftround
 set nrformats-=octal
 set smarttab
@@ -456,21 +426,21 @@ vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
 omap s :normal vs<CR>
 
 " = Typescript =====================================================
-let g:tsuquyomi_use_dev_node_module = 2
-let g:tsuquyomi_tsserver_path = './node_modules/typescript/lib/tsserver.js'
-let g:tsuquyomi_disable_default_mappings = 1
-let g:tsuquyomi_case_sensitive_imports = 1
-let g:tsuquyomi_ignore_missing_modules = 1
-let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_disable_quickfix = 0
-" let g:tsuquyomi_definition_split = 1
-" set ballooneval
-" autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
-let g:tsuquyomi_use_vimproc = 1
-autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
-autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
-autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
-autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
+" let g:tsuquyomi_use_dev_node_module = 2
+" let g:tsuquyomi_tsserver_path = './node_modules/typescript/lib/tsserver.js'
+" let g:tsuquyomi_disable_default_mappings = 1
+" let g:tsuquyomi_case_sensitive_imports = 1
+" let g:tsuquyomi_ignore_missing_modules = 1
+" let g:tsuquyomi_completion_detail = 1
+" let g:tsuquyomi_disable_quickfix = 0
+" " let g:tsuquyomi_definition_split = 1
+" " set ballooneval
+" " autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+" let g:tsuquyomi_use_vimproc = 1
+" autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
+" autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
+" autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
+" autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
 
 " = FZF ================================================
 " let g:buffergator_viewport_split_policy = 'N'
