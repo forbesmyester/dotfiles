@@ -165,8 +165,8 @@ fi
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 export FZF_DEFAULT_COMMAND='rg --files'
-export FZF_DEFAULT_OPTS_INNER='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} ||   cat {}) 2> /dev/null | head -500'
-export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
+# export FZF_DEFAULT_OPTS_INNER='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} ||   cat {}) 2> /dev/null | head -500'
+# export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias todo="todo-txt -d ~/.config/todo.txt/todo.cfg"
