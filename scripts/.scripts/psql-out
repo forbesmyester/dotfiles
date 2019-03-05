@@ -2,21 +2,26 @@
 
 OPTIND=1
 FORMAT="csv"
+HEADER='HEADER'
 
 show_help() {
-    echo "$1 [-f FORMAT]"
+    echo "$1 [-f FORMAT] [-H]"
     echo ""
     echo "-f = The format to output"
+    echo "-H = Skip adding the header"
     exit 0
 }
 
-while getopts "hf:" opt; do
+while getopts "hHf:" opt; do
     case "$opt" in
+        H)
+            HEADER=''
+            ;;
         h)
             show_help
             exit 0
             ;;
-        f)  FORMAT=$OPTARG
+        f)  FORMAT="$OPTARG"
             ;;
     esac
 done
@@ -48,11 +53,11 @@ IFS=$'\n\t'
 
 UUID=$(uuidgen | sed 's/\-//g')
 
-OUT_TSV="COPY (${IN_SQL}) TO STDOUT WITH CSV HEADER NULL AS '' DELIMITER AS E'\t'"
-OUT_CSV="COPY (${IN_SQL}) TO STDOUT WITH CSV HEADER NULL AS ''"
+OUT_TSV="COPY (${IN_SQL}) TO STDOUT WITH CSV ${HEADER} NULL AS '' DELIMITER AS E'\t'"
+OUT_CSV="COPY (${IN_SQL}) TO STDOUT WITH CSV ${HEADER} NULL AS ''"
 OUT_NDJSON="select row_to_json(x$UUID) from ( $IN_SQL ) x$UUID"
 
-OUT="$OUT_CSV"
+OUT="$OUT_TSV"
 if [ "csv" == "$FORMAT" ]; then
     OUT="$OUT_CSV"
 fi
