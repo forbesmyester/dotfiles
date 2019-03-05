@@ -163,7 +163,7 @@ call deoplete#custom#option({
     \ 'min_pattern_length': 1,
     \ 'auto_complete_delay': 200,
 \ })
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " call vundle#end()
 " filetype plugin indent on
