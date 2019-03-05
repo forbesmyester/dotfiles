@@ -23,7 +23,7 @@ function __prompt_command() {
     if [ $? -eq 0 ]; then
         local PS1_GIT_BRANCH_OUT=`__git_ps1`
         if [ -n $PS1_GIT_BRANCH_OUT ]; then
-            local PS1_GIT_DIRTY=$([[ -z $(git status --porcelain) ]] || echo "*")
+            local PS1_GIT_DIRTY=$([[ -z $(git status --porcelain) ]] || echo ">")
             local PS1_GIT_BEHIND=$([[ -z $(git status --porcelain --branch | grep '\[ahead .\]$') ]] || echo "^")
             local PS1_GIT_BRANCH="${PS1_GIT_BRANCH_OUT} ${PS1_GIT_DIRTY} ${PS1_GIT_BEHIND}"
 

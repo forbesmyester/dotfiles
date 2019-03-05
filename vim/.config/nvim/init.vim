@@ -15,6 +15,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " General
+" Plug 'wsdjeg/FlyGrep.vim'
+" Plug 'andymass/vim-tradewinds'
+Plug 'moll/vim-bbye'
+" Plug 'wsdjeg/FlyGrep.vim'
+" Plug 'andymass/vim-tradewinds'
 Plug 'yssl/QFEnter'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'

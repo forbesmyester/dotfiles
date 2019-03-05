@@ -16,6 +16,7 @@ if [[ $LINE =~ $REGEX ]]; then
     export PGPORT="${BASH_REMATCH[2]}"
     export PGDATABASE="${BASH_REMATCH[3]}"
     export PGUSER="${BASH_REMATCH[4]}"
+    export PGPASSWORD="${BASH_REMATCH[5]}"
     export DATABASE_URL="postgres://$PGUSER@$PGHOST:$PGPORT/$PGDATABASE"
     echo "> $DATABASE_URL"
 else
