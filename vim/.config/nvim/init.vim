@@ -118,6 +118,7 @@ Plug 'reasonml-editor/vim-reason-plus'
 "     \ 'do': 'bash install.sh',
 "     \ }
 " let g:LanguageClient_serverCommands = {
+"     \ 'javascript': ['javascript-typescript-stdio'],
 "     \ 'typescript': ['javascript-typescript-stdio'],
 "     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
 "     \ 'reason': ['reason-language-server/reason-language-server.exe']
@@ -126,7 +127,8 @@ Plug 'reasonml-editor/vim-reason-plus'
 " == LSC =============================================
 Plug 'natebosch/vim-lsc'
 let g:lsc_server_commands = {
-    \ 'typescript': 'javascript-typescript-stdio',
+    \ 'javascript': './node_modules/.bin/javascript-typescript-stdio',
+    \ 'typescript': './node_modules/.bin/javascript-typescript-stdio',
     \ 'rust': '~/.cargo/bin/rustup run stable rls',
     \ 'reason': 'reason-language-server/reason-language-server.exe'
     \ }
@@ -190,8 +192,8 @@ set scrolloff=5
 set sidescrolloff=5
 set display+=lastline
 set autoindent
-" set complete-=i
-" set completeopt-=preview
+set complete-=i
+set completeopt-=preview
 set shiftround
 set nrformats-=octal
 set smarttab

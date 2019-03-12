@@ -142,15 +142,11 @@ export JDK_HOME="$JAVA_HOME"
 export TIME_STYLE=long-iso
 export CHROMIUM_USER_SETTINGS_DIRECTORY=~/.config/chromium/
 export CHROMIUM_COMMAND=chromium
+
+# NVM
 export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-[[ -s "/home/fozz/.gvm/scripts/gvm" ]] && source "/home/fozz/.gvm/scripts/gvm"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /home/fozz/.vendor/google-cloud-sdk/path.bash.inc ]; then
-  source '/home/fozz/.vendor/google-cloud-sdk/path.bash.inc'
-fi
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
 if [ ! -d /home/fozz/.tmp ]; then
@@ -167,7 +163,6 @@ fi
 export FZF_DEFAULT_COMMAND='rg --files'
 # export FZF_DEFAULT_OPTS_INNER='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} ||   cat {}) 2> /dev/null | head -500'
 # export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias todo="todo-txt -d ~/.config/todo.txt/todo.cfg"
 alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")'

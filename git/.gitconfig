@@ -13,3 +13,5 @@
 [diff]
 	tool = nvim -d
     ; tool = meld
+[core]
+	editor = vim
