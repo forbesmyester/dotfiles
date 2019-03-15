@@ -136,8 +136,6 @@ let g:lsc_auto_map = {
     \ 'GoToDefinition': 'gfd',
     \ 'GoToDefinitionSplit': '<C-W>gfd',
     \ 'FindReferences': '<C-W>gfr',
-    \ 'NextReference': '<C-n>',
-    \ 'PreviousReference': '<C-p>',
     \ 'FindImplementations': '<C-W>gfi',
     \ 'FindCodeActions': 'gfA',
     \ 'Rename': 'gfR',
@@ -147,6 +145,10 @@ let g:lsc_auto_map = {
     \ 'SignatureHelp': '<C-w>gfs',
     \ 'Completion': 'completefunc',
     \}
+
+    " \ 'NextReference': '<C-n>',
+    " \ 'PreviousReference': '<C-p>',
+
 nmap <C-W>gfh :LSClientShowHover<CR>
 hi lscReference  cterm=bold gui=bold
 " ====================================================
