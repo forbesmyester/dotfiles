@@ -125,33 +125,35 @@ Plug 'reasonml-editor/vim-reason-plus'
 "     \ }
 
 " == LSC =============================================
-Plug 'natebosch/vim-lsc'
-let g:lsc_server_commands = {
-    \ 'javascript': './node_modules/.bin/javascript-typescript-stdio',
-    \ 'typescript': './node_modules/.bin/javascript-typescript-stdio',
-    \ 'rust': '~/.cargo/bin/rustup run stable rls',
-    \ 'reason': 'reason-language-server/reason-language-server.exe'
-    \ }
-let g:lsc_auto_map = {
-    \ 'GoToDefinition': 'gfd',
-    \ 'GoToDefinitionSplit': '<C-W>gfd',
-    \ 'FindReferences': '<C-W>gfr',
-    \ 'FindImplementations': '<C-W>gfi',
-    \ 'FindCodeActions': 'gfA',
-    \ 'Rename': 'gfR',
-    \ 'ShowHover': v:true,
-    \ 'DocumentSymbol': '<C-W>gfF',
-    \ 'WorkspaceSymbol': '<C-W>gff',
-    \ 'SignatureHelp': '<C-w>gfs',
-    \ 'Completion': 'completefunc',
-    \}
-
-    " \ 'NextReference': '<C-n>',
-    " \ 'PreviousReference': '<C-p>',
-
-nmap <C-W>gfh :LSClientShowHover<CR>
-hi lscReference  cterm=bold gui=bold
+" Plug 'natebosch/vim-lsc'
+" let g:lsc_server_commands = {
+"     \ 'javascript': './node_modules/.bin/javascript-typescript-stdio',
+"     \ 'typescript': './node_modules/.bin/javascript-typescript-stdio',
+"     \ 'rust': '~/.cargo/bin/rustup run stable rls',
+"     \ 'reason': 'reason-language-server/reason-language-server.exe'
+"     \ }
+" let g:lsc_auto_map = {
+"     \ 'GoToDefinition': 'gfd',
+"     \ 'GoToDefinitionSplit': '<C-W>gfd',
+"     \ 'FindReferences': '<C-W>gfr',
+"     \ 'FindImplementations': '<C-W>gfi',
+"     \ 'FindCodeActions': 'gfA',
+"     \ 'Rename': 'gfR',
+"     \ 'ShowHover': v:true,
+"     \ 'DocumentSymbol': '<C-W>gfF',
+"     \ 'WorkspaceSymbol': '<C-W>gff',
+"     \ 'SignatureHelp': '<C-w>gfs',
+"     \ 'Completion': 'completefunc',
+"     \}
+" 
+"     " \ 'NextReference': '<C-n>',
+"     " \ 'PreviousReference': '<C-p>',
+" 
+" nmap <C-W>gfh :LSClientShowHover<CR>
+" hi lscReference  cterm=bold gui=bold
 " ====================================================
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
