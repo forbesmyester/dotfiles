@@ -169,3 +169,5 @@ alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:al
 alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*//'"'"')'
 export PATH="$HOME/.cargo/bin:$PATH"
 
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
