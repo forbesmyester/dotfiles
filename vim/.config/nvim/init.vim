@@ -153,7 +153,33 @@ Plug 'reasonml-editor/vim-reason-plus'
 " hi lscReference  cterm=bold gui=bold
 " ====================================================
 
+" == CoC =============================================
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+set shortmess+=c
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap <silent> <C-e>d <Plug>(coc-definition)
+nmap <silent> <C-e>y <Plug>(coc-type-definition)
+nmap <silent> <C-e>i <Plug>(coc-implementation)
+nmap <silent> <C-e>r <Plug>(coc-references)
+nmap <silent> <C-e>f <Plug>(coc-format-selected)
+vmap <silent> <C-e>f <Plug>(coc-format-selected)
+nmap <silent> <C-e>a <Plug>(coc-codeaction)
+
+nnoremap <silent> <C-e>k :call <SID>show_documentation()<CR>
+autocmd CursorHold * silent call CocActionAsync('highlight')
+" ====================================================
+
 
 " deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -168,6 +194,8 @@ Plug 'rust-lang/rust.vim'
 " " Plug 'web-indent'
 
 call plug#end()
+
+let g:winresizer_start_key = '<C-w>e'
 
 call deoplete#custom#option({
     \ 'smart_case': v:true,
@@ -203,6 +231,8 @@ set nrformats-=octal
 set smarttab
 set showcmd
 set hidden
+set updatetime=500
+set cmdheight=2
 set wildmenu
 set wildmode=list:longest
 set wildignore=*.o,*.obj,*.bak,*.exe
@@ -313,7 +343,6 @@ endif
 " = GitGutter  ====================================================
 set signcolumn=yes
 let g:gitgutter_realtime=1
-set updatetime=750
 
 " = NeoTerm ======================================================
 " let g:neoterm_shell = "fish -l"
