@@ -172,9 +172,11 @@ nmap <silent> <C-e>d <Plug>(coc-definition)
 nmap <silent> <C-e>y <Plug>(coc-type-definition)
 nmap <silent> <C-e>i <Plug>(coc-implementation)
 nmap <silent> <C-e>r <Plug>(coc-references)
-nmap <silent> <C-e>f <Plug>(coc-format-selected)
-vmap <silent> <C-e>f <Plug>(coc-format-selected)
+nmap <silent> <C-e>= <Plug>(coc-format-selected)
+vmap <silent> <C-e>= <Plug>(coc-format-selected)
 nmap <silent> <C-e>a <Plug>(coc-codeaction)
+nmap <silent> <C-e>f :CocList outline<cr>
+nmap <silent> <C-e>n <Plug>(coc-rename)
 
 nnoremap <silent> <C-e>k :call <SID>show_documentation()<CR>
 autocmd CursorHold * silent call CocActionAsync('highlight')
