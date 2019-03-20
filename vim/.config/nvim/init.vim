@@ -176,7 +176,10 @@ nmap <silent> <C-e>= <Plug>(coc-format-selected)
 vmap <silent> <C-e>= <Plug>(coc-format-selected)
 nmap <silent> <C-e>a <Plug>(coc-codeaction)
 nmap <silent> <C-e>f :CocList outline<cr>
+nmap <silent> <C-e>F :CocList -I symbols<cr>
 nmap <silent> <C-e>n <Plug>(coc-rename)
+nmap <silent> <C-e>q <Plug>(coc-fix-current)
+nmap <silent> <C-e><CR> <Plug>(coc-fix-current)
 
 nnoremap <silent> <C-e>k :call <SID>show_documentation()<CR>
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -375,6 +378,8 @@ let g:airline_skip_empty_sections = 1
 let g:airline_section_y = ''
 let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
 let g:airline_section_b = ''
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 " let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
 "= Number Switching ================================================
 
