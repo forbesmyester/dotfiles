@@ -179,7 +179,7 @@ nmap <silent> <C-e>f :CocList outline<cr>
 nmap <silent> <C-e>F :CocList -I symbols<cr>
 nmap <silent> <C-e>n <Plug>(coc-rename)
 nmap <silent> <C-e>q <Plug>(coc-fix-current)
-nmap <silent> <C-e><CR> <Plug>(coc-fix-current)
+nmap <silent> <C-e>K :call CocAction('doHover')<CR>
 
 nnoremap <silent> <C-e>k :call <SID>show_documentation()<CR>
 autocmd CursorHold * silent call CocActionAsync('highlight')
