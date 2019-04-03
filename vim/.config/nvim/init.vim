@@ -47,9 +47,22 @@ Plug 'drzel/vim-line-no-indicator'
 " Colours / Style
 if &term == 'nvim'
     Plug 'chriskempson/base16-vim'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    " Plug 'vim-airline/vim-airline'
+    " Plug 'vim-airline/vim-airline-themes'
     " Plug 'edkolev/tmuxline.vim'
+    Plug 'daviesjamie/vim-base16-lightline'
+    Plug 'itchyny/lightline.vim'
+    " let g:lightline = {'colorscheme': 'Tomorrow_Night'}
+    let g:lightline = {
+        \ 'colorscheme': 'base16',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+        \ },
+        \ 'component_function': {
+        \   'cocstatus': 'coc#status'
+        \ },
+        \ }
 endif
 
 " CSS
@@ -89,6 +102,7 @@ Plug 'jason0x43/vim-js-indent'
 " Plug 'Quramy/tsuquyomi'
 " Plug 'HerringtonDarkholme/yats.vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Tmux
 " Plug 'jgdavey/tslime.vim'
@@ -153,36 +167,6 @@ Plug 'reasonml-editor/vim-reason-plus'
 " hi lscReference  cterm=bold gui=bold
 " ====================================================
 
-" == CoC =============================================
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-set shortmess+=c
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-nmap <silent> <C-e>d <Plug>(coc-definition)
-nmap <silent> <C-e>y <Plug>(coc-type-definition)
-nmap <silent> <C-e>i <Plug>(coc-implementation)
-nmap <silent> <C-e>r <Plug>(coc-references)
-nmap <silent> <C-e>= <Plug>(coc-format-selected)
-vmap <silent> <C-e>= <Plug>(coc-format-selected)
-nmap <silent> <C-e>a <Plug>(coc-codeaction)
-nmap <silent> <C-e>f :CocList outline<cr>
-nmap <silent> <C-e>F :CocList -I symbols<cr>
-nmap <silent> <C-e>n <Plug>(coc-rename)
-nmap <silent> <C-e>q <Plug>(coc-fix-current)
-nmap <silent> <C-e><CR> <Plug>(coc-fix-current)
-
-nnoremap <silent> <C-e>k :call <SID>show_documentation()<CR>
-autocmd CursorHold * silent call CocActionAsync('highlight')
 " ====================================================
 
 
@@ -312,6 +296,40 @@ set diffopt+=iwhite
 "     colorscheme solarized
 " endif
 
+
+" == CoC =============================================
+set shortmess+=c
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap <silent> <C-e>d <Plug>(coc-definition)
+nmap <silent> <C-e>y <Plug>(coc-type-definition)
+nmap <silent> <C-e>i <Plug>(coc-implementation)
+nmap <silent> <C-e>r <Plug>(coc-references)
+nmap <silent> <C-e>= <Plug>(coc-format-selected)
+vmap <silent> <C-e>= <Plug>(coc-format-selected)
+nmap <silent> <C-e>a <Plug>(coc-codeaction)
+nmap <silent> <C-e>f :CocList outline<cr>
+nmap <silent> <C-e>F :CocList -I symbols<cr>
+nmap <silent> <C-e>n <Plug>(coc-rename)
+nmap <silent> <C-e>q <Plug>(coc-fix-current)
+nmap <silent> <C-e><CR> :call CocAction('doHover')<CR>
+nmap <silent> <C-e>[ <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-e>] <Plug>(coc-diagnostic-next)
+
+highlight CocHighlightText ctermfg=black ctermbg=white
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+
 " = vim-easy-align ================================================
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -372,14 +390,14 @@ if ! has('gui_running')
     augroup end
 endif
 
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_skip_empty_sections = 1
-let g:airline_section_y = ''
-let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
-let g:airline_section_b = ''
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+" let g:airline#extensions#whitespace#enabled = 0
+" let g:airline_powerline_fonts = 1
+" let g:airline_skip_empty_sections = 1
+" let g:airline_section_y = ''
+" let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
+" let g:airline_section_b = ''
+" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 " let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
 "= Number Switching ================================================
 
@@ -546,6 +564,7 @@ command! -bang -nargs=* Rg
 " let g:Illuminate_highlightUnderCursor = 1
 " hi illuminatedWord cterm=bold gui=bold
 
+
 " = vim-json ======================================================
 let g:vim_json_syntax_conceal = 0
 
@@ -669,10 +688,42 @@ function! HLNext (blinktime)
 	redraw
 endfunction
 
-function! Gpullrequest()
-    let cmd = 'git diff --name-only $(git branch | grep ''^\*'' | sed ''s/^* //'') $(git merge-base $(git branch | grep ''^\*'' | sed ''s/^* //'') master) | sed ''s/$/:1:Changed File/g'' |  sed "s/^/$(git rev-parse --show-cdup |sed ''s/\//\\\//g'')/g" > ' . "/tmp/$USER.vim.cfile"
-    let z = system(cmd)
-    execute "cfile /tmp/" . $USER . ".vim.cfile"
+" function! Gpullrequest()
+"     let cmd = 'git diff --name-only $(git branch | grep ''^\*'' | sed ''s/^* //'') $(git merge-base $(git branch | grep ''^\*'' | sed ''s/^* //'') master) | sed ''s/$/:1:Changed File/g'' |  sed "s/^/$(git rev-parse --show-cdup |sed ''s/\//\\\//g'')/g" > ' . "/tmp/$USER.vim.cfile"
+"     let z = system(cmd)
+"     execute "cfile /tmp/" . $USER . ".vim.cfile"
+" endfunction
+
+function! RestoreWindowLayout()
+
+    function! RestoreWindowLayout_Closer()
+        if &ft == "fugitive"
+            execute "close"
+        endif
+        if &ft == "neoterm"
+            execute "close"
+        endif
+        if expand('%')[0:10] == "fugitive://"
+            execute "close"
+        endif
+    endfunction
+
+
+	let windows = []
+	let current_win = expand('%')
+
+	windo call add(windows, winnr()) 
+    for i in windows
+        bnext
+        call RestoreWindowLayout_Closer()
+    endfor
+    for i in windows
+        if expand('%') != current_win
+            bnext
+        endif
+    endfor
+    Topen
+
 endfunction
 
 
@@ -737,3 +788,5 @@ call textobj#user#plugin('nicecodeblock', {
 \     'select-i': 'iP',
 \   },
 \ })
+
+
