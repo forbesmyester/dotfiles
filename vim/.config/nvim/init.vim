@@ -47,9 +47,6 @@ Plug 'drzel/vim-line-no-indicator'
 " Colours / Style
 if &term == 'nvim'
     Plug 'chriskempson/base16-vim'
-    " Plug 'vim-airline/vim-airline'
-    " Plug 'vim-airline/vim-airline-themes'
-    " Plug 'edkolev/tmuxline.vim'
     Plug 'daviesjamie/vim-base16-lightline'
     Plug 'itchyny/lightline.vim'
     " let g:lightline = {'colorscheme': 'Tomorrow_Night'}
@@ -390,14 +387,14 @@ if ! has('gui_running')
     augroup end
 endif
 
-" let g:airline#extensions#whitespace#enabled = 0
-" let g:airline_powerline_fonts = 1
-" let g:airline_skip_empty_sections = 1
-" let g:airline_section_y = ''
-" let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
-" let g:airline_section_b = ''
-" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_powerline_fonts = 1
+let g:airline_skip_empty_sections = 1
+let g:airline_section_y = ''
+let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
+let g:airline_section_b = ''
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 " let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
 "= Number Switching ================================================
 
@@ -564,7 +561,6 @@ command! -bang -nargs=* Rg
 " let g:Illuminate_highlightUnderCursor = 1
 " hi illuminatedWord cterm=bold gui=bold
 
-
 " = vim-json ======================================================
 let g:vim_json_syntax_conceal = 0
 
@@ -688,42 +684,10 @@ function! HLNext (blinktime)
 	redraw
 endfunction
 
-" function! Gpullrequest()
-"     let cmd = 'git diff --name-only $(git branch | grep ''^\*'' | sed ''s/^* //'') $(git merge-base $(git branch | grep ''^\*'' | sed ''s/^* //'') master) | sed ''s/$/:1:Changed File/g'' |  sed "s/^/$(git rev-parse --show-cdup |sed ''s/\//\\\//g'')/g" > ' . "/tmp/$USER.vim.cfile"
-"     let z = system(cmd)
-"     execute "cfile /tmp/" . $USER . ".vim.cfile"
-" endfunction
-
-function! RestoreWindowLayout()
-
-    function! RestoreWindowLayout_Closer()
-        if &ft == "fugitive"
-            execute "close"
-        endif
-        if &ft == "neoterm"
-            execute "close"
-        endif
-        if expand('%')[0:10] == "fugitive://"
-            execute "close"
-        endif
-    endfunction
-
-
-	let windows = []
-	let current_win = expand('%')
-
-	windo call add(windows, winnr()) 
-    for i in windows
-        bnext
-        call RestoreWindowLayout_Closer()
-    endfor
-    for i in windows
-        if expand('%') != current_win
-            bnext
-        endif
-    endfor
-    Topen
-
+function! Gpullrequest()
+    let cmd = 'git diff --name-only $(git branch | grep ''^\*'' | sed ''s/^* //'') $(git merge-base $(git branch | grep ''^\*'' | sed ''s/^* //'') master) | sed ''s/$/:1:Changed File/g'' |  sed "s/^/$(git rev-parse --show-cdup |sed ''s/\//\\\//g'')/g" > ' . "/tmp/$USER.vim.cfile"
+    let z = system(cmd)
+    execute "cfile /tmp/" . $USER . ".vim.cfile"
 endfunction
 
 
@@ -788,5 +752,3 @@ call textobj#user#plugin('nicecodeblock', {
 \     'select-i': 'iP',
 \   },
 \ })
-
-
