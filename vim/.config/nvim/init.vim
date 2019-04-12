@@ -156,10 +156,10 @@ Plug 'reasonml-editor/vim-reason-plus'
 "     \ 'SignatureHelp': '<C-w>gfs',
 "     \ 'Completion': 'completefunc',
 "     \}
-" 
+"
 "     " \ 'NextReference': '<C-n>',
 "     " \ 'PreviousReference': '<C-p>',
-" 
+"
 " nmap <C-W>gfh :LSClientShowHover<CR>
 " hi lscReference  cterm=bold gui=bold
 " ====================================================
@@ -246,7 +246,7 @@ set incsearch
 set showmatch
 set hlsearch
 set linebreak
-set breakat=\ 
+set breakat=\
 
 set backupdir=~/.tmp//,/tmp// " backups (~)
 set directory=~/.tmp//,/tmp// " swap files
@@ -448,16 +448,16 @@ let g:tern_show_argument_hints='on_move'
 
 " let g:haddock_browser = "/usr/bin/chromium-browser --new-window "
 " let g:haddock_docdir = "/usr/share/doc/ghc-doc/html/"
-" 
+"
 " " let g:ghc = "/opt/ghc/7.8.4/bin/ghc"
-" 
+"
 " let g:haskell_conceal_wide = 0
 " let g:haskell_conceal              = 0
 " let g:haskell_conceal_enumerations = 0
 " let g:hasksyn_indent_search_backward = 100
 " let g:hasksyn_dedent_after_return = 1
 " let g:hasksyn_dedent_after_catchall_case = 1
-" 
+"
 " let g:haskell_conceal_wide  = 0
 " let g:haskell_quasi         = 0
 " let g:haskell_interpolation = 0
@@ -467,9 +467,9 @@ let g:tern_show_argument_hints='on_move'
 " let g:haskell_sql           = 0
 " let g:haskell_json          = 0
 " let g:haskell_xml           = 0
-" 
+"
 " " au BufEnter *.hs compiler ghc
-" 
+"
 " " = Neco-ghc  =======================================================
 " let g:necoghc_enable_detailed_browse = 1
 
@@ -535,13 +535,13 @@ command! -bang -nargs=* Rg
 "         Goyo!
 "     endif
 " endfunction
-" 
+"
 " function! s:goyo_leave()
 "     if winnr('$') < 2
 "         silent! :q
 "     endif
 " endfunction
-" 
+"
 " augroup goyo_markdown
 "     autocmd!
 "     autocmd BufNewFile,BufRead * call s:auto_goyo()
@@ -684,12 +684,37 @@ function! HLNext (blinktime)
 	redraw
 endfunction
 
-function! Gpullrequest()
-    let cmd = 'git diff --name-only $(git branch | grep ''^\*'' | sed ''s/^* //'') $(git merge-base $(git branch | grep ''^\*'' | sed ''s/^* //'') master) | sed ''s/$/:1:Changed File/g'' |  sed "s/^/$(git rev-parse --show-cdup |sed ''s/\//\\\//g'')/g" > ' . "/tmp/$USER.vim.cfile"
-    let z = system(cmd)
-    execute "cfile /tmp/" . $USER . ".vim.cfile"
-endfunction
+function! RestoreWindowLayout()
 
+    function! RestoreWindowLayout_Closer()
+        if &ft == "fugitive"
+            execute "close"
+        endif
+        if &ft == "neoterm"
+            execute "close"
+        endif
+        if expand('%')[0:10] == "fugitive://"
+            execute "close"
+        endif
+    endfunction
+
+
+    let windows = []
+    let current_win = expand('%')
+
+    windo call add(windows, winnr()) 
+    for i in windows
+        bnext
+        call RestoreWindowLayout_Closer()
+    endfor
+    for i in windows
+        if expand('%') != current_win
+            bnext
+        endif
+    endfor
+    Topen
+
+endfunction
 
 if &term == 'nvim'
     " if @% =~ '^term:'
@@ -725,7 +750,7 @@ imap <C-l> <ESC><C-l>
 "   execute 'cabbr ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
 " endfunction
 " command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
-" 
+"
 " " Map `:bc` ex command to Bclose (to close buffers with multiple windows
 " CommandCabbr bc Bclose
 
