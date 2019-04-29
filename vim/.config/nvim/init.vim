@@ -661,6 +661,7 @@ nmap gr <Plug>(neoterm-repl-send)
 nmap grr <Plug>(neoterm-repl-send-line)
 nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
 nmap <leader><Enter> grip
+nmap <leader>d<Enter> :'{,'} DB<CR>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
