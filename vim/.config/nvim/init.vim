@@ -52,15 +52,59 @@ if &term == 'nvim'
     " let g:lightline = {'colorscheme': 'Tomorrow_Night'}
     let g:lightline = {
         \ 'colorscheme': 'base16',
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-        \ },
-        \ 'component_function': {
-        \   'cocstatus': 'coc#status'
-        \ },
+        \   'active': {
+        \     'left': [ [ 'mode', 'paste' ],
+        \               [ 'cocstatus' ],
+        \               ['filename', 'readonly', 'modified' ] ],
+        \     'right': [ [ 'lineinfo' ],
+        \                [ 'filetype' ],
+        \                [ 'fileencoding'] ]
+        \   },
+        \   'component_function': {
+        \     'filename': 'LightlineFilename',
+        \     'filetype': 'LightlineFiletype',
+        \     'cocstatus': 'CocStatus',
+        \     'gitbranch': 'fugitive#head',
+        \     'fileformat': 'LightlineFileformat',
+        \     'fileencoding': 'LightlineFileencoding',
+        \   },
         \ }
+        " \                [ 'fileformat', 'fileencoding'] ]
+
+    function! LightlineFilename()
+        let filename = winwidth(0) > 85 ?  expand('%') : expand('%:t')
+        return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+                \ &filetype ==# 'unite' ? unite#get_status_string() :
+                \ &filetype ==# 'neoterm' ? 'NEOTERM' :
+                \ expand('%:t') !=# '' ? filename : '[No Name]'
+    endfunction
+
+    " function! LightlineReadonly()
+    "     return ''
+    "     return &readonly && &filetype !=# 'help' ? 'RO' : ''
+    " endfunction
+
+    function! CocStatus()
+        return trim(coc#status())
+    endfunction
+
+    function! LightlineFileencoding()
+        let e = &fileformat ==# 'unix' ? '' :
+            \ &fileformat ==# 'dos' ? '/W' : '/M'
+        return winwidth(0) > 85 ? &fileencoding . e : ''
+    endfunction
+
+    function! LightlineFileformat()
+        return winwidth(0) > 85 ? &fileformat : ''
+    endfunction
+
+    function! LightlineFiletype()
+        return winwidth(0) > 85 ? (&filetype !=# '' ? &filetype : 'no ft' ) : ''
+    endfunction
+
 endif
+
+
 
 " CSS
 Plug 'ap/vim-css-color'
@@ -110,7 +154,7 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Plug 'tarekbeker/vim-yaml-formatter'
 
 " JSON / JSONNET
-" Plug 'google/vim-jsonnet'
+Plug 'google/vim-jsonnet'
 " Plug 'elzr/vim-json'
 
 " Clojure
@@ -688,6 +732,7 @@ endfunction
 function! RestoreWindowLayout()
 
     function! RestoreWindowLayout_Closer()
+        call input("Status: " . &ft . " " . expand('%'))
         if &ft == "fugitive"
             execute "close"
         endif
