@@ -85,7 +85,7 @@ if &term == 'nvim'
     " endfunction
 
     function! CocStatus()
-        return trim(coc#status())
+        return substitute(coc#status(), '^\s*\(.\{-}\)\s*$', '\1', '')
     endfunction
 
     function! LightlineFileencoding()
