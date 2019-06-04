@@ -28,11 +28,9 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'simeji/winresizer'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-dadbod'
 if &term == 'nvim'
      Plug 'kassio/neoterm'
@@ -43,6 +41,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'drzel/vim-line-no-indicator'
+
+Plug 'inside/vim-search-pulse'
+
 
 " Colours / Style
 if &term == 'nvim'
@@ -262,7 +263,7 @@ set smarttab
 set showcmd
 set hidden
 set updatetime=500
-set cmdheight=2
+set cmdheight=1
 set wildmenu
 set wildmode=list:longest
 set wildignore=*.o,*.obj,*.bak,*.exe
@@ -714,20 +715,33 @@ autocmd BufWritePost * :call RunUnitTest()
 :com ToggleMenu if &go=~'m'|set go-=m|else|set go+=m|endif
 set go-=m
 
-nnoremap <silent> n   n:call HLNext(0.1)<cr>
-nnoremap <silent> N   N:call HLNext(0.1)<cr>
+" nnoremap <silent> n   n:call HLNext(0.1)<cr>
+" nnoremap <silent> N   N:call HLNext(0.1)<cr>
 nnoremap <silent> <leader>s V:'<,'>ScratchSelection<CR>:sleep 250m<CR><C-w>j
 
-function! HLNext (blinktime)
-	let [bufnum, lnum, col, off] = getpos('.')
-	let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-	let target_pat = '\c\%#'.@/
-	let ring = matchadd('ErrorMsg', target_pat, 101)
-	redraw
-	exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-	call matchdelete(ring)
-	redraw
+" function! HLNext (blinktime)
+" 	let [bufnum, lnum, col, off] = getpos('.')
+" 	let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+" 	let target_pat = '\c\%#'.@/
+" 	let ring = matchadd('ErrorMsg', target_pat, 101)
+" 	redraw
+" 	exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+" 	call matchdelete(ring)
+" 	redraw
+" endfunction
+
+function! SpaceAboveBelow(above)
+    let c = col(".") - 1
+    if a:above
+        exec "silent normal O"
+        exec "silent normal j" . c . "l"
+    else
+        exec "silent normal o"
+        exec "silent normal k" . c . "l"
+    endif
 endfunction
+nmap [<space> :call SpaceAboveBelow(1)<cr>
+nmap ]<space> :call SpaceAboveBelow(0)<cr>
 
 function! RestoreWindowLayout()
 
@@ -823,3 +837,4 @@ call textobj#user#plugin('nicecodeblock', {
 \     'select-i': 'iP',
 \   },
 \ })
+
