@@ -96,7 +96,8 @@ if &term == 'nvim'
     endfunction
 
     function! LightlineFileformat()
-        return winwidth(0) > 85 ? &fileformat : ''
+        " return winwidth(0) > 85 ? &fileformat : ''
+        return &fileformat
     endfunction
 
     function! LightlineFiletype()
@@ -166,7 +167,7 @@ Plug 'google/vim-jsonnet'
 " Plug 'venantius/vim-eastwood'
 
 " ReasonJS
-Plug 'reasonml-editor/vim-reason-plus'
+" Plug 'reasonml-editor/vim-reason-plus'
 
 " LanguageClient
 " Plug 'autozimu/LanguageClient-neovim', {
@@ -459,18 +460,11 @@ augroup LineNumberFlip
 	au insertenter * :call LineNumberFlipFunc(1)
 	au insertleave * :call LineNumberFlipFunc(0)
 augroup end
-map <leader>: :set norelativenumber<CR>
 
 " = Fugitive ======================================================
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
 set diffopt+=vertical
-
-" = YouCompleteMe ===================================================
-
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_semantic_triggers = {'haskell,javascript,typescript' : ['.']}
-
 
 " = GUI Visual Style ================================================
 
@@ -519,12 +513,13 @@ let g:tern_show_argument_hints='on_move'
 " let g:necoghc_enable_detailed_browse = 1
 
 " = Key Bindings ======================================================
-" let mapleader = "\<space>"
+let mapleader = "\<space>"
+nnoremap ' `
+nnoremap ` '
 map U <C-r>
-map <C-o> <PageDown>
-map <C-i> <PageUp>
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 nmap <silent> <leader>/ :nohlsearch<ESC>
+map <leader>: :set norelativenumber<CR>
 imap <Home> <esc>^i
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap Y y$
@@ -742,6 +737,10 @@ function! SpaceAboveBelow(above)
 endfunction
 nmap [<space> :call SpaceAboveBelow(1)<cr>
 nmap ]<space> :call SpaceAboveBelow(0)<cr>
+nmap ]b :bnext<cr>
+nmap [b :bprev<cr>
+nmap ]c :cnext<cr>
+nmap [c :cprev<cr>
 
 function! RestoreWindowLayout()
 
