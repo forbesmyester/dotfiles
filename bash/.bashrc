@@ -133,7 +133,7 @@ BASE16_SHELL=$HOME/.vendor/base16-shell/
 
 EDITOR=vim
 GIT_EDITOR=$EDITOR
-PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin
+PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
 
