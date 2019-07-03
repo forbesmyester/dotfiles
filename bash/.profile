@@ -26,3 +26,5 @@ if [ -t 1 ]; then
 fi
 
 # source /home/fozz/.dvm/dvm.sh
+
+export PATH="$HOME/.cargo/bin:$PATH"
