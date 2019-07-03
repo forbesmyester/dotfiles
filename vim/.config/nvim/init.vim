@@ -354,20 +354,21 @@ function! s:check_back_space() abort
 endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-nmap <silent> <C-e>d <Plug>(coc-definition)
-nmap <silent> <C-e>y <Plug>(coc-type-definition)
-nmap <silent> <C-e>i <Plug>(coc-implementation)
-nmap <silent> <C-e>r <Plug>(coc-references)
-nmap <silent> <C-e>= <Plug>(coc-format-selected)
-vmap <silent> <C-e>= <Plug>(coc-format-selected)
-nmap <silent> <C-e>a <Plug>(coc-codeaction)
-nmap <silent> <C-e>f :CocList outline<cr>
-nmap <silent> <C-e>F :CocList -I symbols<cr>
-nmap <silent> <C-e>n <Plug>(coc-rename)
-nmap <silent> <C-e>q <Plug>(coc-fix-current)
-nmap <silent> <C-e><CR> :call CocAction('doHover')<CR>
-nmap <silent> <C-e>[ <Plug>(coc-diagnostic-prev)
-nmap <silent> <C-e>] <Plug>(coc-diagnostic-next)
+let mapleader = "se"
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>y <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>r <Plug>(coc-references)
+nmap <silent> <leader>= <Plug>(coc-format-selected)
+vmap <silent> <leader>= <Plug>(coc-format-selected)
+nmap <silent> <leader>a <Plug>(coc-codeaction)
+nmap <silent> <leader>f :CocList outline<cr>
+nmap <silent> <leader>F :CocList -I symbols<cr>
+nmap <silent> <leader>n <Plug>(coc-rename)
+nmap <silent> <leader>q <Plug>(coc-fix-current)
+nmap <silent> <leader><CR> :call CocAction('doHover')<CR>
+nmap <silent> [e <Plug>(coc-diagnostic-prev)
+nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
 highlight CocHighlightText ctermfg=black ctermbg=white
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -513,13 +514,15 @@ let g:tern_show_argument_hints='on_move'
 " let g:necoghc_enable_detailed_browse = 1
 
 " = Key Bindings ======================================================
-let mapleader = "\<space>"
+map s <Nop>
+set ttimeout!
 nnoremap ' `
 nnoremap ` '
 map U <C-r>
-nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>N
 nmap <silent> <leader>/ :nohlsearch<ESC>
 map <leader>: :set norelativenumber<CR>
+map <leader>l :
 imap <Home> <esc>^i
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap Y y$
@@ -549,13 +552,11 @@ omap s :normal vs<CR>
 " let g:buffergator_sort_regime = 'mru'
 " let g:buffergator_display_regime = 'bufname'
 " let g:buffergator_suppress_keymaps = 1
+let mapleader = "ss"
 let g:fzf_buffers_jump = 1
-map <C-s><C-f> :Files<CR>
-map <C-s><C-d> :Buffers<CR>
-map <C-s><C-s> :Rg<CR>
-map <C-s>f :Files<CR>
-map <C-s>d :Buffers<CR>
-map <C-s>s :Rg<CR>
+map <leader>f :Files<CR>
+map <leader>d :Buffers<CR>
+map <leader>s :Rg<CR>
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -693,15 +694,19 @@ endfunction
 
 
 
-nmap <leader><leader>r :call SetUnitTest()<CR>
-nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
-" nmap <leader>r :vertical resize 86<CR>
 
-nmap gr <Plug>(neoterm-repl-send)
-nmap grr <Plug>(neoterm-repl-send-line)
+let mapleader = "sr"
+nmap <leader>qu :call SetUnitTest()<CR>
+nmap <leader>qp :call SetPreUnitTest()<CR>
+
+nmap <leader>p <Plug>(neoterm-repl-send)
+nmap <leader>r <Plug>(neoterm-repl-send-line)
 nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
-nmap <leader><Enter> grip
-nmap <leader>d<Enter> :'{,'} DB<CR>
+" nmap <leader><Enter> grip
+
+let mapleader = "sd"
+nmap <leader>p :'{,'} DB<CR>
+nmap <leader>d :. DB<CR>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
