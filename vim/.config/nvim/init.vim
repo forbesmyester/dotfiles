@@ -25,6 +25,7 @@ Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
+Plug 'haya14busa/vim-asterisk'
 Plug 'simeji/winresizer'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -41,8 +42,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'drzel/vim-line-no-indicator'
-
-Plug 'inside/vim-search-pulse'
 
 
 " Colours / Style
@@ -513,22 +512,31 @@ let g:tern_show_argument_hints='on_move'
 " " = Neco-ghc  =======================================================
 " let g:necoghc_enable_detailed_browse = 1
 
+" = VIM Asterisk ======================================================
+"
+let g:asterisk#keeppos = 1
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)"
+
 " = Key Bindings ======================================================
 map s <Nop>
+let mapleader = "s"
 set ttimeout!
 nnoremap ' `
 nnoremap ` '
 map U <C-r>
-nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>N
+" noremap * :let @/=expand("<cword>")<CR>:set hlsearch<CR>
 nmap <silent> <leader>/ :nohlsearch<ESC>
 map <leader>: :set norelativenumber<CR>
 map <leader>l :
 imap <Home> <esc>^i
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap Y y$
-vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
-    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
-omap s :normal vs<CR>
+" vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+"     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+" omap s :normal vs<CR>
 
 " = Typescript =====================================================
 " let g:tsuquyomi_use_dev_node_module = 2
@@ -693,19 +701,18 @@ endfunction
 
 
 
+let mapleader = "s"
+nmap <leader>l :
 
+nmap <leader>rqu :call SetUnitTest()<CR>
+nmap <leader>rqp :call SetPreUnitTest()<CR>
 
-let mapleader = "sr"
-nmap <leader>qu :call SetUnitTest()<CR>
-nmap <leader>qp :call SetPreUnitTest()<CR>
-
-nmap <leader>p <Plug>(neoterm-repl-send)
-nmap <leader>r <Plug>(neoterm-repl-send-line)
-nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
-" nmap <leader><Enter> grip
+nmap <leader>r <Plug>(neoterm-repl-send)
+nmap <leader>rr <Plug>(neoterm-repl-send-line)
+nmap <leader>rc :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
 
 let mapleader = "sd"
-nmap <leader>p :'{,'} DB<CR>
+nmap <leader>ip :'{,'} DB<CR>
 nmap <leader>d :. DB<CR>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
