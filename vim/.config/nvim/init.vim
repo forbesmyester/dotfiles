@@ -41,7 +41,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'drzel/vim-line-no-indicator'
 
 
 " Colours / Style
@@ -56,11 +55,12 @@ if &term == 'nvim'
         \     'left': [ [ 'mode', 'paste' ],
         \               [ 'cocstatus' ],
         \               ['filename', 'readonly', 'modified' ] ],
-        \     'right': [ [ 'lineinfo' ],
+        \     'right': [ [ 'posinfo' ],
         \                [ 'filetype' ],
         \                [ 'fileencoding'] ]
         \   },
         \   'component_function': {
+        \     'posinfo': 'LightlinePositionInfo',
         \     'filename': 'LightlineFilename',
         \     'filetype': 'LightlineFiletype',
         \     'cocstatus': 'CocStatus',
@@ -70,6 +70,11 @@ if &term == 'nvim'
         \   },
         \ }
         " \                [ 'fileformat', 'fileencoding'] ]
+
+    function! LightlinePositionInfo()
+        let cp = getpos(".")
+        return join([winnr(), "@", cp[1], ":", cp[2]], "")
+    endfunction
 
     function! LightlineFilename()
         let filename = winwidth(0) > 85 ?  expand('%') : expand('%:t')
