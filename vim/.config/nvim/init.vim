@@ -524,6 +524,7 @@ map *  <Plug>(asterisk-z*)
 map #  <Plug>(asterisk-z#)
 map g* <Plug>(asterisk-gz*)
 map g# <Plug>(asterisk-gz#)"
+nmap <CR> ;
 
 " = Key Bindings ======================================================
 map s <Nop>
