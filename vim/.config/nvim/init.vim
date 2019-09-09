@@ -518,8 +518,7 @@ let g:tern_show_argument_hints='on_move'
 " let g:necoghc_enable_detailed_browse = 1
 
 " = VIM Asterisk ======================================================
-"
-let g:asterisk#keeppos = 1
+
 map *  <Plug>(asterisk-z*)
 map #  <Plug>(asterisk-z#)
 map g* <Plug>(asterisk-gz*)
