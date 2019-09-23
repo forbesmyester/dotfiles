@@ -153,7 +153,7 @@ export NVM_DIR="/home/fozz/.nvm"
 
 if [ ! -d /var/run/user/$UID/nvim ]; then
     mkdir /var/run/user/$UID/nvim
-    chown 700 /var/run/user/$UID/nvim
+    chmod 700 /var/run/user/$UID/nvim
 fi
 
 if [ ! -d /home/fozz/.tmp ]; then
