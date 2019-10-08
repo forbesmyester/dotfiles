@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Knime
+Comment=Analytics Platform
+GenericName=Analytics Platform
+Exec=/home/fozz/.vendor/knime_3.7.2/knime
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+# Icon=firefox
+Categories=Office
+# MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;
+StartupNotify=true
