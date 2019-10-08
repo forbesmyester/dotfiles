@@ -2,7 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-[ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
+# To use Python VirtualEnv uncomment the following
+# [ -n "$PS1" ] && source ~/.python-default-virtualenv/bin/activate
 
 # If not running interactively, don't do anything
 case $- in
@@ -128,12 +129,13 @@ fi
 
 # Below my customizations
 
-BASE16_SHELL=$HOME/.vendor/base16-shell/
+BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-EDITOR=vim
-GIT_EDITOR=$EDITOR
-PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin
+export VISUAL=vim
+export EDITOR=$VISUAL
+export GIT_EDITOR=$EDITOR
+PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
 NODE_ENV=development
 HISTCONTROL=ignorespace
 
@@ -148,6 +150,11 @@ export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
+if [ ! -d /var/run/user/$UID/nvim ]; then
+    mkdir /var/run/user/$UID/nvim
+    chmod 700 /var/run/user/$UID/nvim
+fi
 
 if [ ! -d /home/fozz/.tmp ]; then
     mkdir ~/.tmp

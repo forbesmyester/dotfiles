@@ -25,6 +25,7 @@ Plug 'gorkunov/smartpairs.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mbbill/undotree'
 Plug 'vim-scripts/YankRing.vim'
+Plug 'haya14busa/vim-asterisk'
 Plug 'simeji/winresizer'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -40,9 +41,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'drzel/vim-line-no-indicator'
-
-Plug 'inside/vim-search-pulse'
 
 
 " Colours / Style
@@ -57,11 +55,12 @@ if &term == 'nvim'
         \     'left': [ [ 'mode', 'paste' ],
         \               [ 'cocstatus' ],
         \               ['filename', 'readonly', 'modified' ] ],
-        \     'right': [ [ 'lineinfo' ],
+        \     'right': [ [ 'posinfo' ],
         \                [ 'filetype' ],
         \                [ 'fileencoding'] ]
         \   },
         \   'component_function': {
+        \     'posinfo': 'LightlinePositionInfo',
         \     'filename': 'LightlineFilename',
         \     'filetype': 'LightlineFiletype',
         \     'cocstatus': 'CocStatus',
@@ -71,6 +70,11 @@ if &term == 'nvim'
         \   },
         \ }
         " \                [ 'fileformat', 'fileencoding'] ]
+
+    function! LightlinePositionInfo()
+        let cp = getpos(".")
+        return join([winnr(), "@", cp[1], ":", cp[2]], "")
+    endfunction
 
     function! LightlineFilename()
         let filename = winwidth(0) > 85 ?  expand('%') : expand('%:t')
@@ -96,7 +100,8 @@ if &term == 'nvim'
     endfunction
 
     function! LightlineFileformat()
-        return winwidth(0) > 85 ? &fileformat : ''
+        " return winwidth(0) > 85 ? &fileformat : ''
+        return &fileformat
     endfunction
 
     function! LightlineFiletype()
@@ -166,7 +171,7 @@ Plug 'google/vim-jsonnet'
 " Plug 'venantius/vim-eastwood'
 
 " ReasonJS
-Plug 'reasonml-editor/vim-reason-plus'
+" Plug 'reasonml-editor/vim-reason-plus'
 
 " LanguageClient
 " Plug 'autozimu/LanguageClient-neovim', {
@@ -353,20 +358,21 @@ function! s:check_back_space() abort
 endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-nmap <silent> <C-e>d <Plug>(coc-definition)
-nmap <silent> <C-e>y <Plug>(coc-type-definition)
-nmap <silent> <C-e>i <Plug>(coc-implementation)
-nmap <silent> <C-e>r <Plug>(coc-references)
-nmap <silent> <C-e>= <Plug>(coc-format-selected)
-vmap <silent> <C-e>= <Plug>(coc-format-selected)
-nmap <silent> <C-e>a <Plug>(coc-codeaction)
-nmap <silent> <C-e>f :CocList outline<cr>
-nmap <silent> <C-e>F :CocList -I symbols<cr>
-nmap <silent> <C-e>n <Plug>(coc-rename)
-nmap <silent> <C-e>q <Plug>(coc-fix-current)
-nmap <silent> <C-e><CR> :call CocAction('doHover')<CR>
-nmap <silent> <C-e>[ <Plug>(coc-diagnostic-prev)
-nmap <silent> <C-e>] <Plug>(coc-diagnostic-next)
+let mapleader = "se"
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>y <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>r <Plug>(coc-references)
+nmap <silent> <leader>= <Plug>(coc-format-selected)
+vmap <silent> <leader>= <Plug>(coc-format-selected)
+nmap <silent> <leader>a <Plug>(coc-codeaction)
+nmap <silent> <leader>f :CocList outline<cr>
+nmap <silent> <leader>F :CocList -I symbols<cr>
+nmap <silent> <leader>n <Plug>(coc-rename)
+nmap <silent> <leader>q <Plug>(coc-fix-current)
+nmap <silent> <leader><CR> :call CocAction('doHover')<CR>
+nmap <silent> [e <Plug>(coc-diagnostic-prev)
+nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
 highlight CocHighlightText ctermfg=black ctermbg=white
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -459,18 +465,11 @@ augroup LineNumberFlip
 	au insertenter * :call LineNumberFlipFunc(1)
 	au insertleave * :call LineNumberFlipFunc(0)
 augroup end
-map <leader>: :set norelativenumber<CR>
 
 " = Fugitive ======================================================
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
 set diffopt+=vertical
-
-" = YouCompleteMe ===================================================
-
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_semantic_triggers = {'haskell,javascript,typescript' : ['.']}
-
 
 " = GUI Visual Style ================================================
 
@@ -518,19 +517,31 @@ let g:tern_show_argument_hints='on_move'
 " " = Neco-ghc  =======================================================
 " let g:necoghc_enable_detailed_browse = 1
 
+" = VIM Asterisk ======================================================
+
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)"
+nmap <CR> ;
+
 " = Key Bindings ======================================================
-" let mapleader = "\<space>"
+map s <Nop>
+let mapleader = "s"
+set ttimeout!
+nnoremap ' `
+nnoremap ` '
 map U <C-r>
-map <C-o> <PageDown>
-map <C-i> <PageUp>
-nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+" noremap * :let @/=expand("<cword>")<CR>:set hlsearch<CR>
 nmap <silent> <leader>/ :nohlsearch<ESC>
+map <leader>: :set norelativenumber<CR>
+map <leader>l :
 imap <Home> <esc>^i
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap Y y$
-vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
-    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
-omap s :normal vs<CR>
+" vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+"     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+" omap s :normal vs<CR>
 
 " = Typescript =====================================================
 " let g:tsuquyomi_use_dev_node_module = 2
@@ -554,13 +565,11 @@ omap s :normal vs<CR>
 " let g:buffergator_sort_regime = 'mru'
 " let g:buffergator_display_regime = 'bufname'
 " let g:buffergator_suppress_keymaps = 1
+let mapleader = "ss"
 let g:fzf_buffers_jump = 1
-map <C-s><C-f> :Files<CR>
-map <C-s><C-d> :Buffers<CR>
-map <C-s><C-s> :Rg<CR>
-map <C-s>f :Files<CR>
-map <C-s>d :Buffers<CR>
-map <C-s>s :Rg<CR>
+map <leader>f :Files<CR>
+map <leader>d :Buffers<CR>
+map <leader>s :Rg<CR>
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -697,16 +706,19 @@ endfunction
 
 
 
+let mapleader = "s"
+nmap <leader>l :
 
-nmap <leader><leader>r :call SetUnitTest()<CR>
-nmap <leader><leader><leader>r :call SetPreUnitTest()<CR>
-" nmap <leader>r :vertical resize 86<CR>
+nmap <leader>rqu :call SetUnitTest()<CR>
+nmap <leader>rqp :call SetPreUnitTest()<CR>
 
-nmap gr <Plug>(neoterm-repl-send)
-nmap grr <Plug>(neoterm-repl-send-line)
-nmap <leader>c :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
-nmap <leader><Enter> grip
-nmap <leader>d<Enter> :'{,'} DB<CR>
+nmap <leader>r <Plug>(neoterm-repl-send)
+nmap <leader>rr <Plug>(neoterm-repl-send-line)
+nmap <leader>rc :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
+
+let mapleader = "sd"
+nmap <leader>ip :'{,'} DB<CR>
+nmap <leader>d :. DB<CR>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
@@ -742,6 +754,10 @@ function! SpaceAboveBelow(above)
 endfunction
 nmap [<space> :call SpaceAboveBelow(1)<cr>
 nmap ]<space> :call SpaceAboveBelow(0)<cr>
+nmap ]b :bnext<cr>
+nmap [b :bprev<cr>
+nmap ]c :cnext<cr>
+nmap [c :cprev<cr>
 
 function! RestoreWindowLayout()
 
