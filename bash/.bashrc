@@ -133,12 +133,15 @@ fi
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-EDITOR=vim
+VISUAL=vim
+VISUAL=vim
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    EDITOR="nvr -cc split --remote-wait"
+    VISUAL="nvr -cc split --remote-wait"
 fi
-export EDITOR
+export VISUAL
+export EDITOR=$VISUAL
 export GIT_EDITOR=$EDITOR
+
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
 export NODE_ENV=development
 export HISTCONTROL=ignorespace
@@ -154,6 +157,11 @@ export NVM_DIR="/home/fozz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
+if [ ! -d /var/run/user/$UID/nvim ]; then
+    mkdir /var/run/user/$UID/nvim
+    chmod 700 /var/run/user/$UID/nvim
+fi
 
 if [ ! -d /home/fozz/.tmp ]; then
     mkdir ~/.tmp
