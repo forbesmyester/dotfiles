@@ -11,6 +11,7 @@ case $- in
       *) return;;
 esac
 
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -133,10 +134,14 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 EDITOR=vim
-GIT_EDITOR=$EDITOR
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    EDITOR="nvr -cc split --remote-wait"
+fi
+export EDITOR
+export GIT_EDITOR=$EDITOR
 PATH=${PATH}:~/.scripts:~/.vendor/bin:node_modules/.bin:~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
-NODE_ENV=development
-HISTCONTROL=ignorespace
+export NODE_ENV=development
+export HISTCONTROL=ignorespace
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export JDK_HOME="$JAVA_HOME"
@@ -169,6 +174,9 @@ alias todo="todo-txt -d ~/.config/todo.txt/todo.cfg"
 alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")'
 alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*//'"'"')'
 export PATH="$HOME/.cargo/bin:$PATH"
+
+export NAVI_PATH="$HOME/.config/navi/:$HOME/.local/navi/cheats/"
+alias navi='~/.local/navi/navi'
 
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
