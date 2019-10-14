@@ -165,7 +165,7 @@ Plug 'google/vim-jsonnet'
 
 " Clojure
 " Plug 'guns/vim-clojure-static'
-" Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 " Plug 'tpope/vim-fireplace'
 " Plug 'tpope/vim-salve'
 " Plug 'venantius/vim-eastwood'
@@ -228,6 +228,9 @@ Plug 'rust-lang/rust.vim'
 " Plug 'guns/vim-sexp'
 " " Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " " Plug 'web-indent'
+
+Plug 'nikvdp/neomux'
+Plug 'habamax/vim-sendtoterm'
 
 call plug#end()
 
@@ -691,6 +694,13 @@ function! StripCommentBeforeTmuxPost(s)
     return r
 endfunction
 
+
+" Use with :windo call MyNeomuxPasteImpl()
+function MyNeomuxPasteImpl()
+    if (&buftype == 'terminal')
+        exec "silent normal p"
+    endif
+endfunction
 
 
 let mapleader = "s"
