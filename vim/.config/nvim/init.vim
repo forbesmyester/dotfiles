@@ -77,7 +77,7 @@ if &term == 'nvim'
     endfunction
 
     function! LightlineFilename()
-        let filename = winwidth(0) > 85 ?  expand('%') : expand('%:t')
+        let filename = winwidth(0) > 75 ? expand('%') : expand('%:t')
         return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
                 \ &filetype ==# 'unite' ? unite#get_status_string() :
                 \ &filetype ==# 'neoterm' ? 'NEOTERM' :
@@ -417,16 +417,18 @@ set signcolumn=yes
 let g:gitgutter_realtime=1
 
 " = NeoTerm ======================================================
+nmap <C-w>t :Topen<CR>:vertical resize 10<CR><C-w>li
+let g:neoterm_default_mod = "botright vertical"
 " let g:neoterm_shell = "fish -l"
 " let g:neoterm_repl_command = "fish -l"
 " let g:neoterm_direct_open_repl = 1
 " " let g:neoterm_autoscroll = 1
-let g:neoterm_default_mod = "botright vertical"
 " let g:neoterm_use_relative_path = 1
 
 " Changes
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
+
 
 " = Airline =======================================================
 
@@ -650,13 +652,61 @@ let g:rainbow_conf =
     \}
 
 
+function MakeTerminalVisibleInit()
+    " Terminal should to be at least 80 with text file at least 80 for side by
+    " side, otherwise we should make it full(ish) width and toggle.
+    let cols = &columns
+    if ((g:neoterm_default_mod == "botright vertical") && ((!exists("g:neoterm_size")) || (g:neoterm_size == "")))
+        let g:neoterm_size = ((cols - 4) / 2)
+        if (g:neoterm_size < 80)
+            let g:neoterm_size = cols - 4
+        endif
+    endif
+endfunction
+
+function MakeTerminalVisibleConfig()
+
+    let vert = input("do you want a vertical terminal? (1/0)", "")
+    let g:neoterm_default_mod = "belowright"
+    if (vert)
+        let g:neoterm_default_mod = "botright vertical"
+    endif
+
+    call MakeTerminalVisibleInit()
+
+    let g:neoterm_size = input("specify terminal size (number):", g:neoterm_size)
+
+endfunction
+
+" -1 means not visible, any number above is the actual number.
+function! GetVisibleTerminalWindowNumber()
+    let i = 0
+    let n = bufnr('$')
+    while i < n
+        let i = i + 1
+        if bufname(i) =~ '^term:'
+            return bufwinnr(i)
+        endif
+    endwhile
+    return -1
+endfun
+
+" This is called in ~/.prompt (!)
+function! MakeTerminalVisible()
+    call MakeTerminalVisibleInit()
+    if GetVisibleTerminalWindowNumber() == -1
+        Topen
+    endif
+endfun
+
 function RunUnitTest()
     " exec 'Neomake'
     if (exists("g:pre_unit_test_command"))
         exec "silent normal " . g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
-            exec "T " . g:unit_test_command
+        hi LineNr ctermfg=3
+        exec "T " . g:unit_test_command
     endif
 endfunction
 
@@ -682,26 +732,18 @@ function SetUnitTest()
     endif
 endfunction
 
-function! StripCommentBeforeTmuxPost(s)
-    return a:s
-    let r = matchstr(a:s, '\w.*')
-    if empty(r)
-        return a:s
-    endif
-    return r
-endfunction
-
-
-
 let mapleader = "s"
 nmap <leader>l :
 
 nmap <leader>rqu :call SetUnitTest()<CR>
+nmap <leader>rqc :call MakeTerminalVisibleConfig()<CR>
 nmap <leader>rqp :call SetPreUnitTest()<CR>
 
 nmap <leader>r <Plug>(neoterm-repl-send)
 nmap <leader>rr <Plug>(neoterm-repl-send-line)
 nmap <leader>rc :call neoterm#exec({ 'cmd': ["\<c-c>"] })<cr>
+autocmd BufWritePost * :call RunUnitTest()
+
 
 let mapleader = "sd"
 nmap <leader>ip :'{,'} DB<CR>
@@ -709,7 +751,6 @@ nmap <leader>d :. DB<CR>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
-autocmd BufWritePost * :call RunUnitTest()
 
 :com ToggleMenu if &go=~'m'|set go-=m|else|set go+=m|endif
 set go-=m

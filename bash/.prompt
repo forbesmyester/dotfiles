@@ -18,6 +18,16 @@ function __prompt_command() {
     if [ $PS1_EXIT_STATUS -eq 0 ]; then
         PS1_EXIT="${GREEN}[$PS1_EXIT_STATUS]"
     fi
+
+    if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+        if [ $PS1_EXIT_STATUS -eq 0 ]; then
+            nvr -c 'hi LineNr ctermfg=8'
+        else
+            nvr -c 'hi LineNr ctermfg=1'
+            nvr -c 'call MakeTerminalVisible()'
+        fi
+    fi
+
     local PS1_GIT_BRANCH=''
     git status 2>/dev/null > /dev/null
     if [ $? -eq 0 ]; then
