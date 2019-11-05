@@ -651,6 +651,10 @@ let g:rainbow_conf =
 	\	}
     \}
 
+function! ResizeTo80()
+    exec "vertical resize " . (80 + &numberwidth + 2)
+endfunction
+nmap <C-w>8 :call ResizeTo80()<CR>
 
 function MakeTerminalVisibleInit()
     " Terminal should to be at least 80 with text file at least 80 for side by
@@ -742,6 +746,7 @@ nmap <leader>rqp :call SetPreUnitTest()<CR>
 nmap <leader>r <Plug>(neoterm-repl-send)
 nmap <leader>rr <Plug>(neoterm-repl-send-line)
 nmap <leader>rc :Tkill<CR>
+nmap <leader>rt :Ttoggle<CR>
 autocmd BufWritePost * :call RunUnitTest()
 
 
