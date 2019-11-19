@@ -187,3 +187,7 @@ alias navi='~/.local/navi/navi'
 
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+
+export PATH="$HOME/.basher/bin:$PATH" # https://github.com/basherpm/basher
+eval "$(basher init -)"
