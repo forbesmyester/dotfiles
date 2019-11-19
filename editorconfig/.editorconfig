@@ -47,3 +47,6 @@ indent_size = 2
 
 [*.jade]
 indent_size = 2
+
+[*.svelte]
+indent_size = 2
