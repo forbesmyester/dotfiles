@@ -1,12 +1,64 @@
 #!/bin/bash
+set -euo pipefail
 
-CPU_COUNT=$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
+show_help() {
+    echo "NAME:"
+    echo "  $0 - Gets the load of the system"
+    echo ""
+    echo "USAGE:"
+    echo "  $0 <STATISTIC> <OUTPUT>"
+    echo ""
+    echo "ARGUMENTS:"
+    echo "  OUTPUT     This must be either 'help', 'graph' or 'plain'"
+    echo "  STATISTIC  This must be either 'load', 'battery', 'memory' or 'swap'"
+    echo ""
+}
 
-OUT="100"
-for l in $(uptime | sed 's/.*\://' | sed 's/,//g'); do
-    printf -v jlh "%0.0f" $(echo "scale=2; ($l / $CPU_COUNT) * 100" | bc -l)
-    OUT="$OUT $jlh"
-done
-GRAPH=$(echo $OUT | spark)
-echo "${GRAPH:1} $(free -w | awk '/Mem:/ { total=$2 } /Mem:/ { used=$8 } END { print (used / total) * 100}' | sed 's/\..*//')%/$(free -w | awk '/Swap:/ { total=$2 } /Swap:/ { used=$3 } END { print (used / total) * 100}' | sed 's/[\.].*//')%"
+if [ $# -gt 0 ] && [ $1 == "help" ]; then
+    show_help
+    exit 0
+fi
 
+if [ $# -lt 2 ]; then
+    show_help
+    exit 1;
+fi
+
+V=""
+
+if [ $1 == "load" ]; then
+    CPU_COUNT=$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
+
+    for l in $(uptime | sed 's/.*\: \+//' | sed 's/,//g'); do
+        printf -v jlh "%0.0f" $(echo "scale=2; ($l / $CPU_COUNT) * 100" | bc -l)
+        V="$V $jlh"
+    done
+    V=${V:1}
+fi
+
+if [ $1 == "battery" ]; then
+    V=$(( 100 - $(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | sed 's/.*: *//' | sed 's/%//') ))
+fi
+
+if [ $1 == "memory" ]; then
+    V=$(free -w | awk '/Mem:/ { total=$2 } /Mem:/ { used=$8 } END { print (1 - (used / total)) * 100}' | sed 's/\..*//')
+fi
+
+if [ $1 == "swap" ]; then
+    V=$(free -w | awk '/Swap:/ { total=$2 } /Swap:/ { used=$3 } END { print (used / total) * 100}' | sed 's/[\.].*//')
+fi
+
+OUT="100 $V 0"
+if [ $2 == "graph" ]; then
+    GRAPH=$(echo $OUT | spark)
+    echo "${GRAPH:1:-1}"
+    exit 0
+fi
+
+if [ $2 == "plain" ]; then
+    echo "$V"
+    exit 0
+fi
+
+show_help
+exit 1;
