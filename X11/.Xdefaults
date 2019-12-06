@@ -3,11 +3,11 @@
 ! URxvt*boldFont:             xft:Ubuntu Mono derivative Powerline:bold:size=13
 ! URxvt*italicFont:           xft:Ubuntu Mono derivative Powerline:italic:size=13
 ! URxvt*boldItalicFont:       xft:Ubuntu Mono derivative Powerline:bold:italic:size=13
-URxvt*font:                 xft:Roboto Mono for Powerline:regular:size=11, xft:Noto Emoji
-URxvt*imFont:               xft:Roboto Mono for Powerline:regular:size=11, xft:Noto Emoji
-URxvt*boldFont:             xft:Roboto Mono for Powerline:bold:size=11, xft:Noto Emoji
-URxvt*italicFont:           xft:Roboto Mono for Powerline:italic:size=11, xft:Noto Emoji
-URxvt*boldItalicFont:       xft:Roboto Mono for Powerline:bold:italic:size=11, xft:Noto Emoji
+URxvt*font:                 xft:Source Code Pro for Powerline:regular:size=11, xft:Noto Emoji
+URxvt*imFont:               xft:Source Code Pro for Powerline:regular:size=11, xft:Noto Emoji
+URxvt*boldFont:             xft:Source Code Pro for Powerline:bold:size=11, xft:Noto Emoji
+URxvt*italicFont:           xft:Source Code Pro for Powerline:italic:size=11, xft:Noto Emoji
+URxvt*boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=11, xft:Noto Emoji
 ! URxvt*font:                 xft:Hack:regular:size=11
 ! URxvt*imFont:               xft:Hack:regular:size=11
 ! URxvt*boldFont:             xft:Hack:bold:size=11
