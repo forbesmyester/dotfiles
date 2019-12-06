@@ -746,7 +746,7 @@ nmap <leader>rqp :call SetPreUnitTest()<CR>
 nmap <leader>r <Plug>(neoterm-repl-send)
 nmap <leader>rr <Plug>(neoterm-repl-send-line)
 nmap <leader>rc :Tkill<CR>
-nmap <leader>rt :Ttoggle<CR>
+nmap <C-t> :Ttoggle<CR>
 autocmd BufWritePost * :call RunUnitTest()
 
 
