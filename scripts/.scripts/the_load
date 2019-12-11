@@ -26,7 +26,10 @@ fi
 
 V=""
 
-if [ $1 == "load" ]; then
+STATISTIC=$1
+OUTPUT=$2
+
+if [ $STATISTIC == "load" ]; then
     CPU_COUNT=$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)
 
     for l in $(uptime | sed 's/.*\: \+//' | sed 's/,//g'); do
@@ -36,26 +39,36 @@ if [ $1 == "load" ]; then
     V=${V:1}
 fi
 
-if [ $1 == "battery" ]; then
+if [ $STATISTIC == "battery" ]; then
     V=$(( 100 - $(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | sed 's/.*: *//' | sed 's/%//') ))
 fi
 
-if [ $1 == "memory" ]; then
+if [ $STATISTIC == "memory" ]; then
     V=$(free -w | awk '/Mem:/ { total=$2 } /Mem:/ { used=$8 } END { print (1 - (used / total)) * 100}' | sed 's/\..*//')
 fi
 
-if [ $1 == "swap" ]; then
+if [ $STATISTIC == "swap" ]; then
     V=$(free -w | awk '/Swap:/ { total=$2 } /Swap:/ { used=$3 } END { print (used / total) * 100}' | sed 's/[\.].*//')
 fi
 
 OUT="100 $V 0"
-if [ $2 == "graph" ]; then
+if [ $OUTPUT == "graph" ]; then
     GRAPH=$(echo $OUT | spark)
+    # if [ "${STATISTIC}" != "load" ]; then
+    #     # if [ "$V" -gt 95 ]; then
+    #     #     echo "⩩";
+    #     #     exit 0;
+    #     # fi
+    #     if [ "$V" -lt 5 ]; then
+    #         echo "⎽";
+    #         exit 0;
+    #     fi
+    # fi
     echo "${GRAPH:1:-1}"
     exit 0
 fi
 
-if [ $2 == "plain" ]; then
+if [ $OUTPUT == "plain" ]; then
     echo "$V"
     exit 0
 fi
