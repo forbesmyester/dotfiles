@@ -30,9 +30,9 @@ function __prompt_command() {
 
     local PS1_GIT_BRANCH=''
     git status 2>/dev/null > /dev/null
-    if [ $? -eq 0 ]; then
-        local PS1_GIT_BRANCH_OUT=`git rev-parse --abbrev-ref HEAD`
-        if [ -n $PS1_GIT_BRANCH_OUT ]; then
+    if [ "$?" -eq 0 ]; then
+        local PS1_GIT_BRANCH_OUT=`git rev-parse --abbrev-ref HEAD 2>&1`
+        if [ $(echo $PS1_GIT_BRANCH_OUT | grep -v ' ' | wc -l) -eq 1 ]; then
             local PS1_GIT_DIRTY=$([[ -z $(git status --porcelain) ]] || echo ">")
             local PS1_GIT_BEHIND=$([[ -z $(git status --porcelain --branch | grep '\[ahead .\]$') ]] || echo "^")
             local PS1_GIT_BRANCH="${PS1_GIT_BRANCH_OUT} ${PS1_GIT_DIRTY} ${PS1_GIT_BEHIND}"
