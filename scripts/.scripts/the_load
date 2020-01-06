@@ -52,7 +52,7 @@ if [ $STATISTIC == "swap" ]; then
 fi
 
 if [ $OUTPUT == "graph" ]; then
-    echo "$V" | spark-null -m 0 -n 10
+    echo "$V" | spark-null -i -0 -m 0 -n 10
     exit 0
 fi
 
