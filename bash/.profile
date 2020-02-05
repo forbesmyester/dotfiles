@@ -1,7 +1,8 @@
-# if running bash
-if [ -n "$TMUX" ] && [ -n "$DISPLAY" ]; then
-	TERM=screen-256color
-fi
+
+# The below will fix colors etc if required (happens automatically nowadays)
+# if [ -n "$TMUX" ] && [ -n "$DISPLAY" ]; then
+# 	TERM=screen-256color
+# fi
 
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
