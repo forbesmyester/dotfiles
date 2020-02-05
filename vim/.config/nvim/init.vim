@@ -737,7 +737,6 @@ function SetUnitTest()
 endfunction
 
 let mapleader = "s"
-nmap <leader>l :
 
 nmap <leader>rqu :call SetUnitTest()<CR>
 nmap <leader>rqc :call MakeTerminalVisibleConfig()<CR>
