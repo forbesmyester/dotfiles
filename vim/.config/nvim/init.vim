@@ -425,6 +425,7 @@ let g:gitgutter_realtime=1
 " = NeoTerm ======================================================
 nmap <C-w>t :Topen<CR>:vertical resize 10<CR><C-w>li
 let g:neoterm_default_mod = "botright vertical"
+let g:neoterm_autoinsert = 1
 " let g:neoterm_shell = "fish -l"
 " let g:neoterm_repl_command = "fish -l"
 " let g:neoterm_direct_open_repl = 1
@@ -812,6 +813,7 @@ imap <C-j> <ESC><C-j>
 imap <C-h> <ESC><C-h>
 imap <C-k> <ESC><C-k>
 imap <C-l> <ESC><C-l>
+tnoremap <C-t> <c-\><c-n>:Ttoggle<CR>
 
 " " Allow lowercase commands
 " function! CommandCabbr(abbreviation, expansion)
