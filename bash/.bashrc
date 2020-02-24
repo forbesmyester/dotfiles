@@ -184,7 +184,7 @@ alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*/
 export PATH="$HOME/.cargo/bin:$PATH"
 
 export NAVI_PATH="$HOME/.config/navi/:$HOME/.local/navi/cheats/"
-alias navi='~/.local/navi/navi'
+alias navi='~/.local/navi/navi' #https://github.com/denisidoro/navi
 
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

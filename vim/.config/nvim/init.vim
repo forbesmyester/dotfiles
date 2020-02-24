@@ -4,6 +4,7 @@ else
     call plug#begin('~/.vim/plugged')
 endif
 
+let mapleader = "s"
 
 " Libs
 Plug 'tomtom/tlib_vim'
@@ -42,6 +43,12 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
 
+Plug 'chrisbra/unicode.vim'
+
+
+let g:vimwiki_key_mappings = { 'all_maps': 0, }
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+" Plug 'vimwiki/vimwiki'
 
 " Colours / Style
 if &term == 'nvim'
@@ -325,7 +332,7 @@ set diffopt+=iwhite
     set noshowmode
     let base16colorspace=256
     set background=dark
-    colorscheme base16-default-dark
+    colorscheme base16-woodland
     if &listchars ==# 'eol:$'
         if !has('win32') && (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
             set list
@@ -360,25 +367,23 @@ function! s:check_back_space() abort
 endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-let mapleader = "se"
-nmap <silent> <leader>d <Plug>(coc-definition)
-nmap <silent> <leader>y <Plug>(coc-type-definition)
-nmap <silent> <leader>i <Plug>(coc-implementation)
-nmap <silent> <leader>r <Plug>(coc-references)
-nmap <silent> <leader>= <Plug>(coc-format-selected)
-vmap <silent> <leader>= <Plug>(coc-format-selected)
-nmap <silent> <leader>a <Plug>(coc-codeaction)
-nmap <silent> <leader>f :CocList outline<cr>
-nmap <silent> <leader>F :CocList -I symbols<cr>
-nmap <silent> <leader>n <Plug>(coc-rename)
-nmap <silent> <leader>q <Plug>(coc-fix-current)
+nmap <silent> <leader>ed <Plug>(coc-definition)
+nmap <silent> <leader>ey <Plug>(coc-type-definition)
+nmap <silent> <leader>ei <Plug>(coc-implementation)
+nmap <silent> <leader>er <Plug>(coc-references)
+" nmap <silent> <leader>e= <Plug>(coc-format-selected)
+" vmap <silent> <leader>e= <Plug>(coc-format-selected)
+nmap <silent> <leader>ea <Plug>(coc-codeaction)
+nmap <silent> <leader>ef :CocList outline<cr>
+nmap <silent> <leader>eF :CocList -I symbols<cr>
+nmap <silent> <leader>en <Plug>(coc-rename)
+nmap <silent> <leader>eq <Plug>(coc-fix-current)
 nmap <silent> <leader><CR> :call CocAction('doHover')<CR>
 nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
 highlight CocHighlightText ctermfg=black ctermbg=white
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 
 " = vim-easy-align ================================================
 
@@ -407,11 +412,11 @@ nmap ga <Plug>(EasyAlign)
 let g:sexp_filetypes = ''
 
 " = Breakindent Patch =============================================
-if exists("&breakindent")
-    set showbreak=..
-    set breakindentopt=shift:0,sbr
-    set breakindent
-endif
+" if exists("&breakindent")
+"     set showbreak=..
+"     set breakindentopt=shift:0,sbr
+"     set breakindent
+" endif
 
 " = GitGutter  ====================================================
 set signcolumn=yes
@@ -527,11 +532,9 @@ map *  <Plug>(asterisk-z*)
 map #  <Plug>(asterisk-z#)
 map g* <Plug>(asterisk-gz*)
 map g# <Plug>(asterisk-gz#)"
-nmap <CR> ;
 
 " = Key Bindings ======================================================
 map s <Nop>
-let mapleader = "s"
 set ttimeout!
 nnoremap ' `
 nnoremap ` '
@@ -543,37 +546,15 @@ map <leader>l :
 imap <Home> <esc>^i
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap Y y$
+nmap <CR> ;
 " vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
 "     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 " omap s :normal vs<CR>
 
-" = Typescript =====================================================
-" let g:tsuquyomi_use_dev_node_module = 2
-" let g:tsuquyomi_tsserver_path = './node_modules/typescript/lib/tsserver.js'
-" let g:tsuquyomi_disable_default_mappings = 1
-" let g:tsuquyomi_case_sensitive_imports = 1
-" let g:tsuquyomi_ignore_missing_modules = 1
-" let g:tsuquyomi_completion_detail = 1
-" let g:tsuquyomi_disable_quickfix = 0
-" " let g:tsuquyomi_definition_split = 1
-" " set ballooneval
-" " autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
-" let g:tsuquyomi_use_vimproc = 1
-" autocmd FileType typescript nmap <buffer> <Leader>tt : <C-u>echo tsuquyomi#hint()<CR>
-" autocmd FileType typescript nmap <leader>td :TsuDefinition<CR>
-" autocmd FileType typescript nmap <leader>tr :TsuReferences<CR>
-" autocmd FileType typescript nmap <leader>tn :TsuRenameSymbolC<CR>
-
-" = FZF ================================================
-" let g:buffergator_viewport_split_policy = 'N'
-" let g:buffergator_sort_regime = 'mru'
-" let g:buffergator_display_regime = 'bufname'
-" let g:buffergator_suppress_keymaps = 1
-let mapleader = "ss"
 let g:fzf_buffers_jump = 1
-map <leader>f :Files<CR>
-map <leader>d :Buffers<CR>
-map <leader>s :Rg<CR>
+map <leader>sf :Files<CR>
+map <leader>sd :Buffers<CR>
+map <leader>ss :Rg<CR>
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -582,42 +563,6 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 " autocmd BufReadPost buffergator://* set bufhidden=delete
 " autocmd FileType buffergator set ma
-
-
-
-" = Markdown =====================================================
-" function! s:auto_goyo()
-"     if &ft == 'markdown' && winnr('$') == 1
-"         Goyo 80
-"     elseif exists('#goyo')
-"         Goyo!
-"     endif
-" endfunction
-"
-" function! s:goyo_leave()
-"     if winnr('$') < 2
-"         silent! :q
-"     endif
-" endfunction
-"
-" augroup goyo_markdown
-"     autocmd!
-"     autocmd BufNewFile,BufRead * call s:auto_goyo()
-"     autocmd! User GoyoLeave nested call s:goyo_leave()
-" augroup END
-
-" au BufNewFile,BufReadPost *.md set filetype=markdown
-" let g:markdown_fenced_languages = ['javascript', 'bash']
-" let g:markdown_enable_folding=1
-" let g:markdown_enable_mappings = 0
-
-
-" = vim-illuminate ================================================
-"
-" Plug 'RRethy/vim-illuminate'
-" let g:Illuminate_ftblacklist = ['markdown']
-" let g:Illuminate_highlightUnderCursor = 1
-" hi illuminatedWord cterm=bold gui=bold
 
 " = vim-json ======================================================
 let g:vim_json_syntax_conceal = 0
@@ -636,7 +581,24 @@ let g:syntastic_dosini_checkers = ["dosini"]
 let g:syntastic_make_checkers = ["gnumake"]
 let g:syntastic_yaml_checkers = ["pyyaml"]
 
-" let g:vim_markdown_no_default_key_mappings=1
+" = vimwiki =======================================================
+
+let g:vimwiki_map_prefix='<leader><leader><leader><leader>w'
+let g:vimwiki_conceallevel=0
+let g:vimwiki_list = [
+            \{'path': '/home/fozz/Documents/Personal Wiki', 'syntax': 'markdown', 'ext': '.md'},
+            \{'path': '/home/fozz/Documents/Work Wiki', 'syntax': 'markdown', 'ext': '.md'}
+            \]
+
+nmap <leader>pp :VimwikiMakeDiaryNote 1<CR>
+nmap <leader>py :VimwikiMakeYesterdayDiaryNote 1<CR>
+nmap <leader>pt :VimwikiMakeTomorrowDiaryNote 1<CR>
+nmap <leader>ww :VimwikiMakeDiaryNote 2<CR>
+nmap <leader>wy :VimwikiMakeYesterdayDiaryNote 2<CR>
+nmap <leader>wt :VimwikiIndex 2<CR>
+
+" =================================================================
+
 " autocmd FileType md set wrap|set linebreak|set nolist "|set textwidth=0|set wrapmargin=0|set formatoptions+=1
 
 let g:rainbow_active = 1
@@ -736,8 +698,6 @@ function SetUnitTest()
     endif
 endfunction
 
-let mapleader = "s"
-nmap <leader>l :
 
 nmap <leader>rqu :call SetUnitTest()<CR>
 nmap <leader>rqc :call MakeTerminalVisibleConfig()<CR>
@@ -750,9 +710,8 @@ nmap <C-t> :Ttoggle<CR>
 autocmd BufWritePost * :call RunUnitTest()
 
 
-let mapleader = "sd"
-nmap <leader>ip :'{,'} DB<CR>
-nmap <leader>d :. DB<CR>
+nmap <leader>dip :'{,'} DB<CR>
+nmap <leader>dd :. DB<CR>
 
 " vmap <C-Space>r :call SendToTmux(@* . "\n")<CR>
 " autocmd BufWritePost *.clj :Require
@@ -878,12 +837,3 @@ highlight clear Error
 highlight Error cterm=underline,bold
 
 " TmuxlineSnapshot! "~/.tmux.tmuxline.conf"
-
-call textobj#user#plugin('nicecodeblock', {
-\   'code': {
-\     'pattern': ['\n\n', '\n\n'],
-\     'select-a': 'aP',
-\     'select-i': 'iP',
-\   },
-\ })
-
