@@ -141,7 +141,7 @@ export VISUAL
 export EDITOR=$VISUAL
 export GIT_EDITOR=$EDITOR
 
-PATH=${PATH}:~/.scripts:~/.vendor/bin~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
+PATH=${PATH}:~/.scripts:~/.vendor/bin:~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
 # :node_modules/.bin:
 export NODE_ENV=development
 export HISTCONTROL=ignorespace
