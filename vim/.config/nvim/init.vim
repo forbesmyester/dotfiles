@@ -1,7 +1,7 @@
 if &term == 'nvim'
     call plug#begin('~/.config/nvim/plugged')
 else
-    call plug#begin ('~/.vim/plugged')
+    call plug#begin('~/.vim/plugged')
 endif
 
 let mapleader = "s"
@@ -45,7 +45,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'chrisbra/unicode.vim'
 
-Plug 'wellle/targets.vim'
+" Plug 'wellle/targets.vim'
 
 let g:vimwiki_key_mappings = { 'all_maps': 0, }
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
@@ -459,7 +459,7 @@ let g:airline_section_z = '%{LineNoIndicator()} %5l%\ %2c'
 let g:airline_section_b = ''
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-" let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
+let g:line_no_indicator_chars = ['█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ']
 "= Number Switching ================================================
 
 function! LineNumberFlipFunc(entered)
@@ -580,8 +580,7 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_auto_loc_list=0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_javascript_checkers = ["eslint"]
-let g:syntastic_typescript_checkers = ["tsuquyomi"]
-" let g:syntastic_typescript_checkers = ["tsuquyomi", "tslint"]
+let g:syntastic_typescript_checkers = ["tslint"]
 let g:syntastic_dosini_checkers = ["dosini"]
 let g:syntastic_make_checkers = ["gnumake"]
 let g:syntastic_yaml_checkers = ["pyyaml"]
@@ -880,6 +879,3 @@ highlight clear Error
 highlight Error cterm=underline,bold
 
 " TmuxlineSnapshot! "~/.tmux.tmuxline.conf"
-"
-"
-
