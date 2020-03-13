@@ -45,9 +45,11 @@ Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'chrisbra/unicode.vim'
 
+" Plug 'wellle/targets.vim'
 
 let g:vimwiki_key_mappings = { 'all_maps': 0, }
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+" Plug 'reedes/vim-pencil'
 " Plug 'vimwiki/vimwiki'
 
 " Colours / Style
@@ -155,13 +157,12 @@ Plug 'jason0x43/vim-js-indent'
 " Typescript
 " Plug 'Quramy/tsuquyomi'
 " Plug 'HerringtonDarkholme/yats.vim'
-
 Plug 'leafgarland/typescript-vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Tmux
-" Plug 'jgdavey/tslime.vim'
-" Plug 'christoomey/vim-tmux-navigator'
+Plug 'jgdavey/tslime.vim'
+Plug 'christoomey/vim-tmux-navigator'
 " Plug 'mhinz/vim-tmuxify'
 
 " Yaml
@@ -420,12 +421,13 @@ let g:sexp_filetypes = ''
 
 " = GitGutter  ====================================================
 set signcolumn=yes
+nmap [g :GitGutterPrevHunk<CR>
+nmap ]g :GitGutterNextHunk<CR>
 let g:gitgutter_realtime=1
 
 " = NeoTerm ======================================================
 nmap <C-w>t :Topen<CR>:vertical resize 10<CR><C-w>li
 let g:neoterm_default_mod = "botright vertical"
-let g:neoterm_autoinsert = 1
 " let g:neoterm_shell = "fish -l"
 " let g:neoterm_repl_command = "fish -l"
 " let g:neoterm_direct_open_repl = 1
@@ -433,6 +435,7 @@ let g:neoterm_autoinsert = 1
 " let g:neoterm_use_relative_path = 1
 
 " Changes
+" let g:neoterm_autoinsert = 1
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 
@@ -594,9 +597,11 @@ let g:vimwiki_list = [
 nmap <leader>pp :VimwikiMakeDiaryNote 1<CR>
 nmap <leader>py :VimwikiMakeYesterdayDiaryNote 1<CR>
 nmap <leader>pt :VimwikiMakeTomorrowDiaryNote 1<CR>
+nmap <leader>pf :FZF ~/Documents/Personal\ Wiki<CR>
 nmap <leader>ww :VimwikiMakeDiaryNote 2<CR>
 nmap <leader>wy :VimwikiMakeYesterdayDiaryNote 2<CR>
 nmap <leader>wt :VimwikiIndex 2<CR>
+nmap <leader>wf :FZF ~/Documents/Work\ Wiki<CR>
 
 " =================================================================
 
@@ -666,14 +671,41 @@ function! MakeTerminalVisible()
     endif
 endfun
 
+nmap <silent> <leader>r :set opfunc=MaTMux<CR>g@
+vmap <silent> <leader>r :call MaTMux(visualmode(), 1)<CR>
+nmap <leader>rqs <Plug>SetTmuxVars<CR>
+
+function! MaTMux(type, ...)
+    let sel_save = &selection
+    let &selection = "inclusive"
+    let reg_save = @@
+
+    if a:0  " Invoked from Visual mode, use gv command.
+        silent exe "normal! gvy"
+    elseif a:type == 'line'
+        silent exe "normal! '[V']y"
+    else
+        silent exe "normal! `[v`]y"
+    endif
+
+    for line in split(@@, ",")
+        call Send_to_Tmux(line . "\n")
+    endfor
+
+    let &selection = sel_save
+    let @@ = reg_save
+endfunction
+
+
 function RunUnitTest()
     " exec 'Neomake'
     if (exists("g:pre_unit_test_command"))
         exec "silent normal " . g:pre_unit_test_command
     endif
     if (exists("g:unit_test_command"))
-        hi LineNr ctermfg=3
-        exec "T " . g:unit_test_command
+        " hi LineNr ctermfg=3
+        " exec "T " . g:unit_test_command
+        call Send_to_Tmux(g:unit_test_command . "\n")
     endif
 endfunction
 
@@ -704,10 +736,10 @@ nmap <leader>rqu :call SetUnitTest()<CR>
 nmap <leader>rqc :call MakeTerminalVisibleConfig()<CR>
 nmap <leader>rqp :call SetPreUnitTest()<CR>
 
-nmap <leader>r <Plug>(neoterm-repl-send)
-nmap <leader>rr <Plug>(neoterm-repl-send-line)
-nmap <leader>rc :Tkill<CR>
-nmap <C-t> :Ttoggle<CR>
+" nmap <leader>r <Plug>(neoterm-repl-send)
+" nmap <leader>rr <Plug>(neoterm-repl-send-line)
+" nmap <leader>rc :Tkill<CR>
+" nmap <C-t> :Ttoggle<CR>
 autocmd BufWritePost * :call RunUnitTest()
 
 
@@ -804,16 +836,24 @@ if &term == 'nvim'
     autocmd BufEnter term://* set signcolumn=no
 endif
 
-nmap <C-j> <C-w>j
-nmap <C-h> <C-w>h
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
+" = tmux-navigator =======================================================
+let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_disable_when_zoomed = 1
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
 
-imap <C-j> <ESC><C-j>
-imap <C-h> <ESC><C-h>
-imap <C-k> <ESC><C-k>
-imap <C-l> <ESC><C-l>
-tnoremap <C-t> <c-\><c-n>:Ttoggle<CR>
+" nmap <C-j> <C-w>j
+" nmap <C-h> <C-w>h
+" nmap <C-k> <C-w>k
+" nmap <C-l> <C-w>l
+
+" imap <C-j> <ESC><C-j>
+" imap <C-h> <ESC><C-h>
+" imap <C-k> <ESC><C-k>
+" imap <C-l> <ESC><C-l>
 
 " " Allow lowercase commands
 " function! CommandCabbr(abbreviation, expansion)
