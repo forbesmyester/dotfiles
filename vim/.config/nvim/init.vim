@@ -378,7 +378,7 @@ nmap <silent> <leader>ef :CocList outline<cr>
 nmap <silent> <leader>eF :CocList -I symbols<cr>
 nmap <silent> <leader>en <Plug>(coc-rename)
 nmap <silent> <leader>eq <Plug>(coc-fix-current)
-nmap <silent> <leader><CR> :call CocAction('doHover')<CR>
+nmap <silent> <leader>e<CR> :call CocAction('doHover')<CR>
 nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
