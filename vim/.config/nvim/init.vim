@@ -47,8 +47,8 @@ Plug 'chrisbra/unicode.vim'
 
 " Plug 'wellle/targets.vim'
 
-let g:vimwiki_key_mappings = { 'all_maps': 0, }
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+" let g:vimwiki_key_mappings = { 'all_maps': 0, }
+" Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 " Plug 'reedes/vim-pencil'
 " Plug 'vimwiki/vimwiki'
 
@@ -161,7 +161,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Tmux
-Plug 'jgdavey/tslime.vim'
+Plug 'LnL7/vim-tslime'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'mhinz/vim-tmuxify'
 
@@ -587,21 +587,21 @@ let g:syntastic_yaml_checkers = ["pyyaml"]
 
 " = vimwiki =======================================================
 
-let g:vimwiki_map_prefix='<leader><leader><leader><leader>w'
-let g:vimwiki_conceallevel=0
-let g:vimwiki_list = [
-            \{'path': '/home/fozz/Documents/Personal Wiki', 'syntax': 'markdown', 'ext': '.md'},
-            \{'path': '/home/fozz/Documents/Work Wiki', 'syntax': 'markdown', 'ext': '.md'}
-            \]
-
-nmap <leader>pp :VimwikiMakeDiaryNote 1<CR>
-nmap <leader>py :VimwikiMakeYesterdayDiaryNote 1<CR>
-nmap <leader>pt :VimwikiMakeTomorrowDiaryNote 1<CR>
-nmap <leader>pf :FZF ~/Documents/Personal\ Wiki<CR>
-nmap <leader>ww :VimwikiMakeDiaryNote 2<CR>
-nmap <leader>wy :VimwikiMakeYesterdayDiaryNote 2<CR>
-nmap <leader>wt :VimwikiIndex 2<CR>
-nmap <leader>wf :FZF ~/Documents/Work\ Wiki<CR>
+" let g:vimwiki_map_prefix='<leader><leader><leader><leader>w'
+" let g:vimwiki_conceallevel=0
+" let g:vimwiki_list = [
+"             \{'path': '/home/fozz/Documents/Personal Wiki', 'syntax': 'markdown', 'ext': '.md'},
+"             \{'path': '/home/fozz/Documents/Work Wiki', 'syntax': 'markdown', 'ext': '.md'}
+"             \]
+" 
+" nmap <leader>pp :VimwikiMakeDiaryNote 1<CR>
+" nmap <leader>py :VimwikiMakeYesterdayDiaryNote 1<CR>
+" nmap <leader>pt :VimwikiMakeTomorrowDiaryNote 1<CR>
+" nmap <leader>pf :FZF ~/Documents/Personal\ Wiki<CR>
+" nmap <leader>ww :VimwikiMakeDiaryNote 2<CR>
+" nmap <leader>wy :VimwikiMakeYesterdayDiaryNote 2<CR>
+" nmap <leader>wt :VimwikiIndex 2<CR>
+" nmap <leader>wf :FZF ~/Documents/Work\ Wiki<CR>
 
 " =================================================================
 
@@ -671,9 +671,10 @@ function! MakeTerminalVisible()
     endif
 endfun
 
+nmap <silent> <leader>rr :call Send_to_Tmux(getline(".") . "\n")<CR>
 nmap <silent> <leader>r :set opfunc=MaTMux<CR>g@
 vmap <silent> <leader>r :call MaTMux(visualmode(), 1)<CR>
-nmap <leader>rqs <Plug>SetTmuxVars<CR>
+nmap <leader>rst <Plug>SetTmuxVars<CR>
 
 function! MaTMux(type, ...)
     let sel_save = &selection
@@ -732,9 +733,9 @@ function SetUnitTest()
 endfunction
 
 
-nmap <leader>rqu :call SetUnitTest()<CR>
-nmap <leader>rqc :call MakeTerminalVisibleConfig()<CR>
-nmap <leader>rqp :call SetPreUnitTest()<CR>
+nmap <leader>rsu :call SetUnitTest()<CR>
+nmap <leader>rsc :call MakeTerminalVisibleConfig()<CR>
+nmap <leader>rsp :call SetPreUnitTest()<CR>
 
 " nmap <leader>r <Plug>(neoterm-repl-send)
 " nmap <leader>rr <Plug>(neoterm-repl-send-line)

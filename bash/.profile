@@ -4,9 +4,9 @@
 # 	TERM=screen-256color
 # fi
 
-if [ -z "$TMUX" ] && [ -n "$DISPLAY" ] && [[ "$TERM" == "rxvt-unicode-256color" ]]; then
-    export TERM="xterm-256color"
-fi
+# if [ -z "$TMUX" ] && [ -n "$DISPLAY" ] && [[ "$TERM" == "rxvt-unicode-256color" ]]; then
+#     export TERM="xterm-256color"
+# fi
 
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
