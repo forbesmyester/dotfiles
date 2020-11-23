@@ -1,8 +1,0 @@
-#!/bin/bash
-
-FILE=$(f)
-if [ $? -ne 0 ]; then
-    exit $?
-fi
-
-nvim "$FILE"
