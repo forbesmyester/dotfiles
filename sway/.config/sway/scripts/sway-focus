@@ -16,6 +16,7 @@ if [[ "$1" == "down" ]]; then
     OPPOSITE=up
 fi
 
+# swaymsg border csd || swaymsg border normal
 
 CURRENT_WORKSPACE=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused == true)' | jq -r .id)
 swaymsg focus "$1"
@@ -24,3 +25,6 @@ NEW_WORKSPACE=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused == true
 if [[ "$CURRENT_WORKSPACE" -ne "$NEW_WORKSPACE" ]]; then
     swaymsg focus "$OPPOSITE"
 fi
+
+# swaymsg border csd || swaymsg border pixel 2
+# swaymsg border csd || swaymsg border normal

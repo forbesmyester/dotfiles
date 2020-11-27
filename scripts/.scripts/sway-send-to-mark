@@ -1,0 +1,74 @@
+#!/bin/bash
+
+function correct_showing() {
+    swaymsg -t get_tree  | jq '.. | (.nodes? // empty)[] | select(.focused==true)' | jq -r '.marks | .[]' | grep '^'"$1"'$' | wc -l
+}
+
+# FOCUSSED=$(swaymsg -t get_tree  | jq '.. | (.nodes? // empty)[] | select(.focused==true) | .id')
+# swaymsg [con_id="263"] focus
+
+IFS=''
+declare -a IN
+IN=()
+while read line
+do
+    IN+=("$line")
+done < "/dev/stdin"
+
+
+sleep 0.2
+swaymsg "[con_mark=$1]" focus || exit 1
+
+TRIES=0
+CORRECT=$(correct_showing "$1")
+if [ "$CORRECT" -lt "1" ]; then
+    while [ "$CORRECT" -lt "1" ]; do
+        TRIES=$((TRIES+1))
+        if [ "$TRIES" -gt 10 ]; then
+            exit 1
+        fi
+        echo "Q: $CORRECT $TRIES"
+        sleep 0.1
+    done
+fi
+
+# Check window focussed
+
+xdotool getactivewindow
+USING_YDO=$?
+FIRST=0
+
+echo "$1" > /tmp/yyy
+echo "$2" >> /tmp/yyy
+echo "YDO: $USING_YDO" >> /tmp/yyy
+echo "" >> /tmp/yyy
+
+for L in "${IN[@]}"; do
+    echo "($L)" >> /tmp/yyy
+    if [ "$FIRST" -gt "0" ]; then
+        echo "_> key Return"
+        if [ "$USING_YDO" -gt 0 ]; then
+            ydotool "key" "Return"
+        else
+            xdotool "key" "Return"
+        fi
+    fi
+    echo "\"$2\" \"$L\""
+    if [ "$USING_YDO" -gt 0 ]; then
+        echo "Y> $L"
+        echo ydotool "$2" "$L"
+        ydotool "$2" "$L"
+    else
+        echo "X> $L"
+        if [[ "$2" == "type" ]]; then
+            xdotool "$2" "a"
+            # xdotool "key" "BackSpace"
+            sleep 0.1
+            xdotool "key" "BackSpace"
+        fi
+        echo xdotool "$2" "$L"
+        xdotool "$2" "$L"
+    fi
+    FIRST=1
+done
+swaymsg "[con_mark=_prev] focus"

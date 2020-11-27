@@ -1,4 +1,3 @@
-
 # The below will fix colors etc if required (happens automatically nowadays)
 # if [ -n "$TMUX" ] && [ -n "$DISPLAY" ]; then
 # 	TERM=screen-256color

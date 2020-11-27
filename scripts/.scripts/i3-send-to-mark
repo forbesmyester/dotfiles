@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+
+IFS=''
+declare -a IN
+IN=()
+XDO_COMMAND="$2"
+if [[ "$XDO_COMMAND" == "stream" ]]; then
+    XDO_COMMAND='type';
+fi
+LINE_NUMBER=1
+i3-msg "[con_mark=$1]" focus || exit 1
+while read LINE
+do
+    if [ "$LINE_NUMBER" -gt "1" ]; then
+        xdotool "key" "Return"
+    fi
+    xdotool "$XDO_COMMAND" "$LINE"
+    LINE_NUMBER=$(( LINE_NUMBER + 1 ))
+done < "/dev/stdin"
+
+if [[ "$2" == "stream" ]]; then
+    echo "RET"
+    xdotool "key" "Return"
+fi
+
+i3-msg '[con_mark="PREV"] focus'

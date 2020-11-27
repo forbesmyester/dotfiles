@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# set -euo pipefail
+# IFS=$'\n\t'
+
+NVM_DIR=~/.nvm
+[ -f "$NVM_DIR/nvm.sh" ] || wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+
+chmod +x "$NVM_DIR"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+nvm install
+nvm use

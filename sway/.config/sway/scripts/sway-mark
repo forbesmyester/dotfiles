@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# swaymsg resize set height 90
+read -p 'Mark: ' MARK
+
+swaymsg '[con_mark=_prev] focus'
+swaymsg "mark --toggle $MARK"

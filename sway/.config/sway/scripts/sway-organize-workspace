@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+MAIN_OUTPUT=$(swaymsg -t get_outputs | cat | jq '.[] | select(.focused == true)' | jq -r .name)
+MAIN_OUTPUT=$(swaymsg -t get_outputs | cat | jq -c -r 'sort_by(.current_mode.width)[] | .name' | tail -n 1)
+OTHER_OUTPUT=$(swaymsg -t get_outputs | cat | jq '.[] | select(.focused == false)' | jq -r .name)
+CURRENT_WORKSPACE=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused == true)' | jq -r .name)
+
+
+if [ $# -lt 1 ]; then
+    for ITEM in $(swaymsg -t get_workspaces | jq -r '.[] | .name'); do
+        swaymsg "workspace ${ITEM}"
+        swaymsg "move workspace to output ${MAIN_OUTPUT}"
+    done
+
+    swaymsg "workspace 0"
+    swaymsg "move workspace to output ${OTHER_OUTPUT}"
+    swaymsg "workspace ${CURRENT_WORKSPACE}"
+else
+    if [[ "$1" -eq 0 ]]; then
+        swaymsg "workspace $1"
+        swaymsg "move workspace to output ${OTHER_OUTPUT}"
+    else
+        swaymsg "workspace $1"
+        swaymsg "move workspace to output ${MAIN_OUTPUT}"
+    fi
+fi
+

@@ -1,7 +1,7 @@
 if &term == 'nvim'
     call plug#begin('~/.config/nvim/plugged')
 else
-    call plug#begin('~/.vim/plugged')
+    plug#begin('~/.vim/plugged')
 endif
 
 let mapleader = "s"
@@ -29,6 +29,7 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'simeji/winresizer'
 Plug 'tpope/vim-surround'
+Plug 'AndrewRadev/sideways.vim'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
@@ -41,7 +42,8 @@ Plug 'scrooloose/syntastic'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
-Plug 'ntpeters/vim-better-whitespace'
+" Plug 'ntpeters/vim-better-whitespace'
+" Plug 'jalvesaq/vimcmdline'
 
 Plug 'chrisbra/unicode.vim'
 
@@ -146,6 +148,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-lastpat'
+Plug 'coachshea/vim-textobj-markdown'
 
 
 " Javascript
@@ -158,10 +161,11 @@ Plug 'jason0x43/vim-js-indent'
 " Plug 'Quramy/tsuquyomi'
 " Plug 'HerringtonDarkholme/yats.vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'leafOfTree/vim-svelte-plugin'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Tmux
-Plug 'LnL7/vim-tslime'
+Plug 'forbesmyester/vim-tslime'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'mhinz/vim-tmuxify'
 
@@ -369,6 +373,7 @@ endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 nmap <silent> <leader>ed <Plug>(coc-definition)
+nmap <silent> <leader>eD :call CocAction("jumpDefinition", "split")<CR>
 nmap <silent> <leader>ey <Plug>(coc-type-definition)
 nmap <silent> <leader>ei <Plug>(coc-implementation)
 nmap <silent> <leader>er <Plug>(coc-references)
@@ -377,13 +382,13 @@ nmap <silent> <leader>er <Plug>(coc-references)
 nmap <silent> <leader>ea <Plug>(coc-codeaction)
 nmap <silent> <leader>ef :CocList outline<cr>
 nmap <silent> <leader>eF :CocList -I symbols<cr>
-nmap <silent> <leader>en <Plug>(coc-rename)
+nmap <silent> <leader>en <Plug>(coc-refactor)
 nmap <silent> <leader>eq <Plug>(coc-fix-current)
 nmap <silent> <leader>e<CR> :call CocAction('doHover')<CR>
 nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
-highlight CocHighlightText ctermfg=black ctermbg=white
+highlight CocHighlightText cterm=underline,bold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " = vim-easy-align ================================================
@@ -428,14 +433,11 @@ let g:gitgutter_realtime=1
 " = NeoTerm ======================================================
 nmap <C-w>t :Topen<CR>:vertical resize 10<CR><C-w>li
 let g:neoterm_default_mod = "botright vertical"
-" let g:neoterm_shell = "fish -l"
-" let g:neoterm_repl_command = "fish -l"
-" let g:neoterm_direct_open_repl = 1
 " " let g:neoterm_autoscroll = 1
 " let g:neoterm_use_relative_path = 1
 
 " Changes
-" let g:neoterm_autoinsert = 1
+let g:neoterm_autoinsert = 1
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 
@@ -619,69 +621,280 @@ let g:rainbow_conf =
 	\	}
     \}
 
-function! ResizeTo80()
-    exec "vertical resize " . (80 + &numberwidth + 2)
-endfunction
-nmap <C-w>8 :call ResizeTo80()<CR>
+" function! ResizeTo80()
+"     exec "vertical resize " . (80 + &numberwidth + 2)
+" endfunction
+" nmap <C-w>8 :call ResizeTo80()<CR>
 
-function MakeTerminalVisibleInit()
-    " Terminal should to be at least 80 with text file at least 80 for side by
-    " side, otherwise we should make it full(ish) width and toggle.
-    let cols = &columns
-    if ((g:neoterm_default_mod == "botright vertical") && ((!exists("g:neoterm_size")) || (g:neoterm_size == "")))
-        let g:neoterm_size = ((cols - 4) / 2)
-        if (g:neoterm_size < 80)
-            let g:neoterm_size = cols - 4
-        endif
+" function MakeTerminalVisibleInit()
+"     " Terminal should to be at least 80 with text file at least 80 for side by
+"     " side, otherwise we should make it full(ish) width and toggle.
+"     let cols = &columns
+"     if ((g:neoterm_default_mod == "botright vertical") && ((!exists("g:neoterm_size")) || (g:neoterm_size == "")))
+"         let g:neoterm_size = ((cols - 4) / 2)
+"         if (g:neoterm_size < 80)
+"             let g:neoterm_size = cols - 4
+"         endif
+"     endif
+" endfunction
+
+" function MakeTerminalVisibleConfig()
+
+"     let vert = input("do you want a vertical terminal? (1/0)", "")
+"     let g:neoterm_default_mod = "belowright"
+"     if (vert)
+"         let g:neoterm_default_mod = "botright vertical"
+"     endif
+
+"     call MakeTerminalVisibleInit()
+
+"     let g:neoterm_size = input("specify terminal size (number):", g:neoterm_size)
+
+" endfunction
+
+" " -1 means not visible, any number above is the actual number.
+" function! GetVisibleTerminalWindowNumber()
+"     let i = 0
+"     let n = bufnr('$')
+"     while i < n
+"         let i = i + 1
+"         if bufname(i) =~ '^term:'
+"             return bufwinnr(i)
+"         endif
+"     endwhile
+"     return -1
+" endfun
+
+" " This is called in ~/.prompt (!)
+" function! MakeTerminalVisible()
+"     call MakeTerminalVisibleInit()
+"     if GetVisibleTerminalWindowNumber() == -1
+"         Topen
+"     endif
+" endfun
+
+" function MaTMuxSetup()
+"     if (exists("g:matmux_mark"))
+"         let g:matmux_mark = input("specify mark: ", g:matmux_mark)
+"     else
+"         let g:matmux_mark = input("specify mark: ", "")
+"     endif
+"     if empty(g:matmux_mark)
+"         unlet g:matmux_mark
+"     endif
+" endfunction
+
+
+" function MaTMuxSetupIfNeeded()
+"     if (exists("g:matmux_mark"))
+"         if (empty("g:matmux_mark"))
+"             call MaTMuxSetup()
+"         endif
+"     else
+"         call MaTMuxSetup()
+"     endif
+" endfunction
+
+
+" function! MaTMuxSend(text)
+
+"     if (exists("g:matmux_mark"))
+"         call MaTMuxSetupIfNeeded()
+"         let n = tempname()
+"         call writefile(a:text, l:n)
+"         call system("cat " . shellescape(l:n) . " | i3-send-to-mark ". shellescape(g:matmux_mark) . " type")
+"         call delete(l:n)
+"         if (v:shell_error > 0)
+"             echoerr "SWAY SEND ERROR: " . v:shell_error . "(" . a:mark . ", " . a:method . ")"
+"         endif
+"     else
+"         call Send_to_Tmux(join(a:text, "\n"))
+"     end
+
+
+" endfunction
+
+" function! GetVisualSelection()
+"     " https://stackoverflow.com/a/6271254 - Public Domain
+"     " Why is this not a built-in Vim script function?!
+"     let [line_start, column_start] = getpos("'<")[1:2]
+"     let [line_end, column_end] = getpos("'>")[1:2]
+"     let lines = getline(line_start, line_end)
+"     if len(lines) == 0
+"         return ''
+"     endif
+"     let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+"     let lines[0] = lines[0][column_start - 1:]
+"     return join(lines, "\n")
+" endfunction
+
+
+" function! MaTMuxText(type, ...)
+"     let sel_save = &selection
+"     let &selection = "inclusive"
+"     let reg_save = @@
+
+"     if a:0  " Invoked from Visual mode, use gv command.
+"         silent exe "normal! gvy"
+"     elseif a:type == 'line'
+"         silent exe "normal! '[V']y"
+"     else
+"         silent exe "normal! `[v`]y"
+"     endif
+
+"     let the_list = []
+"     for line in split(@@, "\n")
+"         call add(the_list, line)
+"     endfor
+"     if len(the_list) > 1
+"         call add(the_list, "\n")
+"     endif
+"     " call Send_to_Tmux(@@ . "\n")
+"     for l in the_list
+"     endfor
+"     call MaTMuxSend(the_list)
+
+"     let &selection = sel_save
+"     let @@ = reg_save
+" endfunction
+
+" function! MaTMuxLine()
+"     call MaTMuxSend([getline("."), ""])
+" endfunction
+
+
+" B
+" C
+" D
+
+" nmap <silent> <leader>b :set opfunc=MaTMuxText<CR>g@
+" nmap <silent> <leader>b<CR> :call MaTMuxSend(["\n"])<CR>
+" nmap <silent> <leader>bc :call Send_Keys_to_Tmux("C-c")<CR>
+" vnoremap <silent> <leader>b :call MaTMuxSend([getline(".") . "\n"])<CR>
+" nmap <silent> <leader>br :call MaTMuxLine()<CR>
+" nmap <leader>bst <Plug>SetTmuxVars
+" nmap <leader>bsw :call MaTMuxSetup()<CR>
+
+" ==============================================================================
+
+function GetCursor() " Restore position with cursor()
+    return [line("."), col(".")]
+endfunction
+
+function TermGetBufferId()
+    let act = g:neoterm.last_active
+    if act == 0
+        return -1
     endif
+    return g:neoterm.instances[act].buffer_id
 endfunction
 
-function MakeTerminalVisibleConfig()
-
-    let vert = input("do you want a vertical terminal? (1/0)", "")
-    let g:neoterm_default_mod = "belowright"
-    if (vert)
-        let g:neoterm_default_mod = "botright vertical"
+function TermGetLastLine(buff_id)
+    let curr_winnr = winnr()
+    let t_winnr = TermGetWinId(a:buff_id)
+    if t_winnr > -1
+        call win_gotoid(win_getid(t_winnr))
+        let max = getbufinfo(a:buff_id)[0]["lnum"]
+        while max >= 0
+            if getline(max) != ""
+                let min = max
+                if max > 5
+                    let min = max - 5
+                else
+                    let min = 1
+                endif
+                let prompt = getline(min, max)
+                call win_gotoid(win_getid(curr_winnr))
+                return [max] + prompt
+            endif
+            let max = max - 1
+        endwhile
+        call win_gotoid(win_getid(curr_winnr))
     endif
-
-    call MakeTerminalVisibleInit()
-
-    let g:neoterm_size = input("specify terminal size (number):", g:neoterm_size)
-
+    return [-1, ""]
 endfunction
 
-" -1 means not visible, any number above is the actual number.
-function! GetVisibleTerminalWindowNumber()
-    let i = 0
-    let n = bufnr('$')
-    while i < n
-        let i = i + 1
-        if bufname(i) =~ '^term:'
-            return bufwinnr(i)
+function TermGetLastLineNumber(buff_id)
+    return TermGetLastLine(a:buff_id)[0]
+endfunction
+
+function TermGetWinId(buff_id)
+    for win in getwininfo()
+        if win["bufnr"] == a:buff_id
+            return win["winnr"]
         endif
-    endwhile
+    endfor
     return -1
-endfun
+endfunction
 
-" This is called in ~/.prompt (!)
-function! MakeTerminalVisible()
-    call MakeTerminalVisibleInit()
-    if GetVisibleTerminalWindowNumber() == -1
-        Topen
+function TermStripEmptyEnd(lines)
+    let last_non_empty = 0
+    let i = 0
+    for line in a:lines
+        if line != ""
+            let last_non_empty = i
+        endif
+        let i = i + 1
+    endfor
+    return a:lines[0:last_non_empty]
+endfunction
+
+function TermGetContent(buff_id)
+    if (!exists("g:meowterm_line_before_send"))
+        return []
     endif
-endfun
+    let line_num = g:meowterm_line_before_send[a:buff_id]
+    let lines = TermStripEmptyEnd(getbufline(a:buff_id, line_num, '$'))
+    if exists("g:meowterm_prompt_line_count")
+        if has_key(g:meowterm_prompt_line_count, a:buff_id)
+            return lines[1: len(lines) - (g:meowterm_prompt_line_count[a:buff_id][0] + 1)]
+        endif
+    endif
+    return lines[1:]
+endfunction
 
-nmap <silent> <leader>rr :call Send_to_Tmux(getline(".") . "\n")<CR>
-nmap <silent> <leader>r :set opfunc=MaTMux<CR>g@
-vmap <silent> <leader>r :call MaTMux(visualmode(), 1)<CR>
-nmap <leader>rst <Plug>SetTmuxVars<CR>
 
-function! MaTMux(type, ...)
+function TermSetPromptLinesCount(buff_id)
+    let last = TermGetLastLineNumber(a:buff_id)[0]
+    call NeotermSendEnter()
+    sleep 250m
+    let new_last = TermGetLastLine(a:buff_id)
+    echo new_last
+    let count = new_last[0] - last
+    if (!exists("g:meowterm_prompt_line_count"))
+        let g:meowterm_prompt_line_count = {}
+    endif
+    let g:meowterm_prompt_line_count[a:buff_id] = [count, new_last[0-count:]]
+endfunction
+
+function TermInitLineBeforeSend()
+    if (!exists("g:meowterm_line_before_send"))
+        let g:meowterm_line_before_send = {}
+    endif
+    let g:meowterm_line_before_send[TermGetBufferId()] = TermGetLastLineNumber(TermGetBufferId())
+    if !has_key(g:neoterm, 'repl')
+        call neoterm#repl#term(g:neoterm.last_active)
+    endif
+endfunction
+
+function! NeotermSendEnter()
+    call neoterm#do({ "cmd": "" })
+endfunction
+
+function! NeotermSendLine()
+    call TermInitLineBeforeSend()
+    let line = getline(".")
+    " call neoterm#do({ "cmd": line })
+    call g:neoterm.repl.exec([line])
+endfunction
+
+function! NeotermSendMotion(type, ...)
+    call TermInitLineBeforeSend()
     let sel_save = &selection
     let &selection = "inclusive"
     let reg_save = @@
 
-    if a:0  " Invoked from Visual mode, use gv command.
+    if a:0
         silent exe "normal! gvy"
     elseif a:type == 'line'
         silent exe "normal! '[V']y"
@@ -689,12 +902,15 @@ function! MaTMux(type, ...)
         silent exe "normal! `[v`]y"
     endif
 
-    for line in split(@@, ",")
-        call Send_to_Tmux(line . "\n")
-    endfor
+    let the_list = []
+    " for line in split(@@, "\n")
+    "     call neoterm#do({ "cmd": line })
+    " endfor
+    call g:neoterm.repl.exec(split(@@, "\n"))
 
     let &selection = sel_save
     let @@ = reg_save
+    call cursor(s:cursor_pos)
 endfunction
 
 
@@ -703,10 +919,18 @@ function RunUnitTest()
     if (exists("g:pre_unit_test_command"))
         exec "silent normal " . g:pre_unit_test_command
     endif
-    if (exists("g:unit_test_command"))
-        " hi LineNr ctermfg=3
-        " exec "T " . g:unit_test_command
-        call Send_to_Tmux(g:unit_test_command . "\n")
+    if (exists("b:unit_test_command"))
+        call TermInitLineBeforeSend()
+        hi LineNr ctermfg=3
+        call g:neoterm.repl.exec([b:unit_test_command])
+        " exec "T " . b:unit_test_command
+        " call Send_to_Tmux(b:unit_test_command . "\n")
+
+        " if (b:unit_test_command =~ 'key ')
+        "     call MaTMuxSend(g:matmux_mark, [substitute(b:unit_test_command, '^key ', '', '') . "\n"])
+        " else
+        "     call MaTMuxSend([b:unit_test_command,""])
+        " endif
     endif
 endfunction
 
@@ -722,26 +946,60 @@ function SetPreUnitTest()
 endfunction
 
 function SetUnitTest()
-    if (exists("g:unit_test_command"))
-        let g:unit_test_command = input("specify command: ", g:unit_test_command)
+    if (exists("b:unit_test_command"))
+        let b:unit_test_command = input("specify command: ", b:unit_test_command)
     else
-        let g:unit_test_command = input("specify command: ", "")
+        let b:unit_test_command = input("specify command: ", "")
     endif
-    if empty(g:unit_test_command)
-        unlet g:unit_test_command
+    if empty(b:unit_test_command)
+        unlet b:unit_test_command
     endif
 endfunction
 
+function TermPasteLit()
+    let c = GetCursor()
+    exe "normal ]f"
+    exe "normal dif"
+    exe "normal k"
+    call TermPaste()
+    call cursor(c)
+endfunction
+
+function TermPaste()
+    for line in TermGetContent(TermGetBufferId())
+        exe "normal o"
+        exe "normal 0"
+        exe "normal i" . line
+    endfor
+endfunction
+
+function RestoreCursor()
+    echo s:cursor_pos
+    call cursor(s:cursor_pos)
+endfunction
+
+function StoreCursor()
+    let s:cursor_pos = GetCursor()
+endfunction
 
 nmap <leader>rsu :call SetUnitTest()<CR>
-nmap <leader>rsc :call MakeTerminalVisibleConfig()<CR>
 nmap <leader>rsp :call SetPreUnitTest()<CR>
-
-" nmap <leader>r <Plug>(neoterm-repl-send)
-" nmap <leader>rr <Plug>(neoterm-repl-send-line)
-" nmap <leader>rc :Tkill<CR>
-" nmap <C-t> :Ttoggle<CR>
+nmap <silent> <leader>r<CR> :call NeotermSendEnter()<CR>
+nmap <silent> <leader>r :call StoreCursor()<CR>:set opfunc=NeotermSendMotion<CR>g@
+" :call RestoreCursor()<CR>
+nmap <leader>rr :call NeotermSendLine()<CR>
+" <Plug>(neoterm-repl-send-line)
+nmap <leader>rc :Tkill<CR>
+nmap <leader>rl :Tclear<CR>
+nmap <leader>rp :call TermPaste()<CR>
+nmap <leader>ro :call TermPasteLit()<CR>
+vmap <leader>r :TREPLSendSelection<CR>
 autocmd BufWritePost * :call RunUnitTest()
+"
+" nmap <leader>rsc :call MakeTerminalVisibleConfig()<CR>
+" nmap <leader>r <Plug>(neoterm-repl-send)
+
+" ==============================================================================
 
 
 nmap <leader>dip :'{,'} DB<CR>
@@ -755,7 +1013,7 @@ set go-=m
 
 " nnoremap <silent> n   n:call HLNext(0.1)<cr>
 " nnoremap <silent> N   N:call HLNext(0.1)<cr>
-nnoremap <silent> <leader>s V:'<,'>ScratchSelection<CR>:sleep 250m<CR><C-w>j
+" nnoremap <silent> <leader>s V:'<,'>ScratchSelection<CR>:sleep 250m<CR><C-w>j
 
 " function! HLNext (blinktime)
 " 	let [bufnum, lnum, col, off] = getpos('.')
@@ -837,24 +1095,58 @@ if &term == 'nvim'
     autocmd BufEnter term://* set signcolumn=no
 endif
 
+" = vimcmdline ============================================================
+
+" let g:cmdline_map_start          = '<leader>as'
+" let g:cmdline_map_send           = '<leader>a<CR>'
+" let g:cmdline_map_send_and_stay  = '<leader>aa'
+" let g:cmdline_map_send_motion    = '<leader>a'
+" let g:cmdline_map_source_fun     = '<leader>af'
+" let g:cmdline_map_send_paragraph = '<leader>ap'
+" let g:cmdline_map_send_block     = '<leader>ab'
+" let g:cmdline_map_quit           = '<leader>aq'
+" let g:cmdline_app                = {}
+" let g:cmdline_app['clojure']     = 'bash'
+" let g:cmdline_term_height = 25
+" let g:cmdline_term_width = 80
+" 
+" nnoremap <silent> <leader>a<CR> :call VimCmdLineSendCmd('')<CR>
+" nmap <silent><leader>ag :call VimCmdLineFiletypeGeneric()<CR>
+
+
+" = sideways.vim =========================================================
+nmap ]a :SidewaysJumpRight<cr>
+nmap [a :SidewaysJumpLeft<cr>
+nmap <leader>ah :SidewaysLeft<cr>
+nmap <leader>al :SidewaysRight<cr>
+
+nmap <leader>ai <Plug>SidewaysArgumentInsertBefore
+nmap <leader>aa <Plug>SidewaysArgumentAppendAfter
+nmap <leader>aI <Plug>SidewaysArgumentInsertFirst
+nmap <leader>aA <Plug>SidewaysArgumentAppendLast
+
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+
+
 " = tmux-navigator =======================================================
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_disable_when_zoomed = 1
+" nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
 nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
-
-" nmap <C-j> <C-w>j
-" nmap <C-h> <C-w>h
-" nmap <C-k> <C-w>k
-" nmap <C-l> <C-w>l
-
-" imap <C-j> <ESC><C-j>
-" imap <C-h> <ESC><C-h>
-" imap <C-k> <ESC><C-k>
-" imap <C-l> <ESC><C-l>
+vmap <C-j> <ESC><C-w>j
+vmap <C-h> <ESC><C-w>h
+vmap <C-k> <ESC><C-w>k
+vmap <C-l> <ESC><C-w>l
+imap <C-j> <ESC><C-j>
+imap <C-h> <ESC><C-h>
+imap <C-k> <ESC><C-k>
+imap <C-l> <ESC><C-l>
 
 " " Allow lowercase commands
 " function! CommandCabbr(abbreviation, expansion)
@@ -871,12 +1163,11 @@ fun! IgnoreCamelCaseSpell()
 endfun
 autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
 
-hi MatchParen ctermfg=white
+" hi MatchParen ctermfg=white
 hi MatchParen ctermbg=18
-hi MatchParan cterm=bold
+hi MatchParen cterm=bold
+highlight Comment cterm=italic
 highlight clear SpellBad
-highlight SpellBad cterm=underline,bold
+highlight SpellBad cterm=underline
 highlight clear Error
-highlight Error cterm=underline,bold
-
-" TmuxlineSnapshot! "~/.tmux.tmuxline.conf"
+highlight Error cterm=underline

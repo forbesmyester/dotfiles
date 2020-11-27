@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+OUTS=$(swaymsg -t get_outputs | cat | jq -c -r 'sort_by(.current_mode.width)[] | { name: .name, width: .current_mode.width }')
+
+OFFSET=0
+for O in $OUTS; do
+    swaymsg output "$(echo "$O" | jq -r .name)" position "$OFFSET" 0
+    OFFSET=$(( OFFSET + $(echo $O | jq '.width') + 100 ))
+done

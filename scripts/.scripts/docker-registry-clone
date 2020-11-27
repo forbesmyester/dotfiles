@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+SRC_REPO_URL=$1
+DST_REPO_URL=$2
+
+
+SRC_REPO=$(echo $SRC_REPO_URL | sed 'sI^http.\?://II')
+DST_REPO=$(echo $DST_REPO_URL | sed 'sI^http.\?://II')
+
+curl "${SRC_REPO_URL}/v2/_catalog" | jq .repositories[] -r | parallel curl "${SRC_REPO_URL}/v2/{}/tags/list" '|' jq -r .tags[] '|' sed 's/^/{}:/' | parallel docker pull "${SRC_REPO}/{}" '&&' docker tag "${SRC_REPO}/{}" "${DST_REPO}/{}" '&&' docker push "${DST_REPO}/{}"
+

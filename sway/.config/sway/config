@@ -1,0 +1,266 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+set $term urxvt
+# Your preferred application launcher
+# Note: it's recommended that you pass the final command to sway
+# set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# set $menu dmenu_run | dmenu | xargs swaymsg exec --
+set $menu rofi -show drun | xargs swaymsg exec --
+
+
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
+# output * bg @datadir@/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Idle configuration
+#
+# Example configuration:
+#
+exec /home/fozz/.config/sway/scripts/sway-organize-workspace
+exec swayidle -w timeout 300 'swaylock -f -c 000000'
+         # timeout 600 'swaymsg "output * dpms off"' \
+         #      resume 'swaymsg "output * dpms on"' \
+         # before-sleep 'swaylock -f -c 000000'
+
+# exec swaymsg -t subscribe -m '["window"]' | jq -r '.container.name' > ~/.current_window
+exec /home/fozz/.config/sway/scripts/sway-track-prev-focus
+
+smart_borders on
+titlebar_border_thickness 2
+titlebar_padding 5 2
+hide_edge_borders both
+show_marks yes
+# smart_gaps on
+# gaps outer 0
+# gaps inner 2
+
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+input type:keyboard {
+    xkb_layout gb,us
+    xkb_options grp:ctrls_toggle,ctrl:nocaps
+}
+
+
+### Key bindings
+#
+# Basics:
+#
+    # Start your launcher
+    bindsym $mod+Return exec $menu
+    #
+    # Start a terminal
+    bindsym $mod+Shift+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+Shift+q kill
+
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Ctrl+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec swaylock -f -c 000000
+#
+# Moving around:
+#
+    focus_wrapping no
+    focus_follows_mouse no
+
+    # Move your focus around
+    bindsym $mod+$left exec /home/fozz/.config/sway/scripts/sway-focus left
+    bindsym $mod+$down exec /home/fozz/.config/sway/scripts/sway-focus down
+    bindsym $mod+$up exec /home/fozz/.config/sway/scripts/sway-focus up
+    bindsym $mod+$right exec /home/fozz/.config/sway/scripts/sway-focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+0 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 0
+    bindsym $mod+1 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 1
+    bindsym $mod+2 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 2
+    bindsym $mod+3 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 3
+    bindsym $mod+4 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 4
+    bindsym $mod+5 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 5
+    bindsym $mod+6 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 6
+    bindsym $mod+7 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 7
+    bindsym $mod+8 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 8
+    bindsym $mod+9 exec /home/fozz/.config/sway/scripts/sway-organize-workspace 9
+    # bindsym $mod+0 workspace 0
+    # bindsym $mod+1 workspace 1
+    # bindsym $mod+2 workspace 2
+    # bindsym $mod+3 workspace 3
+    # bindsym $mod+4 workspace 4
+    # bindsym $mod+5 workspace 5
+    # bindsym $mod+6 workspace 6
+    # bindsym $mod+7 workspace 7
+    # bindsym $mod+8 workspace 8
+    # bindsym $mod+9 workspace 9
+    # Move focused container to workspace
+    
+    bindsym $mod+Shift+0 exec swaymsg 'move container to workspace 0' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 0
+    bindsym $mod+Shift+1 exec swaymsg 'move container to workspace 1' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 1
+    bindsym $mod+Shift+2 exec swaymsg 'move container to workspace 2' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 2
+    bindsym $mod+Shift+3 exec swaymsg 'move container to workspace 3' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 3
+    bindsym $mod+Shift+4 exec swaymsg 'move container to workspace 4' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 4
+    bindsym $mod+Shift+5 exec swaymsg 'move container to workspace 5' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 5
+    bindsym $mod+Shift+6 exec swaymsg 'move container to workspace 6' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 6
+    bindsym $mod+Shift+7 exec swaymsg 'move container to workspace 7' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 7
+    bindsym $mod+Shift+8 exec swaymsg 'move container to workspace 8' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 8
+    bindsym $mod+Shift+9 exec swaymsg 'move container to workspace 9' &&  /home/fozz/.config/sway/scripts/sway-organize-workspace 9
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    # bindsym $mod+s layout stacking
+    bindsym $mod+d layout tabbed
+    bindsym $mod+s layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+
+# bindsym $mod+p exec $term -e "bash -c \"/tmp/fzf-pass ; sleep 5\""
+bindsym $mod+Shift+s exec /bin/bash -c 'grim -g "$(slurp)" "/tmp/screenshot-$(date -Iseconds | sed \'s/\+.*//\').png"'
+bindsym $mod+p exec kitty --class center_float bash -c '/home/fozz/Projects/fzf-pass/fzf-pass'
+bindsym $mod+m exec kitty --class center_float bash -c '/home/fozz/.config/sway/scripts/sway-mark'
+
+for_window [app_id="center_float"] focus, floating enabled, border pixel 1
+#
+#
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+    font pango: Source Code Pro for Powerline Medium 11
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+    status_command i3blocks
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+include @sysconfdir@/sway/config.d/*

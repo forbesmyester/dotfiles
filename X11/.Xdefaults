@@ -3,12 +3,17 @@
 ! URxvt*boldFont:             xft:Ubuntu Mono derivative Powerline:bold:size=13
 ! URxvt*italicFont:           xft:Ubuntu Mono derivative Powerline:italic:size=13
 ! URxvt*boldItalicFont:       xft:Ubuntu Mono derivative Powerline:bold:italic:size=13
+! URxvt*termName: xterm-256color
+URxvt.keysym.Control-Up:   \033[1;5A
+URxvt.keysym.Control-Down:    \033[1;5B
+URxvt.keysym.Control-Left:    \033[1;5D
+URxvt.keysym.Control-Right:    \033[1;5C
 URxvt.letterSpace:          -1
-URxvt*font:                 xft:Source Code Pro for Powerline:regular:size=11, xft: Noto Mono, xft:Noto Color Emoji
-URxvt*imFont:               xft:Source Code Pro for Powerline:regular:size=11, xft: Noto Mono, xft:Noto Color Emoji
-URxvt*boldFont:             xft:Source Code Pro for Powerline:bold:size=11, xft: Noto Mono, xft:Noto Color Emoji
-URxvt*italicFont:           xft:Source Code Pro for Powerline:italic:size=11, xft: Noto Mono, xft:Noto Color Emoji
-URxvt*boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=11, xft: Noto Mono, xft:Noto Color Emoji
+URxvt*font:                 xft:Source Code Pro for Powerline:regular:size=13, xft: Noto Sans Mono, xft:Noto Color Emoji
+URxvt*imFont:               xft:Source Code Pro for Powerline:regular:size=13, xft: Noto Sans Mono, xft:Noto Color Emoji
+URxvt*boldFont:             xft:Source Code Pro for Powerline:bold:size=13, xft: Noto Sans Mono, xft:Noto Color Emoji
+URxvt*italicFont:           xft:Source Code Pro for Powerline:italic:size=13, xft: Noto Sans Mono, xft:Noto Color Emoji
+URxvt*boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=13, xft: Sans Noto Mono, xft:Noto Color Emoji
 ! URxvt*font:                 xft:Hack:regular:size=11
 ! URxvt*imFont:               xft:Hack:regular:size=11
 ! URxvt*boldFont:             xft:Hack:bold:size=11
@@ -18,7 +23,7 @@ URxvt*boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=1
 URxvt*visualBell: true
 URxvt*geometry: WINDOWGEOMETRY
 URxvt*background: #181818
-URxvt*loginShell: true
+! URxvt*loginShell: true
 URxvt*scrollBar: false
 URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: false
@@ -28,3 +33,6 @@ URxvt*saveLines:2048
 !!!
 URxvt.iso14755: False
 URxvt.mouseWheelScrollPage: false
+
+! https://github.com/swaywm/sway/issues/3499
+Xft.dpi: 96

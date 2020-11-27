@@ -1,3 +1,5 @@
+# https://wiki.archlinux.org/index.php/Environment_variables#Per_user
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -14,7 +16,7 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignorespace
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -41,6 +43,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
+    tmux) color_prompt=yes;;
     xterm-256color) color_prompt=yes;;
     xterm-color) color_prompt=yes;;
     rxvt-unicode-256color) color_prompt=yes;;
@@ -55,12 +58,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -72,8 +75,6 @@ if [ "$color_prompt" = yes ]; then
     #     source ~/.vendor/bash-git-prompt/gitprompt.sh
     # fi
     . ~/.prompt
-
-
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi
@@ -141,13 +142,11 @@ export VISUAL
 export EDITOR=$VISUAL
 export GIT_EDITOR=$EDITOR
 
-PATH=${PATH}:~/.scripts:~/.vendor/bin:~/Projects/binary-repository/bin:~/.fzf/bin:~/.local/bin
 # :node_modules/.bin:
 export NODE_ENV=development
-export HISTCONTROL=ignorespace
 
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export JDK_HOME="$JAVA_HOME"
+# export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+# export JDK_HOME="$JAVA_HOME"
 export TIME_STYLE=long-iso
 export CHROMIUM_USER_SETTINGS_DIRECTORY=~/.config/chromium/
 export CHROMIUM_COMMAND=chromium
@@ -179,16 +178,13 @@ export FZF_DEFAULT_COMMAND='rg --files'
 # export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
 
 alias todo="todo-txt -d ~/.config/todo.txt/todo.cfg"
-alias tnew='tmux -f ~/.tmux.conf new-session -As $(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")'
+alias tnew='tmux -f ~/.tmux.conf new-session -As "$(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")"'
 alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*//'"'"')'
-export PATH="$HOME/.cargo/bin:$PATH"
 
-export NAVI_PATH="$HOME/.config/navi/:$HOME/.local/navi/cheats/"
-alias navi='~/.local/navi/navi' #https://github.com/denisidoro/navi
+export NAVI_PATH="$HOME/.config/navi" #/:$HOME/.local/navi/cheats/"
+source <(~/.local/bin/navi widget bash)
+# alias navi='~/.local/navi/navi' #https://github.com/denisidoro/navi
 
+# eval "$(basher init -)"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-
-export PATH="$HOME/.basher/bin:$PATH" # https://github.com/basherpm/basher
-eval "$(basher init -)"
+. ~/.bash_env
