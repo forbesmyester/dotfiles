@@ -76,4 +76,4 @@ cd $DIRECTORY
 set +e
 restic -r "b2:${BUCKET_NAME}:restic" init
 set -e
-restic  --limit-upload 25 -r "b2:${BUCKET_NAME}:restic" backup . #--limit-download 750 
+restic  --limit-upload 200 -r "b2:${BUCKET_NAME}:restic" backup . #--limit-download 750 
