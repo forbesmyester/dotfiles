@@ -14,11 +14,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# tmux list-windows | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/' |fzf  --tiebreak=begin --nth=1 --delimiter=':'
+
 GO_TO=""
 if [[ $1 == "_" ]]; then
-    GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -1)
+    GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -e -1)
 else
-    GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -1 -q $1)
+    GO_TO=$(tmux list-windows | grep -v "^$HIDE_SWICTHER" | sed 's/(.*//' | sed 's/^\(.\)\:/0\1:/'| fzf --reverse -e -1 -q $1)
 fi
 
 if [ $? -ne 0 ]; then
