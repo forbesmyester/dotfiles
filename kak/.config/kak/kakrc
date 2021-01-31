@@ -1,28 +1,52 @@
 eval %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(rust|typescript) %{
-        lsp-enable-window
+# set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
+    lsp-enable-window
+}
+
+hook global WinSetOption filetype=rust %{
+  hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+  hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+  hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+  hook -once -always window WinSetOption filetype=.* %{
+    remove-hooks window semantic-tokens
+  }
+}
+
+hook global WinSetOption filetype=rust %{
+  hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
+  hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
+  hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
+  hook -once -always window WinSetOption filetype=.* %{
+    remove-hooks window rust-inlay-hints
+  }
 }
 
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
 
 hook global WinCreate ^[^*]+$ %{
-    add-highlighter window/ number-lines -hlcursor -relative
-    # declare-option str termcmd 'uxterm -e sh -c'
+    add-highlighter window/ number-lines -hlcursor -separator " " -relative
 }
 
+# editorconfig
+hook global BufOpenFile .* %{ editorconfig-load }
+hook global BufNewFile .* %{ editorconfig-load }
+
 hook global WinCreate .* %{
-    declare-option str termcmd 'uxterm -e sh -c'
+    # declare-option str termcmd 'uxterm -e sh -c'
     colorscheme tomorrow-night
     add-highlighter global/ wrap -indent # -word
 }
+# plug "insipx/kak-crosshairs"
 
 define-command unset-run-after-write -params 0 -docstring 'Unset repl command to run after write' %{
     remove-hooks buffer set-run-after-write
 }
 define-command set-run-after-write -params 1 -docstring 'Set repl command to run after write' %{
     declare-option str auto_repl_command %arg{1}
+    remove-hooks buffer set-run-after-write
     hook -group set-run-after-write buffer BufWritePost .* %{
-        x-send-text %opt{auto_repl_command}
+        repl-send-text %opt{auto_repl_command}
     }
 }
 
@@ -30,25 +54,14 @@ plug "lePerdu/kakboard" %{
     hook global WinCreate .* %{ kakboard-enable }
 }
 
+
 set-option global tabstop 4
 set-option global indentwidth 4
 set-option global scrolloff 3,5
 add-highlighter global/ regex \h+$ 0:Error
 
-define-command x-send-text -params 0..1 -docstring %{
-        x11-send-text [text]: Send text to the REPL window.
-        If no text is passed, then the selection is used
-        } %{
-    evaluate-commands %sh{
-        ([ "$#" -gt 0 ] && printf "%s\n\n" "$1" || printf "%s\\n" "${kak_selection}" ) | xsel -i ||
-        echo 'fail x11-send-text: failed to run xsel, see *debug* buffer for details' &&
-        kak_winid=$(xdotool getactivewindow) &&
-        xdotool windowactivate "${kak_opt_x11_repl_id}" key --clearmodifiers Shift+Insert &&
-        xdotool windowactivate "${kak_winid}" ||
-        echo 'fail x11-send-text: failed to run xdotool, see *debug* buffer for details'
-    }
-}
-
+# plug "alexherbo2/yank-ring.kak" %{
+# }
 plug "alexherbo2/prelude.kak"
 plug "alexherbo2/connect.kak" defer connect %{} config %{
     define-command nnn-persistent -params 0..1 -file-completion -docstring 'Open file with nnn' %{
@@ -77,17 +90,17 @@ plug "h-youhei/kakoune-surround" %{
 
 # map -docstring "Enter LSP mode" global goto gl '\: enter-user-mode lsp<ret>'
 
-# plug "andreyorst/smarttab.kak" defer smarttab %{
-#     # when `backspace' is pressed, 4 spaces are deleted at once
-#     set-option global softtabstop 4
-# } config %{
-#     # these languages will use `expandtab' behavior
-#     hook global WinSetOption filetype=(rust|markdown|kak|lisp|scheme|sh|perl|typescript|scala) expandtab
-#     # these languages will use `noexpandtab' behavior
-#     hook global WinSetOption filetype=(makefile|gas) noexpandtab
-#     # these languages will use `smarttab' behavior
-#     hook global WinSetOption filetype=(c|cpp) smarttab
-# }
+plug "andreyorst/smarttab.kak" defer smarttab %{
+    # when `backspace' is pressed, 4 spaces are deleted at once
+    set-option global softtabstop 4
+} config %{
+    # these languages will use `expandtab' behavior
+    hook global WinSetOption filetype=(rust|markdown|kak|lisp|scheme|sh|perl|typescript|scala) expandtab
+    # these languages will use `noexpandtab' behavior
+    hook global WinSetOption filetype=(makefile|gas) noexpandtab
+    # these languages will use `smarttab' behavior
+    hook global WinSetOption filetype=(c|cpp) smarttab
+}
 
 # plug "andreyorst/powerline.kak" config %{
 #     powerline-start
@@ -107,5 +120,17 @@ plug "andreyorst/fzf.kak"
 #     printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
 # }
 
+define-command -hidden -docstring \
+"select a word under cursor, or add cursor on next occurrence of current selection" \
+select-or-add-cursor %{
+    try %{
+        execute-keys "<a-k>\A.\z<ret>"
+        execute-keys -save-regs '' "_<a-i>w*"
+    } catch %{
+        execute-keys -save-regs '' "_*<s-n>"
+    } catch nop
+}
+
 map global normal '<ret>' ';'
 set-option global ui_options ncurses_change_colors=false ncurses_enable_mouse=false
+
