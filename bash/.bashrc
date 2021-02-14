@@ -50,6 +50,7 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
     rxvt-unicode-256color) color_prompt=yes;;
     screen-256color) color_prompt=yes;;
+    screen) color_prompt=yes;;
     xterm-kitty) color_prompt=yes;;
 esac
 
@@ -57,6 +58,48 @@ esac
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
+
+function __prompt_command() {
+    local PS1_EXIT_STATUS="$?" 
+
+    local GREY="\[\e[0m\]"
+    local CYAN="\[\e[0;36m\]"
+    local YELLOW="\[\e[0;33m\]"
+    local GREEN="\[\e[0;32m\]"
+    local RED="\[\e[0;31m\]"
+    local BLUE="\[\e[0;34m\]"
+
+    local PS1_USER="\u@\h"
+    PS1_EXIT="${RED}[$PS1_EXIT_STATUS]"
+    if [ $PS1_EXIT_STATUS -eq 0 ]; then
+        PS1_EXIT="${GREEN}[$PS1_EXIT_STATUS]"
+    fi
+
+    if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+        if [ $PS1_EXIT_STATUS -eq 0 ]; then
+            nvr -c 'hi LineNr ctermfg=8'
+        else
+            nvr -c 'hi LineNr ctermfg=1'
+            nvr -c "exe 'Topen'"
+        fi
+    fi
+
+    local PS1_GIT_BRANCH=''
+    git status 2>/dev/null > /dev/null
+    if [ "$?" -eq 0 ]; then
+        local PS1_GIT_BRANCH_OUT=`git rev-parse --abbrev-ref HEAD 2>&1`
+        if [ $(echo $PS1_GIT_BRANCH_OUT | grep -v ' ' | wc -l) -eq 1 ]; then
+            local PS1_GIT_DIRTY=$([[ -z $(git status --porcelain) ]] || echo ">")
+            local PS1_GIT_BEHIND=$([[ -z $(git status --porcelain --branch | grep '\[ahead .\]$') ]] || echo "^")
+            local PS1_GIT_BRANCH="${PS1_GIT_BRANCH_OUT} ${PS1_GIT_DIRTY} ${PS1_GIT_BEHIND}"
+
+        fi
+    fi
+    local PS1_PATH="$GREEN\w"
+    PS1="$PS1_EXIT ${BLUE}$PS1_USER$GREY:${GREEN}$PS1_PATH ${GREY}$PS1_GIT_BRANCH \n$ "
+}
+
+
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -76,7 +119,7 @@ if [ "$color_prompt" = yes ]; then
     #     export __GIT_PROMPT_DIR=~/.vendor/bash-git-prompt
     #     source ~/.vendor/bash-git-prompt/gitprompt.sh
     # fi
-    . ~/.prompt
+    PROMPT_COMMAND=__prompt_command
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
 fi
@@ -189,7 +232,7 @@ if ! infocmp alacritty > /dev/null 2>&1; then
     curl https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info > "$ALACRITTY_TERMINFO_TMP"
     mkdir -p ~/.terminfo
     tic -o ~/.terminfo/ -xe alacritty,alacritty-direct "$ALACRITTY_TERMINFO_TMP"
-    echo "NOTICE: alacritty terminfo installed"
+    echo "NOTICE: alacritty terminfo install$HOMEd"
 fi
 
 . ~/.bash_env
