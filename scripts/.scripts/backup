@@ -1,0 +1,45 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+LVGRP=seagate_nas
+
+function cleanup {
+    local SNAPS=$(lvs -S "(lv_attr =~ ^s) && (vg_name = ${LVGRP})" --separator ':' --noheadings | sed 's/^ *//' | awk -F ':' '{ print $1 }')
+    for SNAP in $SNAPS; do
+        echo "$SNAP"
+        echo "Unmounting: /dev/$LVGRP/$SNAP"
+        umount -f "/dev/$LVGRP/$SNAP" || true
+        echo "Removing snap: $SNAP"
+        lvremove -y "$LVGRP/$SNAP"
+    done
+}
+trap cleanup EXIT
+
+
+function do_mount {
+    DATE=$(date "+%Y%m%d-%H%M")
+    SRC_FS="$1"
+    SRC_INTLOC="$2"
+    SNAP="snap-${DATE}-$(echo "$SRC_FS" | awk '{print tolower($0)}' | sed 's/[^a-z0-9]/_/g')-$(echo "$SRC_INTLOC" | awk '{print tolower($0)}' | sed 's/[^a-z0-9]/_/g')"
+    lvcreate -L 32G -s -n "${LVGRP}/$SNAP" "$SRC_FS"
+    mkdir -p "/tmp/$SNAP"
+    MOUNTPOINT="/tmp/$SNAP"
+    mount -o nouuid "/dev/$LVGRP/$SNAP" "$MOUNTPOINT"
+    echo "$MOUNTPOINT/$SRC_INTLOC"
+}
+
+cleanup
+
+
+
+ENVIRONMENT_FILE=$HOME/.backup
+BACKUP_NAMES=$(cat "$ENVIRONMENT_FILE" | jq -r ._name)
+for BACKUP_NAME in $BACKUP_NAMES; do
+    echo ">> $BACKUP_NAME"
+    . ndjson-env -f "$ENVIRONMENT_FILE" "$BACKUP_NAME"
+    export RESTIC_DIRECTORY="$(do_mount "/dev/seagate_nas/${LOGICAL_VOLUME}" "$INTERNAL_DIRECTORY" | tail -n1)"
+    echo ">>> $BACKUP_NAME $RESTIC_DIRECTORY"
+    nc_backup "$BACKUP_NAME" "$RESTIC_DIRECTORY"
+	cleanup
+done
