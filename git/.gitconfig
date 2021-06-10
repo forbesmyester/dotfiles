@@ -11,7 +11,7 @@
 	conflictstyle = diff3
 	prompt = false
 [diff]
-	tool = nvim -d
+	tool = meld
     ; tool = meld
 [core]
 	editor = vim

@@ -1,38 +1,6 @@
-[apps/light-locker]
-idle-hint=false
-late-locking=false
-lock-after-screensaver=uint32 60
-lock-on-lid=false
-lock-on-suspend=true
-
-[apps/update-manager]
-first-run=false
-launch-count=61
-launch-time=int64 1612846668
-show-details=true
-window-height=657
-window-width=645
-
-[com/solus-project/brisk-menu]
-dark-theme=false
-
-[com/ubuntu/update-notifier]
-release-check-time=uint32 1612254657
-
-[org/blueman/general]
-window-properties=[627, 839, 1115, 136]
-
-[org/blueman/network]
-nap-enable=false
-
-[org/blueman/plugins/recentconns]
-recent-connections='eNotj8tOwkAYhStykXrF+wUTFi7cQKZUAsyuhOiChA2JaUxcTDsFJtDi6cWdiV3Ud/AlXPsmLt35HE5HNyf/5Tt//vNaGGmP0F6wdm1XNE1jnD3FXoiCy50k0idxKIKZjnW7JpeEUKNPh2067ND2LTUHKGYopSj/W3noRREq8z+6Tygx6aBLrSHtWrTdw0aGagrdLuX0UrAIm5Ktyu5BLBr3Rssg2MqwnWLHLsqpcFcBdiWi54aEi1XTZSHHXoZain3FBMz3cKAIKycaExEscKh2SSI4jqT/Sj1PiGEQp5kXTSOXXi6E9Ehn2nfMm6mD4wwnKU6VOxby8tmd9fX+813/+LTLcsa9Z+F6OB+rDL6IPR8XYxV/FolZwJaoj7SEveGy9QvL21k5'
-
-[org/blueman/transfer]
-shared-path=''
-
-[org/cinnamon]
+[/]
 alttab-switcher-delay=100
+alttab-switcher-style='icons+preview'
 desklet-snap-interval=25
 desktop-effects-close-effect='traditional'
 desktop-effects-close-time=120
@@ -53,128 +21,137 @@ desktop-effects-tile-transition='easeInQuad'
 desktop-effects-unmaximize-effect='none'
 desktop-effects-unmaximize-time=100
 desktop-effects-unmaximize-transition='easeNone'
-enabled-applets=['panel1:right:1:systray@cinnamon.org:0', 'panel1:left:0:menu@cinnamon.org:1', 'panel1:left:2:panel-launchers@cinnamon.org:3', 'panel1:left:3:window-list@cinnamon.org:4', 'panel1:right:2:keyboard@cinnamon.org:5', 'panel1:right:3:notifications@cinnamon.org:6', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:5:user@cinnamon.org:8', 'panel1:right:6:network@cinnamon.org:9', 'panel1:right:7:bluetooth@cinnamon.org:10', 'panel1:right:8:power@cinnamon.org:11', 'panel1:right:9:calendar@cinnamon.org:12', 'panel1:right:10:sound@cinnamon.org:13', 'panel1:right:0:workspace-switcher@cinnamon.org:14']
+enabled-applets=['panel1:right:5:systray@cinnamon.org:0', 'panel1:left:0:menu@cinnamon.org:1', 'panel1:left:1:panel-launchers@cinnamon.org:3', 'panel1:right:6:keyboard@cinnamon.org:5', 'panel1:right:7:notifications@cinnamon.org:6', 'panel1:right:8:removable-drives@cinnamon.org:7', 'panel1:right:9:user@cinnamon.org:8', 'panel1:right:10:network@cinnamon.org:9', 'panel1:right:11:power@cinnamon.org:11', 'panel1:right:12:calendar@cinnamon.org:12', 'panel1:right:13:sound@cinnamon.org:13', 'panel1:right:1:workspace-switcher@cinnamon.org:14', 'panel1:right:3:xrandr@cinnamon.org:17', 'panel1:right:2:printers@cinnamon.org:18', 'panel1:center:0:window-list@cinnamon.org:24']
 enabled-desklets=@as []
 enabled-extensions=@as []
 extension-cache-updated=1613062573
-next-applet-id=15
+hotcorner-layout=['expo:false:0', 'scale:false:0', 'scale:false:0', 'desktop:false:0']
+next-applet-id=25
 next-desklet-id=1
+panel-edit-mode=false
 panel-launchers=['DEPRECATED']
 panels-autohide=['1:true']
 panels-height=['1:25']
 
-[org/cinnamon/cinnamon-session]
+[cinnamon-session]
 quit-time-delay=60
 
-[org/cinnamon/desktop/a11y/applications]
+[desktop/a11y/applications]
 screen-keyboard-enabled=true
 
-[org/cinnamon/desktop/a11y/keyboard]
+[desktop/a11y/keyboard]
 bouncekeys-delay=300
 mousekeys-accel-time=300
 mousekeys-init-delay=300
 mousekeys-max-speed=10
 slowkeys-delay=300
 
-[org/cinnamon/desktop/a11y/mouse]
+[desktop/a11y/mouse]
 dwell-click-enabled=false
 dwell-threshold=10
 dwell-time=1.2
 secondary-click-enabled=false
 secondary-click-time=1.2
 
-[org/cinnamon/desktop/applications/calculator]
+[desktop/applications/calculator]
 exec='gnome-calculator'
 
-[org/cinnamon/desktop/applications/terminal]
+[desktop/applications/terminal]
 exec='alacritty'
 
-[org/cinnamon/desktop/interface]
+[desktop/interface]
 cursor-blink-time=1200
 cursor-size=24
 gtk-theme='Adapta-Nokto'
 icon-theme='Yaru'
 toolkit-accessibility=true
 
-[org/cinnamon/desktop/keybindings]
-custom-list=['custom13', 'custom3', 'custom1', '__dummy__', 'custom0', 'custom2', 'custom4', 'custom5', 'custom6', 'custom7', 'custom8', 'custom9', 'custom10', 'custom11', 'custom12']
+[desktop/keybindings]
+custom-list=['custom13', 'custom3', 'custom1', '__dummy__', 'custom0', 'custom2', 'custom4', 'custom5', 'custom6', 'custom7', 'custom8', 'custom9', 'custom10', 'custom11', 'custom12', 'custom14']
 looking-glass-keybinding=@as []
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
+[desktop/keybindings/custom-keybindings/custom0]
 binding=['<Super>h']
 command='/home/fozz/Projects/fake_tile/fake_tile left'
 name='Window Left'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom1]
+[desktop/keybindings/custom-keybindings/custom1]
 binding=['<Super>l']
 command='/home/fozz/Projects/fake_tile/fake_tile right'
 name='Window Right'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom10]
+[desktop/keybindings/custom-keybindings/custom10]
 binding=['<Super><Ctrl>j']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -h +1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -h +1'
 name='Window Resize Vertical Larger'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom11]
+[desktop/keybindings/custom-keybindings/custom11]
 binding=['<Super><Ctrl>k']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -h -1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -h -1'
 name='Window Resize Vertical Smaller'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom12]
+[desktop/keybindings/custom-keybindings/custom12]
 binding=['<Super>p']
 command='/home/fozz/Projects/fzf-pass/fzf-pass-window-control'
 name='FZF Pass'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom13]
+[desktop/keybindings/custom-keybindings/custom13]
 binding=['<Super>Return']
 command='/home/fozz/.cargo/bin/alacritty'
 name='Alacritty'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom2]
+[desktop/keybindings/custom-keybindings/custom14]
+binding=['Print']
+command='flameshot gui'
+name='Flameshot'
+
+[desktop/keybindings/custom-keybindings/custom2]
 binding=['<Super>k']
 command='/home/fozz/Projects/fake_tile/fake_tile up'
 name='Window Up'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom3]
+[desktop/keybindings/custom-keybindings/custom3]
 binding=['<Super>j']
 command='/home/fozz/Projects/fake_tile/fake_tile down'
 name='Window Down'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom4]
+[desktop/keybindings/custom-keybindings/custom4]
 binding=['<Super><Shift>l']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -x +1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -x +1'
 name='Window Move Right'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom5]
+[desktop/keybindings/custom-keybindings/custom5]
 binding=['<Super><Shift>h']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -x -1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -x -1'
 name='Window Move Left'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom6]
+[desktop/keybindings/custom-keybindings/custom6]
 binding=['<Super><Shift>j']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -y +1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -y +1'
 name='Window Move Down'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom7]
-binding=['<Super><Shift>k']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -y -1'
+[desktop/keybindings/custom-keybindings/custom7]
+binding=['<Shift><Super>k']
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -y -1'
 name='Window Move Up'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom8]
+[desktop/keybindings/custom-keybindings/custom8]
 binding=['<Super><Ctrl>l']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -w +1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -w +1'
 name='Window Resize Horizontal Larger'
 
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom9]
+[desktop/keybindings/custom-keybindings/custom9]
 binding=['<Super><Ctrl>h']
-command='/home/fozz/Projects/window_grid/window_grid -d 24 -c both -w -1'
+command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -w -1'
 name='Window Resize Horizontal Smaller'
 
-[org/cinnamon/desktop/keybindings/media-keys]
+[desktop/keybindings/media-keys]
 screensaver=['XF86ScreenSaver']
+screenshot=@as []
 video-outputs=['XF86Display']
 
-[org/cinnamon/desktop/keybindings/wm]
+[desktop/keybindings/wm]
+activate-window-menu=@as []
 move-to-workspace-1=['<Shift><Super>F1']
 move-to-workspace-10=['<Shift><Super>F10']
 move-to-workspace-11=['<Shift><Super>F11']
@@ -212,16 +189,23 @@ switch-windows-backward=['<Shift><Super>Tab']
 toggle-fullscreen=['<Shift><Super>f']
 toggle-maximized=['<Alt>F10', '<Super>f']
 
-[org/cinnamon/desktop/media-handling]
+[desktop/media-handling]
 autorun-never=false
+autorun-x-content-ignore=['x-content/ebook-reader']
+autorun-x-content-open-folder=@as []
+autorun-x-content-start-app=['x-content/unix-software']
 
-[org/cinnamon/desktop/screensaver]
+[desktop/screensaver]
+lock-delay=uint32 30
 screensaver-name=''
 
-[org/cinnamon/desktop/sound]
+[desktop/session]
+idle-delay=uint32 300
+
+[desktop/sound]
 event-sounds=false
 
-[org/cinnamon/desktop/wm/preferences]
+[desktop/wm/preferences]
 button-layout=':minimize,maximize,close'
 min-window-opacity=30
 mouse-button-modifier='<Super>'
@@ -229,27 +213,29 @@ num-workspaces=12
 theme='Adapta-Nokto'
 workspace-names=@as []
 
-[org/cinnamon/muffin]
+[muffin]
+placement-mode='pointer'
 resize-threshold=24
 tile-hud-threshold=25
+unredirect-fullscreen-windows=true
 
-[org/cinnamon/settings-daemon/peripherals/keyboard]
+[settings-daemon/peripherals/keyboard]
 delay=uint32 500
 numlock-state='off'
 repeat-interval=uint32 30
 
-[org/cinnamon/settings-daemon/peripherals/mouse]
+[settings-daemon/peripherals/mouse]
 double-click=400
 drag-threshold=8
 motion-threshold=1
 
-[org/cinnamon/settings-daemon/peripherals/touchpad]
+[settings-daemon/peripherals/touchpad]
 motion-threshold=1
 
-[org/cinnamon/settings-daemon/peripherals/touchscreen]
-orientation-lock=false
+[settings-daemon/peripherals/touchscreen]
+orientation-lock=true
 
-[org/cinnamon/settings-daemon/plugins/power]
+[settings-daemon/plugins/power]
 lid-close-ac-action='suspend'
 lid-close-battery-action='suspend'
 lid-close-suspend-with-external-monitor=true
@@ -258,1280 +244,6 @@ sleep-display-battery=1800
 sleep-inactive-ac-timeout=0
 sleep-inactive-battery-timeout=0
 
-[org/cinnamon/theme]
+[theme]
 name='Adapta-Nokto'
 theme-cache-updated=1572605291
-
-[org/gnome/Totem]
-active-plugins=['recent', 'save-file', 'media-player-keys', 'rotation', 'screenshot', 'variable-rate', 'open-directory', 'movie-properties', 'vimeo', 'skipto', 'apple-trailers', 'screensaver', 'autoload-subtitles']
-subtitle-encoding='UTF-8'
-
-[org/gnome/calculator]
-accuracy=9
-angle-units='degrees'
-base=10
-button-mode='basic'
-number-format='automatic'
-show-thousands=false
-show-zeroes=false
-source-currency=''
-source-units='degree'
-target-currency=''
-target-units='radian'
-window-position=(2674, 1015)
-word-size=64
-
-[org/gnome/cheese]
-burst-delay=1000
-camera='Full HD webcam: Full HD webcam'
-photo-x-resolution=640
-photo-y-resolution=480
-video-x-resolution=640
-video-y-resolution=480
-
-[org/gnome/control-center]
-last-panel='sound'
-
-[org/gnome/deja-dup]
-backend='google'
-include-list=@as []
-prompt-check='disabled'
-
-[org/gnome/deja-dup/drive]
-folder='saw'
-
-[org/gnome/deja-dup/file]
-migrated=true
-
-[org/gnome/deja-dup/gcs]
-folder='saw'
-
-[org/gnome/deja-dup/google]
-folder='saw'
-
-[org/gnome/deja-dup/local]
-folder='saw'
-
-[org/gnome/deja-dup/openstack]
-container='saw'
-
-[org/gnome/deja-dup/rackspace]
-container='saw'
-
-[org/gnome/deja-dup/remote]
-folder='saw'
-
-[org/gnome/deja-dup/s3]
-folder='saw'
-
-[org/gnome/desktop/a11y/applications]
-screen-keyboard-enabled=true
-screen-magnifier-enabled=false
-screen-reader-enabled=false
-
-[org/gnome/desktop/a11y/magnifier]
-mag-factor=5.0
-
-[org/gnome/desktop/a11y/mouse]
-dwell-click-enabled=false
-dwell-threshold=10
-dwell-time=1.2
-secondary-click-enabled=false
-secondary-click-time=1.2
-
-[org/gnome/desktop/app-folders]
-folder-children=['Utilities', 'Sundry', 'YaST']
-
-[org/gnome/desktop/app-folders/folders/Sundry]
-apps=['alacarte.desktop', 'authconfig.desktop', 'ca.desrt.dconf-editor.desktop', 'fedora-release-notes.desktop', 'firewall-config.desktop', 'flash-player-properties.desktop', 'gconf-editor.desktop', 'gnome-abrt.desktop', 'gnome-power-statistics.desktop', 'ibus-setup-anthy.desktop', 'ibus-setup.desktop', 'ibus-setup-hangul.desktop', 'ibus-setup-libbopomofo.desktop', 'ibus-setup-libpinyin.desktop', 'ibus-setup-m17n.desktop', 'ibus-setup-typing-booster.desktop', 'im-chooser.desktop', 'itweb-settings.desktop', 'jhbuild.desktop', 'javaws.desktop', 'java-1.7.0-openjdk-jconsole.desktop', 'java-1.7.0-openjdk-policytool.desktop', 'log4j-chainsaw.desktop', 'log4j-logfactor5.desktop', 'nm-connection-editor.desktop', 'orca.desktop', 'setroubleshoot.desktop', 'system-config-date.desktop', 'system-config-firewall.desktop', 'system-config-keyboard.desktop', 'system-config-language.desktop', 'system-config-printer.desktop', 'system-config-users.desktop', 'vino-preferences.desktop']
-categories=['X-GNOME-Sundry']
-name='X-GNOME-Sundry.directory'
-translate=true
-
-[org/gnome/desktop/app-folders/folders/Utilities]
-apps=['org.gnome.baobab.desktop', 'deja-dup-preferences.desktop', 'eog.desktop', 'evince.desktop', 'org.gnome.FileRoller.desktop', 'gnome-calculator.desktop', 'gnome-dictionary.desktop', 'org.gnome.Characters.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Screenshot.desktop', 'gnome-system-log.desktop', 'gnome-system-monitor.desktop', 'gnome-tweak-tool.desktop', 'gucharmap.desktop', 'seahorse.desktop', 'vinagre.desktop', 'yelp.desktop']
-categories=['X-GNOME-Utilities']
-name='X-GNOME-Utilities.directory'
-translate=true
-
-[org/gnome/desktop/app-folders/folders/YaST]
-categories=['X-SuSE-YaST']
-name='suse-yast.directory'
-translate=true
-
-[org/gnome/desktop/background]
-color-shading-type='solid'
-picture-options='zoom'
-picture-uri='file:///usr/share/backgrounds/gnome/Symbolics-2.jpg'
-primary-color='#000000'
-secondary-color='#000000'
-
-[org/gnome/desktop/input-sources]
-current=uint32 0
-show-all-sources=false
-sources=[('xkb', 'gb')]
-xkb-options=['shift:both_capslock_cancel', 'ctrl:nocaps', 'altwin:swap_alt_win']
-
-[org/gnome/desktop/interface]
-cursor-size=96
-cursor-theme='DMZ-White'
-gtk-im-module='gtk-im-context-simple'
-gtk-theme='Yaru-dark'
-icon-theme='Adwaita'
-locate-pointer=false
-monospace-font-name='Source Code Pro for Powerline Semi-Bold 13'
-toolkit-accessibility=true
-
-[org/gnome/desktop/notifications]
-application-children=['update-manager', 'gnome-network-panel', 'org-gnome-software', 'org-gnome-chromegnomeshell', 'org-gnome-extensions-desktop', 'org-gnome-dejadup', 'org-gnome-nautilus', 'firefox', 'google-chrome', 'gnome-printers-panel', 'org-gnome-screenshot', 'rhythmbox']
-
-[org/gnome/desktop/notifications/application/firefox]
-application-id='firefox.desktop'
-
-[org/gnome/desktop/notifications/application/gnome-network-panel]
-application-id='gnome-network-panel.desktop'
-
-[org/gnome/desktop/notifications/application/gnome-printers-panel]
-application-id='gnome-printers-panel.desktop'
-
-[org/gnome/desktop/notifications/application/google-chrome]
-application-id='google-chrome.desktop'
-
-[org/gnome/desktop/notifications/application/org-gnome-chromegnomeshell]
-application-id='org.gnome.ChromeGnomeShell.desktop'
-
-[org/gnome/desktop/notifications/application/org-gnome-dejadup]
-application-id='org.gnome.DejaDup.desktop'
-
-[org/gnome/desktop/notifications/application/org-gnome-extensions-desktop]
-application-id='org.gnome.Extensions.desktop.desktop'
-
-[org/gnome/desktop/notifications/application/org-gnome-nautilus]
-application-id='org.gnome.Nautilus.desktop'
-
-[org/gnome/desktop/notifications/application/org-gnome-screenshot]
-application-id='org.gnome.Screenshot.desktop'
-
-[org/gnome/desktop/notifications/application/org-gnome-software]
-application-id='org.gnome.Software.desktop'
-
-[org/gnome/desktop/notifications/application/rhythmbox]
-application-id='rhythmbox.desktop'
-
-[org/gnome/desktop/notifications/application/update-manager]
-application-id='update-manager.desktop'
-
-[org/gnome/desktop/peripherals/touchpad]
-two-finger-scrolling-enabled=true
-
-[org/gnome/desktop/privacy]
-disable-microphone=false
-
-[org/gnome/desktop/screensaver]
-color-shading-type='solid'
-lock-delay=uint32 120
-lock-enabled=true
-picture-options='zoom'
-picture-uri='file:///usr/share/backgrounds/hardy_wallpaper_uhd.png'
-primary-color='#000000'
-secondary-color='#000000'
-
-[org/gnome/desktop/search-providers]
-disabled=@as []
-
-[org/gnome/desktop/session]
-idle-delay=uint32 180
-
-[org/gnome/desktop/sound]
-allow-volume-above-100-percent=false
-event-sounds=true
-theme-name='__custom'
-
-[org/gnome/desktop/wm/keybindings]
-activate-window-menu=@as []
-always-on-top=@as []
-begin-move=['<Alt>F7']
-begin-resize=['<Alt>F8']
-close=['<Alt>F4']
-cycle-group=['<Alt>F6']
-cycle-group-backward=['<Shift><Alt>F6']
-cycle-panels=['<Control><Alt>Escape']
-cycle-panels-backward=['<Shift><Control><Alt>Escape']
-cycle-windows=['<Super>Tab']
-cycle-windows-backward=['<Shift><Super>Tab']
-lower=@as []
-maximize=['<Super>Up']
-maximize-horizontally=@as []
-maximize-vertically=@as []
-minimize=['<Primary><Shift><Super>underscore']
-move-to-center=@as []
-move-to-corner-ne=@as []
-move-to-corner-nw=@as []
-move-to-corner-se=@as []
-move-to-corner-sw=@as []
-move-to-monitor-down=['<Super><Shift>Down']
-move-to-monitor-left=['<Super><Shift>Left']
-move-to-monitor-right=['<Super><Shift>Right']
-move-to-monitor-up=['<Super><Shift>Up']
-move-to-side-e=@as []
-move-to-side-n=@as []
-move-to-side-s=@as []
-move-to-side-w=@as []
-move-to-workspace-1=['<Super><Shift>1']
-move-to-workspace-10=['<Super><Shift>0']
-move-to-workspace-11=['<Shift><Super>underscore']
-move-to-workspace-12=['<Shift><Super>plus']
-move-to-workspace-2=['<Super><Shift>2']
-move-to-workspace-3=['<Super><Shift>3']
-move-to-workspace-4=['<Super><Shift>4']
-move-to-workspace-5=['<Super><Shift>5']
-move-to-workspace-6=['<Super><Shift>6']
-move-to-workspace-7=['<Super><Shift>7']
-move-to-workspace-8=['<Super><Shift>8']
-move-to-workspace-9=['<Super><Shift>9']
-move-to-workspace-down=['<Super><Shift>Page_Down', '<Control><Shift><Alt>Down']
-move-to-workspace-last=['<Super><Shift>End']
-move-to-workspace-left=['<Control><Shift><Alt>Left']
-move-to-workspace-right=['<Control><Shift><Alt>Right']
-move-to-workspace-up=['<Super><Shift>Page_Up', '<Control><Shift><Alt>Up']
-panel-main-menu=['<Alt>F1']
-panel-run-dialog=['<Alt>F2']
-raise=@as []
-raise-or-lower=@as []
-set-spew-mark=@as []
-show-desktop=@as []
-switch-applications=@as []
-switch-applications-backward=@as []
-switch-group=['<Super>Above_Tab', '<Alt>Above_Tab']
-switch-group-backward=['<Shift><Super>Above_Tab', '<Shift><Alt>Above_Tab']
-switch-input-source=['<Super>space', 'XF86Keyboard']
-switch-input-source-backward=['<Shift><Super>space', '<Shift>XF86Keyboard']
-switch-panels=['<Control><Alt>Tab']
-switch-panels-backward=['<Shift><Control><Alt>Tab']
-switch-to-workspace-1=['<Super>1']
-switch-to-workspace-10=['<Super>0']
-switch-to-workspace-11=['<Super>minus']
-switch-to-workspace-12=['<Super>equal']
-switch-to-workspace-2=['<Super>2']
-switch-to-workspace-3=['<Super>3']
-switch-to-workspace-4=['<Super>4']
-switch-to-workspace-5=['<Super>5']
-switch-to-workspace-6=['<Super>6']
-switch-to-workspace-7=['<Super>7']
-switch-to-workspace-8=['<Super>8']
-switch-to-workspace-9=['<Super>9']
-switch-to-workspace-down=@as []
-switch-to-workspace-last=@as []
-switch-to-workspace-left=['<Control><Alt>Left']
-switch-to-workspace-right=['<Control><Alt>Right']
-switch-to-workspace-up=@as []
-switch-windows=@as []
-switch-windows-backward=@as []
-toggle-above=@as []
-toggle-fullscreen=@as []
-toggle-maximized=@as []
-toggle-on-all-workspaces=@as []
-toggle-shaded=@as []
-unmaximize=['<Super>Down', '<Alt>F5']
-
-[org/gnome/desktop/wm/preferences]
-button-layout='appmenu:close'
-num-workspaces=12
-theme='Ayu-Mirage-Dark'
-
-[org/gnome/eog/view]
-background-color='rgb(0,0,0)'
-use-background-color=true
-
-[org/gnome/epiphany/state]
-is-maximized=false
-window-position=(-1, -1)
-window-size=(1651, 375)
-
-[org/gnome/evince/default]
-window-ratio=(1.2138410838520688, 1.0684022460439)
-
-[org/gnome/evolution-data-server]
-migrated=true
-network-monitor-gio-name=''
-
-[org/gnome/file-roller/dialogs/extract]
-recreate-folders=true
-skip-newer=false
-
-[org/gnome/file-roller/dialogs/new]
-default-extension='.zip'
-encrypt-header=false
-volume-size=0
-
-[org/gnome/file-roller/listing]
-list-mode='as-folder'
-name-column-width=515
-show-path=false
-sort-method='name'
-sort-type='ascending'
-
-[org/gnome/file-roller/ui]
-sidebar-width=200
-window-height=2086
-window-width=1278
-
-[org/gnome/gedit/plugins]
-active-plugins=['filebrowser', 'time', 'modelines', 'docinfo', 'spell']
-
-[org/gnome/gedit/plugins/filebrowser]
-root='file:///'
-tree-view=true
-virtual-root='file:///home/fozz/Videos'
-
-[org/gnome/gedit/preferences/ui]
-show-tabs-mode='auto'
-
-[org/gnome/gedit/state/window]
-bottom-panel-size=140
-side-panel-active-page='GeditWindowDocumentsPanel'
-side-panel-size=200
-size=(956, 997)
-state=0
-
-[org/gnome/gnome-flashback]
-desktop=false
-notifications=false
-root-background=true
-status-notifier-watcher=false
-
-[org/gnome/gnome-screenshot]
-border-effect='none'
-delay=2
-include-border=true
-include-pointer=true
-last-save-directory='file:///home/fozz'
-
-[org/gnome/gnote]
-start-note='note://gnote/9b41d085-d94b-4e35-b0a5-1c73b498700c'
-
-[org/gnome/libgnomekbd/keyboard]
-options=['caps\tcaps:ctrl_modifier']
-
-[org/gnome/maps]
-last-viewed-location=[51.513653551407302, -0.099477767944335938]
-map-type='MapsStreetSource'
-transportation-type='pedestrian'
-window-maximized=false
-window-position=[26, 23]
-window-size=[3792, 2065]
-zoom-level=16
-
-[org/gnome/meld]
-draw-spaces=@as []
-highlight-syntax=false
-show-line-numbers=true
-text-filters=[('CVS/SVN keywords', false, '\\$\\w+(:[^\\n$]+)?\\$'), ('C++ comment', false, '//.*'), ('C comment', false, '/\\*.*?\\*/'), ('All whitespace', true, '[ \\t\\r\\f\\v]*'), ('Leading whitespace', false, '^[ \\t\\r\\f\\v]*'), ('Trailing whitespace', false, '[ \\t\\r\\f\\v]*$'), ('Script comment', false, '#.*')]
-vc-status-filters=['flatten', 'modified']
-wrap-mode='none'
-
-[org/gnome/meld/window-state]
-height=1763
-is-maximized=false
-width=2560
-
-[org/gnome/mutter]
-dynamic-workspaces=false
-experimental-features=@as []
-workspaces-only-on-primary=false
-
-[org/gnome/mutter/keybindings]
-toggle-tiled-left=@as []
-toggle-tiled-right=@as []
-
-[org/gnome/mutter/wayland/keybindings]
-restore-shortcuts=['']
-
-[org/gnome/nautilus/compression]
-default-compression-format='7z'
-
-[org/gnome/nautilus/list-view]
-default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency', 'starred', 'detailed_type']
-default-visible-columns=['name', 'size', 'date_modified', 'starred']
-
-[org/gnome/nautilus/preferences]
-default-folder-viewer='list-view'
-search-filter-time-type='last_modified'
-search-view='list-view'
-
-[org/gnome/nautilus/window-state]
-initial-size=(2171, 1523)
-maximized=false
-sidebar-width=271
-
-[org/gnome/nm-applet]
-disable-connected-notifications=true
-disable-vpn-notifications=true
-
-[org/gnome/nm-applet/eap/02f89149-836e-48ab-adbe-40e92b2ade63]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/06ee4016-741c-446f-a342-3255663e6f7e]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/2703235b-d0d7-4922-a1e7-b8186ecd480f]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/29aac372-f79f-421c-81d3-d55241bc77ad]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/29fa43f8-bb1b-4dd6-afed-ad00561285da]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/53efa54a-04aa-4f65-9e21-ebcc26bf1bc1]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/545edf7c-a465-406a-9480-859d98fc5fa9]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/547a5250-509e-40fa-b0e0-db6e0ea8a062]
-ignore-ca-cert=true
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/590e0ec5-1e57-45ba-b920-63f62caccdb5]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/677e8d09-09e8-4084-a81c-347ebcb41af8]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/6f6870ec-a183-400d-9dfd-0e76716c8c25]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/7948100c-f6b0-4367-a8cd-1ff93bcedb8d]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/7da93031-bf06-4e2e-896d-a9029b9c512b]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/8b377139-1495-4e9a-bffc-a0b876e869c9]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/95529a45-df98-4490-99ae-b65e61866a8a]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/b004e8f1-831b-4bee-b990-ff3c5807691d]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/c0487c00-50d5-4203-946c-5870cd6c19a4]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/d0c89b75-bbf1-4415-8264-ef1899dc1626]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/d4269c6f-d381-4d9a-8ce7-62816990c323]
-ignore-ca-cert=true
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/de3ecb08-699f-45ed-a12c-028dc83db2c8]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/e0c5dee6-06fe-4d74-a549-863859006f71]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/e4e56fcf-69ee-4bdb-852d-209c2ac96765]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/e624f8d2-9f72-4065-996a-5ca3123060e2]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/ee583ca8-c71a-4e8b-822e-d2354e5021a6]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/ef346127-66dd-40c4-b82b-83bde56842ff]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/f0bf1c41-40de-4e73-955d-cbb316381e6c]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/fafd040a-6b75-4be5-8a0d-13cf8afdb7a3]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/rhythmbox]
-position=(221, 633)
-size=(1652, 1213)
-
-[org/gnome/rhythmbox/library/source]
-show-browser=true
-
-[org/gnome/rhythmbox/player]
-volume=1.0
-
-[org/gnome/rhythmbox/plugins]
-active-plugins=['mpris', 'daap', 'generic-player', 'mtpdevice', 'notification', 'audioscrobbler', 'mmkeys', 'rb', 'ipod', 'power-manager', 'audiocd', 'cd-recorder', 'iradio', 'artsearch', 'android', 'dbus-media-server']
-seen-plugins=['mpris', 'daap', 'mtpdevice', 'notification', 'audioscrobbler', 'fmradio', 'rb', 'alternative-toolbar', 'webremote', 'replaygain', 'rblirc', 'ipod', 'im-status', 'grilo', 'soundcloud', 'pythonconsole', 'artsearch', 'lyrics', 'magnatune', 'listenbrainz', 'dbus-media-server', 'cd-recorder']
-
-[org/gnome/rhythmbox/plugins/audioscrobbler/Last.fm]
-scrobbling-enabled=true
-
-[org/gnome/rhythmbox/plugins/audioscrobbler/Libre.fm]
-scrobbling-enabled=true
-
-[org/gnome/rhythmbox/plugins/iradio]
-initial-stations-loaded=true
-
-[org/gnome/rhythmbox/plugins/iradio/source]
-show-browser=true
-
-[org/gnome/rhythmbox/podcast/source]
-show-browser=true
-
-[org/gnome/rhythmbox/rhythmdb]
-locations=['file:///home/fozz/Music']
-
-[org/gnome/settings-daemon/plugins/color]
-night-light-enabled=true
-
-[org/gnome/settings-daemon/plugins/media-keys]
-area-screenshot=['<Shift>Print']
-area-screenshot-clip=['<Ctrl><Shift>Print']
-battery-status=@as []
-battery-status-static=['XF86Battery']
-calculator=['<Super>F10']
-calculator-static=['XF86Calculator']
-control-center=@as []
-control-center-static=['XF86Tools']
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom14/']
-decrease-text-size=@as []
-eject=@as []
-eject-static=['XF86Eject']
-email=@as []
-email-static=['XF86Mail']
-help=['', '<Super>F1']
-hibernate=@as []
-hibernate-static=['XF86Suspend', 'XF86Hibernate']
-home=@as []
-home-static=['XF86Explorer']
-increase-text-size=@as []
-keyboard-brightness-down=@as []
-keyboard-brightness-down-static=['XF86KbdBrightnessDown']
-keyboard-brightness-toggle=@as []
-keyboard-brightness-toggle-static=['XF86KbdLightOnOff']
-keyboard-brightness-up=@as []
-keyboard-brightness-up-static=['XF86KbdBrightnessUp']
-logout=['<Control><Alt>Delete']
-magnifier=['<Alt><Super>8']
-magnifier-zoom-in=['<Alt><Super>equal']
-magnifier-zoom-out=['<Alt><Super>minus']
-media=@as []
-media-static=['XF86AudioMedia']
-mic-mute=@as []
-mic-mute-static=['XF86AudioMicMute']
-next=@as []
-next-static=['XF86AudioNext', '<Ctrl>XF86AudioNext']
-on-screen-keyboard=@as []
-pause=@as []
-pause-static=['XF86AudioPause']
-play=@as []
-play-static=['XF86AudioPlay', '<Ctrl>XF86AudioPlay']
-playback-forward=@as []
-playback-forward-static=['XF86AudioForward']
-playback-random=@as []
-playback-random-static=['XF86AudioRandomPlay']
-playback-repeat=@as []
-playback-repeat-static=['XF86AudioRepeat']
-playback-rewind=@as []
-playback-rewind-static=['XF86AudioRewind']
-power=@as []
-power-static=['XF86PowerOff']
-previous=@as []
-previous-static=['XF86AudioPrev', '<Ctrl>XF86AudioPrev']
-rfkill=@as []
-rfkill-bluetooth=@as []
-rfkill-bluetooth-static=['XF86Bluetooth']
-rfkill-static=['XF86WLAN', 'XF86UWB', 'XF86RFKill']
-rotate-video-lock=@as []
-rotate-video-lock-static=['<Super>o']
-screen-brightness-cycle=@as []
-screen-brightness-cycle-static=['XF86MonBrightnessCycle']
-screen-brightness-down=@as []
-screen-brightness-down-static=['XF86MonBrightnessDown']
-screen-brightness-up=@as []
-screen-brightness-up-static=['XF86MonBrightnessUp']
-screencast=['<Ctrl><Shift><Alt>R']
-screenreader=['<Alt><Super>s']
-screensaver=['<Primary><Alt>l']
-screensaver-static=['XF86ScreenSaver']
-screenshot=['Print']
-screenshot-clip=['<Ctrl>Print']
-search=@as []
-search-static=['XF86Search']
-stop=@as []
-stop-static=['XF86AudioStop']
-suspend=@as []
-suspend-static=['XF86Sleep']
-terminal=['<Primary><Alt>t']
-toggle-contrast=@as []
-touchpad-off=@as []
-touchpad-off-static=['XF86TouchpadOff']
-touchpad-on=@as []
-touchpad-on-static=['XF86TouchpadOn']
-touchpad-toggle=@as []
-touchpad-toggle-static=['XF86TouchpadToggle', '<Ctrl><Super>XF86TouchpadToggle']
-volume-down=@as []
-volume-down-precise=@as []
-volume-down-precise-static=['<Shift>XF86AudioLowerVolume', '<Ctrl><Shift>XF86AudioLowerVolume']
-volume-down-quiet=@as []
-volume-down-quiet-static=['<Alt>XF86AudioLowerVolume', '<Alt><Ctrl>XF86AudioLowerVolume']
-volume-down-static=['XF86AudioLowerVolume', '<Ctrl>XF86AudioLowerVolume']
-volume-mute=@as []
-volume-mute-quiet=@as []
-volume-mute-quiet-static=['<Alt>XF86AudioMute']
-volume-mute-static=['XF86AudioMute']
-volume-up=@as []
-volume-up-precise=@as []
-volume-up-precise-static=['<Shift>XF86AudioRaiseVolume', '<Ctrl><Shift>XF86AudioRaiseVolume']
-volume-up-quiet=@as []
-volume-up-quiet-static=['<Alt>XF86AudioRaiseVolume', '<Alt><Ctrl>XF86AudioRaiseVolume']
-volume-up-static=['XF86AudioRaiseVolume', '<Ctrl>XF86AudioRaiseVolume']
-window-screenshot=['<Alt>Print']
-window-screenshot-clip=['<Ctrl><Alt>Print']
-www=@as []
-www-static=['XF86WWW']
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
-binding='<Super>Return'
-command='/home/fozz/.cargo/bin/alacritty'
-name='Launch Alacritty'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
-binding='<Super>h'
-command='/home/fozz/Projects/fake_tile/fake_tile left'
-name='Window Left'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom10]
-binding='<Ctrl><Super>h'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -w -1'
-name='Window Resize Left'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom11]
-binding='<Ctrl><Super>j'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -h +1'
-name='Window Resize Right'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom12]
-binding='<Ctrl><Super>k'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -h -1'
-name='Window Resize Left'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom13]
-binding='<Super>f'
-command='/home/fozz/Projects/window_grid/toggle_full'
-name='Window Toggle Full'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom14]
-binding='<Super>p'
-command='/home/fozz/Projects/fzf-pass/fzf-pass-window-control'
-name='Window Toggle Full'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
-binding='<Super>j'
-command='/home/fozz/Projects/fake_tile/fake_tile down'
-name='Window Down'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3]
-binding='<Super>k'
-command='/home/fozz/Projects/fake_tile/fake_tile up'
-name='Window Up'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4]
-binding='<Super>l'
-command='/home/fozz/Projects/fake_tile/fake_tile right'
-name='Window Right'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5]
-binding='<Super><Shift>l'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -x +1'
-name='Window Move Right'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6]
-binding='<Super><Shift>h'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -x -1'
-name='Window Move Left'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7]
-binding='<Super><Shift>j'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -y +1'
-name='Window Move Right'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8]
-binding='<Super><Shift>k'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -y -1'
-name='Window Move Left'
-
-[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9]
-binding='<Ctrl><Super>l'
-command='/home/fozz/Projects/window_grid/window_grid -d 12 -c both -w +1'
-name='Window Resize Right'
-
-[org/gnome/settings-daemon/plugins/power]
-button-hibernate='hibernate'
-button-power='suspend'
-button-sleep='hibernate'
-button-suspend='suspend'
-power-button-action='suspend'
-sleep-inactive-ac-timeout=3600
-sleep-inactive-ac-type='nothing'
-
-[org/gnome/settings-daemon/plugins/xsettings]
-antialiasing='rgba'
-hinting='medium'
-
-[org/gnome/shell]
-disabled-extensions=['material-shell@papyelgringo', 'window-list@gnome-shell-extensions.gcampax.github.com', 'windowsNavigator@gnome-shell-extensions.gcampax.github.com']
-enabled-extensions=['launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'hidetopbar@mathieu.bidon.ca', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']
-favorite-apps=['firefox.desktop', 'rhythmbox.desktop', 'org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'yelp.desktop', 'menulibre-alacritty.desktop']
-had-bluetooth-devices-setup=true
-
-[org/gnome/shell/extensions/dash-to-dock]
-dock-fixed=false
-
-[org/gnome/shell/extensions/hidetopbar]
-enable-active-window=false
-enable-intellihide=false
-mouse-sensitive=false
-mouse-sensitive-fullscreen-window=false
-pressure-threshold=97
-shortcut-delay=10.0
-
-[org/gnome/shell/extensions/user-theme]
-name='Yaru-dark'
-
-[org/gnome/shell/keybindings]
-open-application-menu=@as []
-switch-to-application-1=['']
-switch-to-application-2=['']
-switch-to-application-3=['']
-switch-to-application-4=['']
-switch-to-application-5=['']
-switch-to-application-6=['']
-switch-to-application-7=['']
-switch-to-application-8=['']
-switch-to-application-9=['']
-toggle-application-view=['']
-toggle-overview=['']
-
-[org/gnome/shell/window-switcher]
-current-workspace-only=true
-
-[org/gnome/software]
-check-timestamp=int64 1613111615
-online-updates-timestamp=int64 1613111617
-
-[org/gnome/terminal/legacy]
-default-show-menubar=false
-headerbar=@mb false
-
-[org/gnome/terminal/legacy/profiles:]
-default='6b5d15f7-1c84-49b7-aec8-df889ebde70a'
-list=['806e6045-fe2a-46f0-8a89-c9a0afcf5455', '6b5d15f7-1c84-49b7-aec8-df889ebde70a']
-
-[org/gnome/terminal/legacy/profiles:/:6b5d15f7-1c84-49b7-aec8-df889ebde70a]
-audible-bell=false
-background-color='#1F2430'
-bold-color='#77A8D9'
-bold-color-same-as-fg=false
-bold-is-bright=false
-cursor-background-color='#BFBAB0'
-cursor-blink-mode='off'
-cursor-colors-set=true
-cursor-foreground-color='#FF3333'
-font='Source Code Pro for Powerline Semi-Bold 12'
-foreground-color='#CBCCC6'
-highlight-background-color='#BFBAB0'
-highlight-colors-set=true
-highlight-foreground-color='#1F2430'
-login-shell=true
-nord-gnome-terminal-version='0.1.0'
-palette=['#1F2430', '#FF3333', '#A6CC70', '#FFD580', '#77A8D9', '#B48EAD', '#95E6CB', '#CBCCC6', '#BFBAB0', '#FF3333', '#BAE67E', '#FFE6B3', '#73D0FF', '#D4BFFF', '#5CCFE6', '#FFFFFF']
-scrollbar-policy='never'
-use-system-font=false
-use-theme-background=false
-use-theme-colors=false
-use-theme-transparency=false
-use-transparent-background=false
-visible-name='Regolith'
-
-[org/gnome/terminal/legacy/profiles:/:806e6045-fe2a-46f0-8a89-c9a0afcf5455]
-background-color='#181818'
-bold-color='#d8d8d8'
-bold-color-same-as-fg=true
-cursor-background-color='#d8d8d8'
-cursor-colors-set=true
-cursor-foreground-color='#181818'
-foreground-color='#d8d8d8'
-login-shell=true
-palette=['#181818', '#ab4642', '#a1b56c', '#f7ca88', '#7cafc2', '#ba8baf', '#86c1b9', '#d8d8d8', '#585858', '#dc9656', '#282828', '#383838', '#b8b8b8', '#e8e8e8', '#a16946', '#f8f8f8']
-use-theme-background=false
-use-theme-colors=false
-visible-name='Base 16 Default Dark'
-
-[org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
-login-shell=true
-visible-name='Default'
-
-[org/gtk/settings/color-chooser]
-custom-colors=[(0.5, 0.5, 0.5, 1.0)]
-selected-color=(true, 0.33333333333333331, 0.3411764705882353, 0.32549019607843138, 1.0)
-
-[org/gtk/settings/file-chooser]
-date-format='regular'
-location-mode='path-bar'
-show-hidden=false
-show-size-column=true
-show-type-column=true
-sidebar-width=233
-sort-column='name'
-sort-directories-first=false
-sort-order='ascending'
-type-format='category'
-window-position=(1701, 547)
-window-size=(1361, 912)
-
-[org/mate/atril]
-document-directory=@ms 'file:///home/fozz'
-
-[org/mate/atril/default]
-continuous=true
-dual-page=false
-dual-page-odd-left=false
-fullscreen=false
-inverted-colors=false
-show-sidebar=false
-show-toolbar=true
-sidebar-page='thumbnails'
-sidebar-size=188
-sizing-mode='free'
-window-ratio=(2.46218487394958, 2.3888228299643282)
-zoom=1.0
-
-[org/mate/caja/list-view]
-default-column-order=['name', 'size', 'type', 'date_modified', 'date_accessed', 'extension', 'group', 'where', 'mime_type', 'octal_permissions', 'owner', 'permissions', 'selinux_context', 'size_on_disk']
-default-visible-columns=['name', 'size', 'type', 'date_modified']
-
-[org/mate/caja/window-state]
-geometry='1916x2132+3840+26'
-maximized=false
-sidebar-width=119
-start-with-sidebar=true
-start-with-status-bar=true
-start-with-toolbar=true
-
-[org/mate/calc]
-button-mode='basic'
-source-units='degree'
-target-units='radian'
-
-[org/mate/desktop/accessibility/keyboard]
-bouncekeys-beep-reject=true
-bouncekeys-delay=300
-bouncekeys-enable=false
-enable=false
-feature-state-change-beep=false
-mousekeys-accel-time=1200
-mousekeys-enable=false
-mousekeys-init-delay=160
-mousekeys-max-speed=750
-slowkeys-beep-accept=true
-slowkeys-beep-press=true
-slowkeys-beep-reject=false
-slowkeys-delay=300
-slowkeys-enable=false
-stickykeys-enable=false
-stickykeys-latch-to-lock=true
-stickykeys-modifier-beep=true
-stickykeys-two-key-off=true
-timeout=120
-timeout-enable=false
-togglekeys-enable=false
-
-[org/mate/desktop/applications/at/visual]
-exec='orca'
-
-[org/mate/desktop/applications/calculator]
-exec='mate-calc'
-
-[org/mate/desktop/applications/terminal]
-exec='mate-terminal'
-
-[org/mate/desktop/background]
-color-shading-type='vertical-gradient'
-picture-filename=''
-picture-options='wallpaper'
-primary-color='rgb(88,145,188)'
-secondary-color='rgb(60,143,37)'
-show-desktop-icons=false
-
-[org/mate/desktop/interface]
-gtk-theme='Ambiant-MATE-Dark'
-icon-theme='Ambiant-MATE'
-
-[org/mate/desktop/peripherals/keyboard]
-numlock-state='off'
-
-[org/mate/desktop/peripherals/keyboard/kbd]
-layouts=['gb']
-options=['caps\tcaps:ctrl_modifier', 'grp_led\tgrp_led:scroll', 'grp\tgrp:ctrls_toggle']
-
-[org/mate/desktop/peripherals/keyboard/preview]
-height=810
-width=1440
-x=240
-y=135
-
-[org/mate/desktop/peripherals/mouse]
-cursor-theme='mate'
-motion-acceleration=5.7004048582995956
-motion-threshold=6
-
-[org/mate/desktop/peripherals/touchpad]
-disable-while-typing=false
-tap-to-click=false
-three-finger-click=0
-two-finger-click=0
-vertical-edge-scrolling=false
-
-[org/mate/desktop/session]
-session-start=1587975703
-
-[org/mate/desktop/session/required-components]
-windowmanager='i3'
-
-[org/mate/desktop/sound]
-event-sounds=true
-theme-name='Yaru'
-
-[org/mate/engrampa/dialogs/extract]
-overwrite=true
-recreate-folders=true
-skip-newer=false
-
-[org/mate/engrampa/general]
-unar-open-zip=false
-
-[org/mate/engrampa/listing]
-list-mode='as-folder'
-name-column-width=615
-show-path=false
-sort-method='name'
-sort-type='ascending'
-
-[org/mate/engrampa/ui]
-sidebar-width=200
-window-height=1052
-window-width=1530
-
-[org/mate/eom/ui]
-image-collection=true
-sidebar=false
-
-[org/mate/eom/view]
-background-color='rgb(0,0,0)'
-use-background-color=true
-
-[org/mate/marco/general]
-mouse-button-modifier='<Super>'
-num-workspaces=10
-theme='Ambiant-MATE-Dark'
-
-[org/mate/marco/global-keybindings]
-switch-to-workspace-1='<Mod4>1'
-switch-to-workspace-10='<Mod4>0'
-switch-to-workspace-2='<Mod4>2'
-switch-to-workspace-3='<Mod4>3'
-switch-to-workspace-4='<Mod4>4'
-switch-to-workspace-5='<Mod4>5'
-switch-to-workspace-6='<Mod4>6'
-switch-to-workspace-7='<Mod4>7'
-switch-to-workspace-8='<Mod4>8'
-switch-to-workspace-9='<Mod4>9'
-
-[org/mate/marco/window-keybindings]
-toggle-fullscreen='<Shift><Mod4>Return'
-toggle-maximized='<Mod4>Return'
-
-[org/mate/marco/workspace-names]
-name-10='Playspace 0'
-name-6='Playspace 6'
-name-7='Playspace 7'
-name-8='Playspace 8'
-name-9='Playspace 9'
-
-[org/mate/notification-daemon]
-do-not-disturb=false
-theme='slider'
-
-[org/mate/panel/general]
-history-mate-run=['kitty', 'firefox']
-object-id-list=['briskmenu', 'firefox', 'notification-area', 'show-desktop', 'window-list', 'workspace-switcher', 'trashapplet', 'object-0']
-toplevel-id-list=['top', 'bottom']
-
-[org/mate/panel/objects/briskmenu]
-applet-iid='BriskMenuFactory::BriskMenu'
-locked=true
-object-type='applet'
-position=0
-toplevel-id='top'
-
-[org/mate/panel/objects/firefox]
-launcher-location='/usr/share/applications/firefox.desktop'
-locked=true
-menu-path='applications:/'
-object-type='launcher'
-position=10
-toplevel-id='top'
-
-[org/mate/panel/objects/indicatorappletcomplete]
-applet-iid='IndicatorAppletCompleteFactory::IndicatorAppletComplete'
-locked=true
-object-type='applet'
-panel-right-stick=true
-position=0
-toplevel-id='top'
-
-[org/mate/panel/objects/notification-area]
-applet-iid='NotificationAreaAppletFactory::NotificationArea'
-locked=true
-object-type='applet'
-panel-right-stick=true
-position=10
-toplevel-id='top'
-
-[org/mate/panel/objects/object-0]
-applet-iid='WnckletFactory::WorkspaceSwitcherApplet'
-object-type='applet'
-panel-right-stick=false
-position=3532
-toplevel-id='bottom'
-
-[org/mate/panel/objects/show-desktop]
-applet-iid='WnckletFactory::ShowDesktopApplet'
-locked=true
-object-type='applet'
-position=0
-toplevel-id='bottom'
-
-[org/mate/panel/objects/trashapplet]
-applet-iid='TrashAppletFactory::TrashApplet'
-locked=true
-object-type='applet'
-panel-right-stick=true
-position=0
-toplevel-id='bottom'
-
-[org/mate/panel/objects/window-list]
-applet-iid='WnckletFactory::WindowListApplet'
-locked=true
-object-type='applet'
-position=20
-toplevel-id='bottom'
-
-[org/mate/panel/objects/workspace-switcher]
-applet-iid='WnckletFactory::WorkspaceSwitcherApplet'
-locked=true
-object-type='applet'
-panel-right-stick=true
-position=10
-toplevel-id='bottom'
-
-[org/mate/panel/toplevels/bottom]
-expand=true
-orientation='bottom'
-screen=0
-size=28
-y=2132
-y-bottom=0
-
-[org/mate/panel/toplevels/top]
-expand=true
-orientation='top'
-screen=0
-size=28
-
-[org/mate/pluma]
-active-plugins=['filebrowser', 'time', 'modelines', 'docinfo', 'spell']
-history-search-for=['Feat', 'Freat', 'size', 'words', 'tags', 'slayer', 'public', 'dtparam', 'stea']
-statusbar-visible=true
-
-[org/mate/pluma/plugins/filebrowser/on-load]
-root='file:///'
-tree-view=true
-virtual-root='file:///media/fozz/5e9f2a2a-40e3-4cec-9ff2-50cbc9a8221f/Calibre%20Library/Unknown/Default%20(116163)'
-
-[org/mate/power-manager]
-button-lid-ac='suspend'
-button-lid-battery='suspend'
-button-power='interactive'
-button-suspend='suspend'
-
-[org/mate/screenshot]
-border-effect='none'
-delay=2
-include-border=true
-include-pointer=true
-last-save-directory='file:///tmp'
-
-[org/mate/search-tool]
-default-window-height=350
-default-window-maximized=false
-default-window-width=554
-look-in-folder='/home/fozz'
-
-[org/mate/search-tool/select]
-contains-the-text=true
-
-[org/mate/settings-daemon/plugins/media-keys]
-magnifier='disabled'
-on-screen-keyboard='disabled'
-screenreader='disabled'
-
-[org/mate/system-monitor]
-window-state=(700, 507, 50, 50)
-
-[org/mate/system-monitor/disktreenew]
-col-6-width=300
-
-[org/mate/system-monitor/proctree]
-col-22-width=131
-
-[org/mate/terminal/profiles/default]
-allow-bold=false
-background-color='#FFFFFFFFDDDD'
-bold-color='#000000000000'
-cursor-blink-mode='on'
-default-show-menubar=false
-exit-action='close'
-font='Source Code Pro for Powerline Medium 11'
-foreground-color='#000000000000'
-login-shell=false
-palette='#2E2E34343636:#CCCC00000000:#4E4E9A9A0606:#C4C4A0A00000:#34346565A4A4:#757550507B7B:#060698209A9A:#D3D3D7D7CFCF:#555557575353:#EFEF29292929:#8A8AE2E23434:#FCFCE9E94F4F:#72729F9FCFCF:#ADAD7F7FA8A8:#3434E2E2E2E2:#EEEEEEEEECEC'
-scrollbar-position='hidden'
-silent-bell=true
-use-system-font=false
-use-theme-colors=false
-visible-name='Default'
-
-[org/nemo/desktop]
-computer-icon-visible=false
-home-icon-visible=true
-network-icon-visible=true
-trash-icon-visible=true
-volumes-visible=true
-
-[org/nemo/preferences]
-last-server-connect-method=4
-show-edit-icon-toolbar=false
-show-location-entry=false
-show-open-in-terminal-toolbar=true
-show-reload-icon-toolbar=true
-show-show-thumbnails-toolbar=false
-
-[org/nemo/window-state]
-geometry='2302x1237+759+439'
-maximized=false
-side-pane-view='places'
-sidebar-bookmark-breakpoint=5
-sidebar-width=226
-start-with-sidebar=true
-
-[org/regolith-linux/remontoire]
-expanded-category-path-ids='Launch,,Session,Modify,Navigate,'
-
-[org/virt-manager/virt-manager]
-manager-window-height=1052
-manager-window-width=1916
-
-[org/virt-manager/virt-manager/confirm]
-delete-storage=false
-forcepoweroff=false
-
-[org/virt-manager/virt-manager/connections]
-autoconnect=['qemu:///system']
-uris=['qemu:///system']
-
-[org/virt-manager/virt-manager/conns/qemu:system]
-window-size=(764, 2132)
-
-[org/virt-manager/virt-manager/details]
-show-toolbar=true
-
-[org/virt-manager/virt-manager/new-vm]
-graphics-type='system'
-
-[org/virt-manager/virt-manager/paths]
-media-default='/home/fozz/Downloads'
-
-[org/virt-manager/virt-manager/urls]
-isos=['/home/fozz/Downloads/debian-10.4.0-amd64-netinst.iso', '/home/fozz/Downloads/Win10_2004_EnglishInternational_x64.iso']
-
-[org/virt-manager/virt-manager/vmlist-fields]
-disk-usage=false
-host-cpu-usage=false
-network-traffic=false
-
-[org/virt-manager/virt-manager/vms/0876892158954cf58b12e56955d2e279]
-vm-window-size=(764, 2132)
-
-[org/virt-manager/virt-manager/vms/d6dc41f738474f618bb7c266d4e350af]
-vm-window-size=(891, 665)
-
-[org/virt-manager/virt-manager/vms/dad848a4b1e24e42bb725dcd8f931314]
-scaling=0
-vm-window-size=(3836, 1052)
-
-[org/xfce/mousepad/preferences/view]
-auto-indent=false
-color-scheme='xubuntu_light'
-font-name='DejaVu Sans Mono 10'
-highlight-current-line=false
-indent-on-tab=true
-indent-width=-1
-insert-spaces=false
-match-braces=false
-right-margin-position=80
-show-line-endings=false
-show-line-marks=false
-show-line-numbers=false
-show-right-margin=false
-show-whitespace=false
-smart-home-end='disabled'
-tab-width=8
-word-wrap=false
-
-[org/xfce/mousepad/preferences/window]
-menubar-visible=true
-
-[org/xfce/mousepad/state/window]
-fullscreen=false
-height=1065
-maximized=true
-width=1291

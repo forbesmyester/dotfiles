@@ -8,6 +8,10 @@ indent_size = 4
 [Makefile]
 indent_style = tab
 
+[Vagrantfile]
+indent_style = space
+indent_size = 2
+
 [*.go]
 indent_size = 4
 indent_style = tab

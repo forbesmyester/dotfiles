@@ -44,6 +44,7 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     tmux) color_prompt=yes;;
+    tmux-256color) color_prompt=yes;;
     xterm) color_prompt=yes;;
     alacritty) color_prompt=yes;;
     xterm-256color) color_prompt=yes;;
@@ -236,3 +237,5 @@ if ! infocmp alacritty > /dev/null 2>&1; then
 fi
 
 . ~/.bash_env
+
+source /home/fozz/.config/broot/launcher/bash/br

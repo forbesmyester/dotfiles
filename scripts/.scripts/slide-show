@@ -3,8 +3,13 @@
 if [ ! -f /tmp/.slide-show ]; then
     echo "BUILDING"
     find $@ | grep '\(\.jpg\|\.jpeg\|\.gif\|\.png\)$' > /tmp/.slide-show
+    exit 0
 fi
-COUNT=$(cat /tmp/.slide-show | wc -l | sed 's/ .*//')
+FILTER='.'
+if [ "$#" -gt 1 ]; then
+    FILTER="$2"
+fi
+COUNT=$(cat /tmp/.slide-show | grep "$FILTER" | wc -l | sed 's/ .*//')
 echo $COUNT
 
 I=0
@@ -12,7 +17,7 @@ while [ $I -lt $1 ];
 do
     ((I++))
     NUM=$((1+($RANDOM%$COUNT)))
-    IMG=$(sed "${NUM}q;d" /tmp/.slide-show)
+    IMG=$(cat /tmp/.slide-show | grep -v '+' | grep "$FILTER" | sed "${NUM}q;d")
     feh -F -Z "$IMG" &
     sleep 5
     echo $IMG
