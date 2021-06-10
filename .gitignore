@@ -2,3 +2,4 @@ lein/.lein/repl-history
 lein/.lein/repl-port
 parallel/.parallel/tmp/
 vim/.config/nvim/.netrwhist
+scripts/.scripts/xmux

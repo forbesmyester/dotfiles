@@ -1,0 +1,39 @@
+#!/bin/bash
+
+IFS=$'\n\t'
+
+if [ "${#KAKOUNE_SESSION}" -gt 0 ]; then
+    kak -c "$KAKOUNE_SESSION" $@
+    exit 0
+fi
+
+if [ ${#TMUX} -gt 0 ]; then
+    kak -l | grep -v '\(dead\)' | grep -F "$(xmux current_socket)" && kak -c "$(xmux current_socket)" $@ || kak -s "$(xmux current_socket)" $@
+    exit 0
+fi
+
+CURRENT_DESKTOP="$(wmctrl -d | grep '^[0-9]\+\s\+\*' | awk '{ print $1 }')"
+SESSIONS_FROM_WINDOW_TITLES="$(wmctrl -l  | grep "^0x[a-z0-9]\+\s\+\($CURRENT_DESKTOP\|\-1\)"  | grep '@\[\(.*\)\].*Kakoune' | sed 's/.*@\[\(.*\)\].*/\1/')"
+KAK_RUNNING_SESSIONS="$(kak -l | grep -v '\(dead\)')"
+
+set -eou pipefail
+
+FOUND_SESSION=""
+
+for K in $KAK_RUNNING_SESSIONS; do
+    echo "> $K"
+    if echo "$SESSIONS_FROM_WINDOW_TITLES" | grep "$K" > /dev/null; then
+        FOUND_SESSION="$K"
+        echo ">> $K"
+    fi
+done
+
+echo "FOUND $FOUND_SESSION"
+if [ "${#FOUND_SESSION}" -gt 0 ]; then
+    kak -c "$FOUND_SESSION" $@
+else
+    # kak -s "D$(( $CURRENT_DESKTOP + 1 ))" $@
+    kak $@
+fi
+echo $CURRENT_DESKTOP
+echo $FOUND_SESSION

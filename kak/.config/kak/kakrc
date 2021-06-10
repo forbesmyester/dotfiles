@@ -1,61 +1,78 @@
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
+plug "andreyorst/plug.kak" noload
 
 
 # kak-lsp
 
-    eval %sh{kak-lsp --kakoune -s $kak_session}
+    plug "kak-lsp/kak-lsp" do %{
+        cargo install --locked --force --path .
+    }
+    map global user , ' :lsp-hover<ret>' -docstring 'lsp-hover'
+    map global user l ' :enter-user-mode lsp<ret>' -docstring 'lsp-mode'
 
     # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-    hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
-        lsp-enable-window
-        lsp-auto-signature-help-enable
-    }
+    # hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
+    #     lsp-enable-window
+    #     lsp-auto-signature-help-enable
+    # }
 
-    hook global WinSetOption filetype=rust %{
-      hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
-      hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
-      hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
-      hook -once -always window WinSetOption filetype=.* %{
-        remove-hooks window semantic-tokens
-      }
-    }
+    # hook global WinSetOption filetype=rust %{
+    #   hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+    #   hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+    #   hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+    #   hook -once -always window WinSetOption filetype=.* %{
+    #     remove-hooks window semantic-tokens
+    #   }
+    # }
 
-    hook global WinSetOption filetype=rust %{
-      hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
-      hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
-      hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
-      hook -once -always window WinSetOption filetype=.* %{
-        remove-hooks window rust-inlay-hints
-      }
-    }
+    # hook global WinSetOption filetype=rust %{
+    #   hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
+    #   hook window -group rust-inlay-hints NormalIdle .* rust-analyzer-inlay-hints
+    #   hook window -group rust-inlay-hints InsertIdle .* rust-analyzer-inlay-hints
+    #   hook -once -always window WinSetOption filetype=.* %{
+    #     remove-hooks window rust-inlay-hints
+    #   }
+    # }
 
 # User Interface
 
-    set-option global ui_options ncurses_change_colors=false ncurses_enable_mouse=false
+    set-option global ui_options ncurses_assistant=none ncurses_change_colors=false ncurses_enable_mouse=false
+    # set-option global ui_options ncurses_enable_mouse=false
+    # set-option global ui_options 
     hook global WinCreate ^[^*]+$ %{
         add-highlighter window/ number-lines -hlcursor -separator " " -relative
     }
-    set-option global scrolloff 3,5
     add-highlighter global/ regex \h+$ 0:Error
+    set-option global scrolloff 4,5
+    hook global WinResize .* %{
+        evaluate-commands %sh{
+            if [ "$(echo "$kak_window_range" | cut -d ' ' -f 3)" -gt 35 ]; then
+                echo 'set-option global scrolloff 18,5'
+            else
+                echo 'set-option global scrolloff 4,5'
+            fi
+        }
+    }
+
+    set-option global windowing_modules "x11"
+
 
 # File space / tab etc
 
     hook global BufOpenFile .* %{ editorconfig-load }
     hook global BufNewFile .* %{ editorconfig-load }
 
+    add-highlighter global/ wrap -word -indent
     hook global WinCreate .* %{
-        # declare-option str termcmd 'uxterm -e sh -c'
         colorscheme tomorrow-night
-        add-highlighter global/ wrap -indent # -word
     }
-
     # set-option global tabstop 4
     # set-option global indentwidth 4
 
 # Filetypes
 
     hook global WinSetOption filetype=sh %{
-        set-option global lintcmd "shellcheck  -f gcc -"
+        set-option global lintcmd "shellcheck -f gcc -"
         set-option window formatcmd '/home/fozz/go/bin/shfmt -ci -sr'
     }
 
@@ -63,8 +80,31 @@ source "%val{config}/plugins/plug.kak/rc/plug.kak"
         set-option window formatcmd 'prettier --parser=scss'
     }
 
+# Xmux
+
+    plug "forbesmyester/xmux.kak" defer "xmux" %{
+        map global user r ' :xmux-repl<ret>' -docstring 'repl'
+        map global user t ' :prompt ''name:'' ''xmux-repl "" %val{text}''<ret>' -docstring 'term'
+    }
+
 plug "forbesmyester/set-run-after-write.kak"
-plug "forbesmyester/xmux.kak"
+
+# Connect
+    # plug "kakounedotcom/prelude.kak"
+    # plug "kakounedotcom/connect.kak" defer connect %{
+    #     # map global user F ' :connect-terminal sh -c '':e "$(fzf)"''<ret>' -docstring 'files'
+    #     map global user F ' :connect-terminal sh -c '':e "$(broot --color yes --conf /home/fozz/Projects/dotfiles/broot/select.toml)"''<ret>' -docstring 'files'
+    #     map global user B ' :connect-terminal sh -c '':b "$(:ls | fzf)"''<ret>' -docstring 'buffers'
+    #     map global user G ' :connect-terminal sh -c '':e "$(rg . | fzf | sed "s/\:.*//")"''<ret>' -docstring 'search'
+    # } config %{ } demand
+    require-module prelude
+    require-module connect
+    map global user f ' :connect-terminal sh -c '':e "$(broot --color yes --conf /home/fozz/Projects/dotfiles/broot/select.toml)"''<ret>' -docstring 'files'
+    map global user b ' :connect-terminal sh -c '':b "$(:ls | fzf)"''<ret>' -docstring 'buffers'
+    map global user g ' :connect-terminal sh -c '':e "$(rg . | fzf | sed "s/\:.*//")"''<ret>' -docstring 'search'
+
+
+
 
 plug "lePerdu/kakboard" %{
     hook global WinCreate .* %{ kakboard-enable }
@@ -72,20 +112,6 @@ plug "lePerdu/kakboard" %{
 
 # plug "alexherbo2/yank-ring.kak" %{
 # }
-
-# Connect
-    plug "alexherbo2/prelude.kak"
-    plug "alexherbo2/connect.kak" defer connect %{} config %{
-        define-command nnn-persistent -params 0..1 -file-completion -docstring 'Open file with nnn' %{
-            connect-terminal nnn %sh{echo "${@:-$(dirname "$kak_buffile")}"}
-        }
-
-        map global user t ' :connect-terminal<ret>' -docstring 'open terminal'
-
-        alias global nnn nnn-persistent
-    } demand
-    require-module prelude
-    require-module connect
 
 
 # plug "https://gitlab.com/Screwtapello/kakoune-shellcheck"
@@ -95,8 +121,10 @@ plug "lePerdu/kakboard" %{
 #   map global normal "'" ': enter-user-mode -lock mirror<ret>'
 # }
 
-plug 'alexherbo2/surround.kak'
-
+# plug 'alexherbo2/surround.kak' %{
+#     require-module surround
+# }
+# 
 # plug "h-youhei/kakoune-surround" %{
 #     declare-user-mode surround
 #     map global surround s ':surround<ret>' -docstring 'surround'
@@ -110,20 +138,16 @@ plug 'alexherbo2/surround.kak'
 # map -docstring "Enter LSP mode" global goto gl '\: enter-user-mode lsp<ret>'
 
 plug "andreyorst/smarttab.kak" defer smarttab %{
-    # when `backspace' is pressed, 4 spaces are deleted at once
-    set-option global softtabstop 4
-} config %{
-    # these languages will use `expandtab' behavior
-    hook global WinSetOption filetype=(rust|markdown|kak|lisp|scheme|sh|perl|typescript|scala) expandtab
-    # these languages will use `noexpandtab' behavior
-    hook global WinSetOption filetype=(makefile|gas) noexpandtab
-    # these languages will use `smarttab' behavior
-    hook global WinSetOption filetype=(c|cpp) smarttab
-}
-
-# plug "andreyorst/powerline.kak" config %{
-#     powerline-start
-# }
+        # when `backspace' is pressed, 4 spaces are deleted at once
+        set-option global softtabstop 4
+    } config %{
+        # these languages will use `expandtab' behavior
+        hook global WinSetOption filetype=.* expandtab
+        # these languages will use `noexpandtab' behavior
+        hook global WinSetOption filetype=(makefile|gas) noexpandtab
+        # these languages will use `smarttab' behavior
+        hook global WinSetOption filetype=(c|cpp) smarttab
+    }
 
 plug "andreyorst/fzf.kak"
 
@@ -139,16 +163,29 @@ plug "andreyorst/fzf.kak"
 #     printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
 # }
 
-define-command -hidden -docstring \
-"select a word under cursor, or add cursor on next occurrence of current selection" \
-select-or-add-cursor %{
-    try %{
-        execute-keys "<a-k>\A.\z<ret>"
-        execute-keys -save-regs '' "_<a-i>w*"
-    } catch %{
-        execute-keys -save-regs '' "_*<s-n>"
-    } catch nop
-}
+# Make editign mode more prominent
 
+    hook global ModeChange .*:insert %{
+        set-face window PrimarySelection black,blue+F
+        set-face window SecondarySelection black,blue+F
+        set-face window PrimaryCursor black,bright-yellow+F
+        set-face window SecondaryCursor black,bright-blue+F
+        set-face window PrimaryCursorEol black,bright-yellow+F
+        set-face window SecondaryCursorEol black,bright-blue+F
+    }
+
+    hook global ModeChange .*:normal %{
+        unset-face window PrimarySelection
+        unset-face window SecondarySelection
+        unset-face window PrimaryCursor
+        unset-face window SecondaryCursor
+        unset-face window PrimaryCursorEol
+        unset-face window SecondaryCursorEol
+    }
+
+
+map global normal x '<a-x>'
+map global normal '<a-x>' '<a-:>J<a-L>'
+map global normal '<a-X>' '<a-:><a-;>K'
 map global normal '<ret>' ';'
 
