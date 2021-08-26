@@ -1,8 +1,37 @@
 #!/bin/bash
 
+show_help() {
+    echo "NAME:"
+    echo "  $0 - Inspects for running Kakoune sessions"
+    echo ""
+    echo "USAGE:"
+    echo "  $0 [-n] Do not lauch Kakoune, just output session"
+    echo ""
+    exit 0
+}
+
+JUST_OUTPUT=0
+while getopts "hN" opt; do
+    case "$opt" in
+        h)
+            show_help
+            exit 0
+            ;;
+        N)
+            JUST_OUTPUT=1
+            ;;
+    esac
+done
+
+shift $(( OPTIND - 1 ))
+
 IFS=$'\n\t'
 
 if [ "${#KAKOUNE_SESSION}" -gt 0 ]; then
+    if [ "${JUST_OUTPUT}" -gt 0 ]; then
+        echo "FOUND $KAKOUNE_SESSION"
+        exit 0
+    fi
     kak -c "$KAKOUNE_SESSION" $@
     exit 0
 fi
@@ -21,14 +50,19 @@ set -eou pipefail
 FOUND_SESSION=""
 
 for K in $KAK_RUNNING_SESSIONS; do
-    echo "> $K"
     if echo "$SESSIONS_FROM_WINDOW_TITLES" | grep "$K" > /dev/null; then
         FOUND_SESSION="$K"
-        echo ">> $K"
     fi
 done
 
-echo "FOUND $FOUND_SESSION"
+echo "$JUST_OUTPUT"
+if [ "${#FOUND_SESSION}" -gt 0 ]; then
+    echo "FOUND $FOUND_SESSION"
+fi
+if [ "$JUST_OUTPUT" -gt 0 ]; then
+    exit 0
+fi
+
 if [ "${#FOUND_SESSION}" -gt 0 ]; then
     kak -c "$FOUND_SESSION" $@
 else

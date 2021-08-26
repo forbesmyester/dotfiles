@@ -35,6 +35,7 @@ ensure_repository() {
 }
 
 function finish {
+    touch ~/.b2_account_info
     rm ~/.b2_account_info || true
 }
 trap finish EXIT

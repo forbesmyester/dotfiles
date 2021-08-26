@@ -41,5 +41,5 @@ for BACKUP_NAME in $BACKUP_NAMES; do
     export RESTIC_DIRECTORY="$(do_mount "/dev/seagate_nas/${LOGICAL_VOLUME}" "$INTERNAL_DIRECTORY" | tail -n1)"
     echo ">>> $BACKUP_NAME $RESTIC_DIRECTORY"
     nc_backup "$BACKUP_NAME" "$RESTIC_DIRECTORY"
-	cleanup
+    cleanup
 done
