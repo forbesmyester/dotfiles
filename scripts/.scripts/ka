@@ -1,73 +1,59 @@
-#!/bin/bash
+#!/bin/sh
+
+get_name() {
+    local PROSP
+    PROSP="$( [ -n "$KAKOUNE_SESSION" ] && echo "$KAKOUNE_SESSION" || git rev-parse --show-toplevel 2> /dev/null || echo "$PWD" )"
+    echo $PROSP | tr '[:upper:]' '[:lower:]' | sed 's/[^A-Za-z0-9]/_/g' | sed 's/^_\+//' | sed 's/__\+/_/' | sed 's/_\+$//'
+}
+
+_KAK_NAME="$( get_name )"
 
 show_help() {
-    echo "NAME:"
-    echo "  $0 - Inspects for running Kakoune sessions"
+    echo "$1 [-s SESSION_NAME]"
     echo ""
-    echo "USAGE:"
-    echo "  $0 [-n] Do not lauch Kakoune, just output session"
+    echo "-s = Use session name specified as apposed to one derived from the director"
+    echo "-l = List kakoune sessions"
+    echo "-k = Pick a kakoune session to destroy"
+    echo "-t = Create a temporary kakoune session (it just runs kak!)"
+    echo "-h = Display this help"
     echo ""
     exit 0
 }
 
-JUST_OUTPUT=0
-while getopts "hN" opt; do
+while getopts "hlkts:" opt; do
     case "$opt" in
         h)
             show_help
             exit 0
             ;;
-        N)
-            JUST_OUTPUT=1
+        s)
+            _KAK_NAME="$OPTARG"
+            if [ -n "$KAKOUNE_SESSION" ]; then
+                echo 'Session cannot be specified when in an existing $KAKOUNE_SESSION'
+                exit 1
+            fi
+            ;;
+        l)
+            ps aux | grep -F 'kak -d -s' | awk '$11 == "kak" { print $2 " " $14 }'
+            exit 0
+            ;;
+        t)
+            shift $(( OPTIND - 1 ))
+            kak "$@"
+            exit 0
+            ;;
+        k)
+            ps aux | grep -F 'kak -d -s' | awk '$11 == "kak" { print $2 " " $14 }' | fzf | sed 's/ .*//' | parallel kill {}
+            exit 0
             ;;
     esac
 done
-
 shift $(( OPTIND - 1 ))
 
-IFS=$'\n\t'
-
-if [ "${#KAKOUNE_SESSION}" -gt 0 ]; then
-    if [ "${JUST_OUTPUT}" -gt 0 ]; then
-        echo "FOUND $KAKOUNE_SESSION"
-        exit 0
-    fi
-    kak -c "$KAKOUNE_SESSION" $@
-    exit 0
-fi
-
-if [ ${#TMUX} -gt 0 ]; then
-    kak -l | grep -v '\(dead\)' | grep -F "$(xmux current_socket)" && kak -c "$(xmux current_socket)" $@ || kak -s "$(xmux current_socket)" $@
-    exit 0
-fi
-
-CURRENT_DESKTOP="$(wmctrl -d | grep '^[0-9]\+\s\+\*' | awk '{ print $1 }')"
-SESSIONS_FROM_WINDOW_TITLES="$(wmctrl -l  | grep "^0x[a-z0-9]\+\s\+\($CURRENT_DESKTOP\|\-1\)"  | grep '@\[\(.*\)\].*Kakoune' | sed 's/.*@\[\(.*\)\].*/\1/')"
-KAK_RUNNING_SESSIONS="$(kak -l | grep -v '\(dead\)')"
-
-set -eou pipefail
-
-FOUND_SESSION=""
-
-for K in $KAK_RUNNING_SESSIONS; do
-    if echo "$SESSIONS_FROM_WINDOW_TITLES" | grep "$K" > /dev/null; then
-        FOUND_SESSION="$K"
-    fi
+echo "KAK_NAME: $_KAK_NAME"
+[ -z "$(kak -l | grep -F -x "$_KAK_NAME")" ] && setsid kak -d -s "$_KAK_NAME" &
+while ! kak -l | grep -F -x "$_KAK_NAME"; do
+    echo "WAITING FOR $_KAK_NAME"
+    sleep 0.1
 done
-
-echo "$JUST_OUTPUT"
-if [ "${#FOUND_SESSION}" -gt 0 ]; then
-    echo "FOUND $FOUND_SESSION"
-fi
-if [ "$JUST_OUTPUT" -gt 0 ]; then
-    exit 0
-fi
-
-if [ "${#FOUND_SESSION}" -gt 0 ]; then
-    kak -c "$FOUND_SESSION" $@
-else
-    # kak -s "D$(( $CURRENT_DESKTOP + 1 ))" $@
-    kak $@
-fi
-echo $CURRENT_DESKTOP
-echo $FOUND_SESSION
+kak -c "$_KAK_NAME" "$@"

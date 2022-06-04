@@ -84,8 +84,8 @@ plug "andreyorst/plug.kak" noload
     hook global WinCreate .* %{
         colorscheme tomorrow-night
     }
-    # set-option global tabstop 4
-    # set-option global indentwidth 4
+    set-option global tabstop 4
+    set-option global indentwidth 4
 
 # Filetypes
 
@@ -101,8 +101,8 @@ plug "andreyorst/plug.kak" noload
 # Xmux
 
     plug "forbesmyester/xmux.kak" defer "xmux" %{
-    map global user r ' :xmux-repl<ret>' -docstring 'repl'
-        map global user t ' :prompt ''name:'' ''xmux-repl "" %val{text}''<ret>' -docstring 'term'
+        # map global user r ' :xmux-repl<ret>' -docstring 'repl'
+        # map global user t ' :prompt ''name:'' ''xmux-repl "" %val{text}''<ret>' -docstring 'term'
     }
 
 plug "forbesmyester/set-run-after-write.kak"
@@ -133,20 +133,50 @@ plug "Delapouite/kakoune-registers"
     }
     map global user '"' ' :show-registers<ret>' -docstring 'show-registers'
 
-plug 'delapouite/kakoune-buffers' %{
-    #  map global normal "'" q
-    #  map global normal "@" Q
-    #  map global normal q b
-    #  map global normal Q B
-    #  map global normal <a-q> <a-b>
-    #  map global normal <a-Q> <a-B>
-    map global user b ': enter-buffers-mode<ret>' -docstring 'buffers'
-    map global user B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
-}
+# plug 'delapouite/kakoune-buffers' %{
+#     #  map global normal "'" q
+#     #  map global normal "@" Q
+#     #  map global normal q b
+#     #  map global normal Q B
+#     #  map global normal <a-q> <a-b>
+#     #  map global normal <a-Q> <a-B>
+#     map global user b ': enter-buffers-mode<ret>' -docstring 'buffers'
+#     map global user B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+# }
 
-plug "lePerdu/kakboard" %{
-    hook global WinCreate .* %{ kakboard-enable }
-}
+# plug "lePerdu/kakboard" %{
+    # hook global WinCreate .* %{ kakboard-enable }
+# }
+# map global user , ' :lsp-hover<ret>' -docstring 'lsp-hover'
+
+
+
+
+declare-user-mode clipboard
+declare-user-mode xmux
+map global clipboard p '|xclip -selection clipboard -o<ret>' -docstring 'paste from clipboard'
+map global clipboard P 'yp|xclip -selection clipboard -o<ret>' -docstring 'paste from clipboard'
+map global clipboard y '<a-|>xclip -selection clipboard -i<ret>' -docstring 'yank into clipboard'
+map global user c ':enter-user-mode clipboard<ret>' -docstring "Clipboard"
+map global user y '<a-|>xclip -selection clipboard -i<ret>' -docstring 'yank into clipboard'
+map global normal y 'y,y'
+map global user R '|xclip -selection clipboard -o<ret>' -docstring 'paste over from clipboard'
+map global user p 'yP|xclip -selection clipboard -o<ret>' -docstring 'paste after from clipboard'
+map global user P 'yp|xclip -selection clipboard -o<ret>' -docstring 'paste before from clipboard'
+map global user s ':enter-user-mode mirror<ret>' -docstring "Surround"
+map global user x ':enter-user-mode xmux<ret>' -docstring "XMUX"
+map global xmux p '<a-i>p:xmux-lines-default<ret>' -docstring 'Send Paragraph'
+map global xmux p '<a-i>p:xmux-lines-default<ret>' -docstring 'Send Paragraph'
+map global xmux c ':xmux-key-default "C-c"<ret>'
+map global xmux 0 ':xmux-key-default "F10"<ret>'
+map global xmux ';' ':xmux-lines-default ";"<ret>'
+# map global surround d "|sed '$ s/\(.*\)./\1/' | sed '1 s/.\(.*\)/\1/'<ret>"  -docstring 'Delete outer char'
+# map global surround s ':echo %opt{kak_source}'
+# map global surround s "on-key 'awk -v WRAP_START=""("" -v WRAP_END='')'' ''BEGIN { L=0 }; NR>1 { print ""NL"" }; { printf(""%s%s"",WRAP_START,$0); WRAP_START=""""; }; END { print WRAP_END }'"  -docstring 'Surround outer char'
+#map bal surround s ":on-key 'execute-keys "| sed ''s/^/X/'''<ret>"""  -docstring 'Surround outer char'
+
+
+
 
 # plug "alexherbo2/yank-ring.kak" %{
 # }
@@ -154,10 +184,10 @@ plug "lePerdu/kakboard" %{
 
 # plug "https://gitlab.com/Screwtapello/kakoune-shellcheck"
 
-# plug 'delapouite/kakoune-mirror' %{
-#   # Suggested mapping
-#   map global normal "'" ': enter-user-mode -lock mirror<ret>'
-# }
+plug 'delapouite/kakoune-mirror' %{
+  # Suggested mapping
+  # map global normal "'" ': enter-user-mode mirror<ret>'
+}
 
 # plug 'alexherbo2/surround.kak' %{
 #     require-module surround
@@ -202,7 +232,7 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 #     printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
 # }
 
-# Make editign mode more prominent
+# Make editing mode more prominent
 
     hook global ModeChange .*:insert %{
         set-face window PrimarySelection black,blue+F
@@ -226,5 +256,8 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 map global normal x '<a-x>'
 map global normal '<a-x>' '<a-:>J<a-L>'
 map global normal '<a-X>' '<a-:><a-;>K'
-map global normal '<ret>' ';'
-
+map global normal '<ret>' ' ;'
+# map global normal '#' '`'
+map global normal '<a-`>' '~'
+map global normal '¬' '~'
+# map global normal "'" "," # Seems to be free - use instead of comma?

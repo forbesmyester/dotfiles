@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+get_name() {
+    local PROSP
+    PROSP="$( [ -n "$KAKOUNE_SESSION" ] && echo "$KAKOUNE_SESSION" || git rev-parse --show-toplevel 2> /dev/null || echo "$PWD" )"
+    echo $PROSP | tr '[:upper:]' '[:lower:]' | sed 's/[^A-Za-z0-9]/_/g' | sed 's/^_\+//' | sed 's/__\+/_/' | sed 's/_\+$//'
+}
+
+TMUX_SESSION="$(get_name)"
+if [ "$#" -gt 0 ]; then
+    TMUX_SESSION="$1"
+fi
+CONSOLE="default"
+if [ "$#" -gt 1 ]; then
+    CONSOLE="$2"
+fi
+
+if xmux ensure "$TMUX_SESSION" "$CONSOLE"; then
+    echo "ALREADY EXISTS"
+    tmux -L "$TMUX_SESSION" attach -t "$CONSOLE"
+else
+    xmux new "$TMUX_SESSION" "$CONSOLE"
+fi
+
+
+
