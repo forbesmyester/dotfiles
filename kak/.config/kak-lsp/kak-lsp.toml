@@ -9,6 +9,7 @@ verbosity = 2
 # Examples:
 # - TypeScript: https://github.com/microsoft/vscode-languageserver-node/blob/2645fb54ea1e764aff71dee0ecc8aceff3aabf56/client/src/common/semanticTokens.ts#L58
 # - Rust Analyzer: https://github.com/rust-analyzer/rust-analyzer/blob/f6da603c7fe56c19a275dc7bab1f30fe1ad39707/crates/ide/src/syntax_highlighting.rs#L42
+
 [[semantic_tokens]]
 token = "comment"
 face = "documentation"
@@ -135,16 +136,16 @@ command = "html-languageserver"
 args = ["--stdio"]
 
 [language.typescript]
-filetypes = ["typescript"]
-roots = ["package.json"]
+filetypes = ["typescript", "ts"]
+roots = ["package.json", "tsconfig.json"]
 command = "node_modules/.bin/typescript-language-server"
 args = ["--stdio"]
 
-[language.javascript]
-filetypes = ["typescript"]
-roots = ["package.json"]
-command = "node_modules/.bin/typescript-language-server"
-args = ["--stdio"]
+# [language.javascript]
+# filetypes = ["typescript"]
+# roots = ["package.json"]
+# command = "node_modules/.bin/typescript-language-server"
+# args = ["--stdio"]
 
 # [language.javascript]
 # filetypes = ["javascript"]
@@ -212,11 +213,16 @@ args = ["stdio"]
 # command = "sh"
 # args = ["-c", "if command -v rustup >/dev/null; then $(rustup which rls); else rls; fi"]
 
+# [language.rust]
+# filetypes = ["rust"]
+# roots = ["Cargo.toml"]
+# command = "sh"
+# args = ["-c", "if command -v rustup >/dev/null; then $(rustup which rust-analyzer); else rust-analyzer; fi"]
+
 [language.rust]
 filetypes = ["rust"]
 roots = ["Cargo.toml"]
-command = "sh"
-args = ["-c", "if command -v rustup >/dev/null; then $(rustup which rust-analyzer); else rust-analyzer; fi"]
+command = "rls"
 
 [language.terraform]
 filetypes = ["terraform"]

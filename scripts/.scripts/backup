@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-LVGRP=seagate_nas
+LVGRP=store
 
 function cleanup {
     local SNAPS=$(lvs -S "(lv_attr =~ ^s) && (vg_name = ${LVGRP})" --separator ':' --noheadings | sed 's/^ *//' | awk -F ':' '{ print $1 }')
@@ -31,15 +31,22 @@ function do_mount {
 
 cleanup
 
-
-
 ENVIRONMENT_FILE=$HOME/.backup
 BACKUP_NAMES=$(cat "$ENVIRONMENT_FILE" | jq -r ._name)
 for BACKUP_NAME in $BACKUP_NAMES; do
-    echo ">> $BACKUP_NAME"
-    . ndjson-env -f "$ENVIRONMENT_FILE" "$BACKUP_NAME"
-    export RESTIC_DIRECTORY="$(do_mount "/dev/seagate_nas/${LOGICAL_VOLUME}" "$INTERNAL_DIRECTORY" | tail -n1)"
-    echo ">>> $BACKUP_NAME $RESTIC_DIRECTORY"
-    nc_backup "$BACKUP_NAME" "$RESTIC_DIRECTORY"
-    cleanup
+    LOCATIONS="$(cat "$ENVIRONMENT_FILE" | jq -r "select(._name == \"$BACKUP_NAME\") | .locations[].location")"
+    for LOCATION in $LOCATIONS; do
+        if [ "$#" -gt 0 ] && [ "$LOCATION" != "$1" ]; then
+            continue
+        fi
+        LINE="$(cat "$ENVIRONMENT_FILE" | jq "select(._name == \"$BACKUP_NAME\")")"
+        echo ">> $BACKUP_NAME -> $LOCATION"
+        JSON="$(echo "$LINE" | jq ". + (.locations[] | select(.location == \"$LOCATION\") | .info) + {\"method\":(.locations[] | select(.location == \"$LOCATION\") | .method)} | del(.locations)")"
+        . ndjson-env -a "$JSON"
+        # . ndjson-env -f "$ENVIRONMENT_FILE" "$BACKUP_NAME"
+        export RESTIC_DIRECTORY="$(do_mount "/dev/$LVGRP/${LOGICAL_VOLUME}" "$INTERNAL_DIRECTORY" | tail -n1)"
+        echo ">>> $BACKUP_NAME $RESTIC_DIRECTORY"
+        backup_$method "$BACKUP_NAME" "$RESTIC_DIRECTORY"
+        cleanup
+    done
 done
