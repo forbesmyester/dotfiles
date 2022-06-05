@@ -237,5 +237,3 @@ if ! infocmp alacritty > /dev/null 2>&1; then
 fi
 
 . ~/.bash_env
-
-source /home/fozz/.config/broot/launcher/bash/br
