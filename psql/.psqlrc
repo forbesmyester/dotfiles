@@ -1,0 +1,11 @@
+\set QUIET 1
+\pset null ·
+\pset pager off
+\pset linestyle unicode
+-- \pset border 2
+-- \timing
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTCONTROL ignoredups
+\x auto
+
+
