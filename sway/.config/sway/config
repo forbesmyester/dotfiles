@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term urxvt
+set $term /home/fozz/.cargo/bin/alacritty
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
@@ -50,7 +50,7 @@ exec /home/fozz/.config/sway/scripts/sway-track-prev-focus
 smart_borders on
 titlebar_border_thickness 2
 titlebar_padding 5 2
-hide_edge_borders both
+hide_edge_borders none # both
 show_marks yes
 # smart_gaps on
 # gaps outer 0
@@ -90,7 +90,7 @@ input type:keyboard {
     # Start a terminal
     bindsym $mod+Shift+Return exec $term
 
-    # Kill focused window
+   # Kill focused window
     bindsym $mod+Shift+q kill
 
 
@@ -112,6 +112,8 @@ input type:keyboard {
 #
     focus_wrapping no
     focus_follows_mouse no
+
+    bindsym $mod+Tab exec swaymsg '[con_mark=_prev] focus'
 
     # Move your focus around
     bindsym $mod+$left exec /home/fozz/.config/sway/scripts/sway-focus left

@@ -7,6 +7,27 @@ get_name() {
     echo $PROSP | tr '[:upper:]' '[:lower:]' | sed 's/[^A-Za-z0-9]/_/g' | sed 's/^_\+//' | sed 's/__\+/_/' | sed 's/_\+$//'
 }
 
+show_help() {
+    echo "$1 <TMUX_SESSION> [TMUX_WINDOW]"
+    echo ""
+    echo "-h = Display this help"
+    echo ""
+    exit 0
+}
+
+while getopts "h" opt; do
+    case "$opt" in
+        h)
+            show_help
+            exit 0
+            ;;
+    esac
+done
+shift $(( OPTIND - 1 ))
+
+
+
+
 TMUX_SESSION="$(get_name)"
 if [ "$#" -gt 0 ]; then
     TMUX_SESSION="$1"

@@ -32,4 +32,7 @@ fi
 # source /home/fozz/.dvm/dvm.sh
 
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/go/bin:$PATH"
 export PATH="$HOME/.basher/bin:$PATH"
+
+[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"

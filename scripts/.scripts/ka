@@ -9,10 +9,11 @@ get_name() {
 _KAK_NAME="$( get_name )"
 
 show_help() {
-    echo "$1 [-s SESSION_NAME]"
+    echo "$1"
     echo ""
-    echo "-s = Use session name specified as apposed to one derived from the director"
+    echo "-s SESSION_NAME = Use session name specified as apposed to one derived from the directory"
     echo "-l = List kakoune sessions"
+    echo "-K SESSION_NAME = Pick a kakoune session to destroy"
     echo "-k = Pick a kakoune session to destroy"
     echo "-t = Create a temporary kakoune session (it just runs kak!)"
     echo "-h = Display this help"
@@ -20,7 +21,7 @@ show_help() {
     exit 0
 }
 
-while getopts "hlkts:" opt; do
+while getopts "hlkts:K:" opt; do
     case "$opt" in
         h)
             show_help
@@ -34,7 +35,7 @@ while getopts "hlkts:" opt; do
             fi
             ;;
         l)
-            ps aux | grep -F 'kak -d -s' | awk '$11 == "kak" { print $2 " " $14 }'
+            kak -l
             exit 0
             ;;
         t)
@@ -43,7 +44,11 @@ while getopts "hlkts:" opt; do
             exit 0
             ;;
         k)
-            ps aux | grep -F 'kak -d -s' | awk '$11 == "kak" { print $2 " " $14 }' | fzf | sed 's/ .*//' | parallel kill {}
+            kak -l | fzf | parallel kak -c {} -ui dummy -e kill
+            exit 0
+            ;;
+        K)
+            kak -c "$OPTARG" -ui dummy -e kill
             exit 0
             ;;
     esac
@@ -51,9 +56,18 @@ done
 shift $(( OPTIND - 1 ))
 
 echo "KAK_NAME: $_KAK_NAME"
-[ -z "$(kak -l | grep -F -x "$_KAK_NAME")" ] && setsid kak -d -s "$_KAK_NAME" &
-while ! kak -l | grep -F -x "$_KAK_NAME"; do
-    echo "WAITING FOR $_KAK_NAME"
-    sleep 0.1
-done
-kak -c "$_KAK_NAME" "$@"
+kak -clear
+# [ -z "$(kak -l | grep -F -x "$_KAK_NAME")" ] && setsid kak -d -s "$_KAK_NAME" &
+# while ! kak -l | grep -F -x "$_KAK_NAME"; do
+#     echo "WAITING FOR $_KAK_NAME"
+#     sleep 0.1
+# done
+# kak -c "$_KAK_NAME" "$@"
+
+if [ -z "$(kak -l | grep -F -x "$_KAK_NAME")" ]; then
+    echo "s"
+    exec kak -s "$_KAK_NAME" "$@"
+else
+    echo "c"
+    exec kak -c "$_KAK_NAME" "$@"
+fi

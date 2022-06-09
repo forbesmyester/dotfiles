@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Makes workspace 0 sticky on the the second monitor. all other workspaces exist on primary
+
 set -euo pipefail
 IFS=$'\n\t'
 
