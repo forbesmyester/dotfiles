@@ -4,6 +4,7 @@
 # git clone -q https://github.com/kakounedotcom/prelude.kak.git "autoload/prelude.kak"
 # git clone -q https://github.com/kakounedotcom/connect.kak.git "autoload/connect.kak"
 
+
 evaluate-commands %sh{
     plugins="$kak_config/plugins"
     mkdir -p "$plugins"
@@ -13,6 +14,8 @@ evaluate-commands %sh{
 }
 
 plug "andreyorst/plug.kak" noload
+plug "kakounedotcom/prelude.kak"
+plug "kakounedotcom/connect.kak"
 
 # kak-lsp
 
@@ -108,7 +111,6 @@ plug "andreyorst/plug.kak" noload
 plug "forbesmyester/set-run-after-write.kak"
 
 # Connect
-    # plug "kakounedotcom/prelude.kak"
     # plug "kakounedotcom/connect.kak" defer connect %{
     #     # map global user F ' :connect-terminal sh -c '':e "$(fzf)"''<ret>' -docstring 'files'
     #     map global user F ' :connect-terminal sh -c '':e "$(broot --color yes --conf /home/fozz/Projects/dotfiles/broot/select.toml)"''<ret>' -docstring 'files'

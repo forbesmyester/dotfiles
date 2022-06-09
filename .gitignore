@@ -3,3 +3,4 @@ lein/.lein/repl-port
 parallel/.parallel/tmp/
 vim/.config/nvim/.netrwhist
 scripts/.scripts/xmux
+/kak/.config/kak/plugins/
