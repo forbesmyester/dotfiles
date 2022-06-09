@@ -1,12 +1,3 @@
 #!/bin/bash
 
-# ~/.screenlayout/mirrored-1920x1080.sh --off "--mode 1920x1080 --rate 60.0 --pos 0x0 --rotate normal"
-
-AWK_SCRIPT="$(dirname "${BASH_SOURCE[0]}")/detection.awk"
-
-OFF="$1"
-SETUP="$2"
-CMD="$(xrandr | awk -f "$AWK_SCRIPT" -v setup="$SETUP" -v off="$OFF" | tail -n1)"
-echo $CMD
-$CMD
-
+~/.screenlayout/switcher-impl --off "--mode 1920x1080 --rate 60.0 --pos 0x0 --rotate normal"
