@@ -1,0 +1,20 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# Marks all "list-gaming" games as "not-played" when they don't include a "played" tag.
+#
+# This uses https://github.com/artur-shaik/wallabag-client/
+
+TMP=$(mktemp -d -t tmp.XXXXXXXXXX)
+function finish {
+  rm -rf "$TMP"
+}
+trap finish EXIT
+
+wallabag list -g list-gaming | grep -v  '^\-' | awk '{ print $1 }' | sed '1i id' > "$TMP/gaming.csv"
+wallabag list -g played | grep -v  '^\-' | awk '{ print $1 }' | sed '1i id' > "$TMP/played.csv"
+
+mlr --csv join -u -j id --np --ul -f "$TMP/gaming.csv" "$TMP/played.csv" > "$TMP/need_tagging.csv"
+
+cat "$TMP/need_tagging.csv" | sed 1d | parallel -j1 wallabag tags -c add -e {} -t "not-played"
