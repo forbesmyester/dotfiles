@@ -75,4 +75,4 @@ function move_appropriate {
 export -f move_appropriate
 
 echo "$SRC_DIR"
-find "${SRC_DIR}/" -type f -printf "%P\n" | parallel -j 1 move_appropriate "$SRC_DIR" "$DST_DIR" "$AGE_IN_SECONDS" {}
+find "${SRC_DIR}/" -type f -printf "%P\n"  | grep -v '^\.' | grep -v '\/\.' | parallel -j 1 move_appropriate "$SRC_DIR" "$DST_DIR" "$AGE_IN_SECONDS" {}
