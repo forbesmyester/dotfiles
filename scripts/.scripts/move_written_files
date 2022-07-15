@@ -1,0 +1,78 @@
+#!/bin/bash
+
+
+OPTIND=1
+
+show_help() {
+    echo "NAME:"
+    echo "  $0 - Moves files from place A to place B, when they've not changed for a while"
+    echo ""
+    echo "USAGE FOR FILE MODE:"
+    echo "  $0 -s SRC_DIR -d DST_DIR -a AGE_IN_SECONDS"
+    echo ""
+    echo "GLOBAL OPTIONS:"
+    echo "  -s    The SRC_DIR is a directory to look for files"
+    echo "  -a    That are AGE_IN_SECONDS old"
+    echo "  -d    so they can be moved to DST_DIR"
+    echo "  -h    Get (this) help"
+    echo ""
+    exit 0
+}
+
+while getopts "hd:s:a:" opt; do
+    case "$opt" in
+        h)
+            show_help
+            exit 0
+            ;;
+        s)
+            SRC_DIR="$OPTARG"
+            ;;
+        a)
+            AGE_IN_SECONDS="$OPTARG"
+            ;;
+        d)
+            DST_DIR="$OPTARG"
+            ;;
+        *)
+            echo "INVALID FLAG"
+            exit 1
+    esac
+done
+
+shift $(( OPTIND - 1 ))
+
+set -euo pipefail
+IFS=$'\n\t'
+
+
+function should_i_move {
+    local WAIT_SECONDS="$1"
+    local FILENAME="$2"
+    local FILE_TIMESTAMP="$(stat "-c %Y" "$FILENAME" | awk '{ print $1 }')"
+    local NOW_TIMESTAMP="$(date '+%s')"
+    local MOVE_TIMESTAMP="$(($FILE_TIMESTAMP+$WAIT_SECONDS))"
+    local DO_MOVE=0
+    if [ "$NOW_TIMESTAMP" -gt "$MOVE_TIMESTAMP" ];then
+        DO_MOVE=1
+    fi
+    echo "$DO_MOVE"
+}
+export -f should_i_move
+
+function move_appropriate {
+    SRC_DIR="$1"
+    DST_DIR="$2"
+    WAIT_SECONDS="$3"
+    FILENAME="$4"
+    SHOULD_I_MOVE="$(should_i_move "$WAIT_SECONDS" "${SRC_DIR}/$FILENAME")"
+    if [ "$SHOULD_I_MOVE" -gt 0 ]; then
+        tar -c -C "$SRC_DIR" "$FILENAME" | tar -xv -C "$DST_DIR"
+        # echo tar -c -C "$SRC_DIR" "$FILENAME" '|' tar -xv -C "$DST_DIR"
+        rm "${SRC_DIR}/$FILENAME"
+    fi
+}
+export -f move_appropriate
+
+echo "$SRC_DIR"
+find "${SRC_DIR}/" -type f -printf "%P\n" | parallel -j 1 move_appropriate "$SRC_DIR" "$DST_DIR" "$AGE_IN_SECONDS" {}
