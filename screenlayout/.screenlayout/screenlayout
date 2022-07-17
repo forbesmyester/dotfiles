@@ -1,0 +1,26 @@
+#!/bin/bash
+
+CUR="$(cat ~/.screenlayout/current 2>/dev/null || echo "")"
+DIRNAME="$(dirname $0)"
+AWK='
+BEGIN { NEXT=0; FIRST=""; OUT="" }
+FIRST=="" { FIRST=$1 }
+CUR=="" { NEXT=1 }
+NEXT==1 { OUT=$1; NEXT=0 }
+CUR==$1 {NEXT=1}
+# { print "P", OUT "|", CUR, "|", FIRST, "|", NEXT }
+END {
+    if (NEXT == 1) {
+        print FIRST
+        exit
+    }
+    print OUT
+}
+'
+cd "$DIRNAME"
+find "$DIRNAME/conf.d" -type f | sort | awk -v CUR="$CUR" "$AWK" > current
+cat current
+$(cat current)
+
+
+
