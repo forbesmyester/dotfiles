@@ -258,8 +258,9 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 map global normal x '<a-x>'
 map global normal '<a-x>' '<a-:>J<a-L>'
 map global normal '<a-X>' '<a-:><a-;>K'
-map global normal '<ret>' ' ;'
+# map global normal '<ret>' ' ;'
 # map global normal '#' '`'
-map global normal '<a-`>' '~'
-map global normal '¬' '~'
+# map global normal '<a-`>' '~'
+# map global normal '¬' '~'
+map global normal '#' '`'
 # map global normal "'" "," # Seems to be free - use instead of comma?

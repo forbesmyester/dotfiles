@@ -2,6 +2,9 @@
 
 
 OPTIND=1
+SRC_DIR=""
+AGE_IN_SECONDS="60"
+DST_DIR=""
 
 show_help() {
     echo "NAME:"
@@ -61,18 +64,34 @@ function should_i_move {
 export -f should_i_move
 
 function move_appropriate {
-    SRC_DIR="$1"
-    DST_DIR="$2"
-    WAIT_SECONDS="$3"
-    FILENAME="$4"
-    SHOULD_I_MOVE="$(should_i_move "$WAIT_SECONDS" "${SRC_DIR}/$FILENAME")"
+    local SRC_DIR="$1"
+    local DST_DIR="$2"
+    local WAIT_SECONDS="$3"
+    local FILENAME="$4"
+    local SHOULD_I_MOVE="$(should_i_move "$WAIT_SECONDS" "${SRC_DIR}/$FILENAME")"
     if [ "$SHOULD_I_MOVE" -gt 0 ]; then
         tar -c -C "$SRC_DIR" "$FILENAME" | tar -xv -C "$DST_DIR"
-        # echo tar -c -C "$SRC_DIR" "$FILENAME" '|' tar -xv -C "$DST_DIR"
-        rm "${SRC_DIR}/$FILENAME"
+        local EC="$?"
+        if [ "$EC" -eq 0 ] && [ -f "${DST_DIR}/${FILENAME}" ]; then
+            rm "${SRC_DIR}/$FILENAME"
+            echo "${SRC_DIR}/$FILENAME"
+        fi
     fi
 }
 export -f move_appropriate
 
-echo "$SRC_DIR"
+if [ "$SRC_DIR" == "" ]; then
+    echo "Must supply source directory (SRC_DIR)"
+    echo ""
+    show_help
+    exit 0
+fi
+if [ "$DST_DIR" == "" ]; then
+    echo "Must supply source directory (DST_DIR)"
+    echo ""
+    show_help
+    exit 0
+fi
+
+mkdir -p "$DST_DIR"
 find "${SRC_DIR}/" -type f -printf "%P\n"  | grep -v '^\.' | grep -v '\/\.' | parallel -j 1 move_appropriate "$SRC_DIR" "$DST_DIR" "$AGE_IN_SECONDS" {}
