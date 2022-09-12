@@ -14,13 +14,19 @@ END {
         print FIRST
         exit
     }
-    print OUT
+    if (OUT) {
+        print OUT
+        exit
+    }
+    print FIRST
 }
 '
 cd "$DIRNAME"
 find "$DIRNAME/conf.d" -type f | sort | awk -v CUR="$CUR" "$AWK" > current
 cat current
 $(cat current)
+cat current | sed 'sx.*/xx' | aosd_cat -p 4 -n "Anonymous Pro 99" -R lime
+cat current | sed 'sx.*/xx' | aosd_cat -p 4 -n "Anonymous Pro 99" -R lime
 
 
 

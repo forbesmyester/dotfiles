@@ -35,4 +35,4 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/go/bin:$PATH"
 export PATH="$HOME/.basher/bin:$PATH"
 
-[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
+[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh" || true

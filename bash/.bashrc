@@ -220,20 +220,22 @@ export FZF_DEFAULT_COMMAND='rg --files'
 # export FZF_DEFAULT_OPTS_INNER='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || coderay {} || rougify {} ||   cat {}) 2> /dev/null | head -500'
 # export FZF_DEFAULT_OPTS="--preview '$FZF_DEFAULT_OPTS_INNER'"
 
-alias tnew='tmux -f ~/.tmux.conf new-session -As "$(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")"'
-alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*//'"'"')'
+# alias tnew='tmux -f ~/.tmux.conf new-session -As "$(basename $PWD | sed "sJ[^[:alnum:]]J_Jg")"'
+# alias tres='tmux attach-session -t $(tmux list-sessions | fzf | sed '"'"'s/\:.*//'"'"')'
 
 # export NAVI_PATH="$HOME/.config/navi" #/:$HOME/.local/navi/cheats/"
 # source <(~/.local/bin/navi widget bash)
 
 
 
-if ! infocmp alacritty > /dev/null 2>&1; then
-    ALACRITTY_TERMINFO_TMP=$(mktemp)
-    curl https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info > "$ALACRITTY_TERMINFO_TMP"
-    mkdir -p ~/.terminfo
-    tic -o ~/.terminfo/ -xe alacritty,alacritty-direct "$ALACRITTY_TERMINFO_TMP"
-    echo "NOTICE: alacritty terminfo install$HOMEd"
-fi
+# if ! infocmp alacritty > /dev/null 2>&1; then
+#     ALACRITTY_TERMINFO_TMP=$(mktemp)
+#     curl https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info > "$ALACRITTY_TERMINFO_TMP"
+#     mkdir -p ~/.terminfo
+#     tic -o ~/.terminfo/ -xe alacritty,alacritty-direct "$ALACRITTY_TERMINFO_TMP"
+#     echo "NOTICE: alacritty terminfo install$HOMEd"
+# fi
 
 . ~/.bash_env
+
+# [ -s "/home/fozz/.jabba/jabba.sh" ] && source "/home/fozz/.jabba/jabba.sh"

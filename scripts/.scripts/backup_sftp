@@ -1,9 +1,0 @@
-#!/bin/bash
-set -euo pipefail
-IFS=$'\n\t'
-
-
-
-cd "$2"
-echo "($PWD) restic -r \"sftp:${SFTP_USER}@${SFTP_HOSTNAME}:${SFTP_LOCATION}\" backup ."
-restic -r "sftp:${SFTP_USER}@${SFTP_HOSTNAME}:${SFTP_LOCATION}" backup .

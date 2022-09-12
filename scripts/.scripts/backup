@@ -2,51 +2,38 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-LVGRP=store
+# Generate ~/.backup by `pass ls Backup/ | sed '1d' | sed 's/.* //' | parallel -j 1 pass show Backup/{} '|' awk -v PASSWORD_NAME=RESTIC_PASSWORD -v PRE=BACKUPARG_ -f serialize_gnu_pass.awk BACKUPARG_RESTIC_REPOSITORY_NAME={=s/.*://=} > ~/.backup`
 
-function cleanup {
-    local SNAPS=$(lvs -S "(lv_attr =~ ^s) && (vg_name = ${LVGRP})" --separator ':' --noheadings | sed 's/^ *//' | awk -F ':' '{ print $1 }')
-    for SNAP in $SNAPS; do
-        echo "$SNAP"
-        echo "Unmounting: /dev/$LVGRP/$SNAP"
-        umount -f "/dev/$LVGRP/$SNAP" || true
-        echo "Removing snap: $SNAP"
-        lvremove -y "$LVGRP/$SNAP"
-    done
-}
-trap cleanup EXIT
-
-
-function do_mount {
-    DATE=$(date "+%Y%m%d-%H%M")
-    SRC_FS="$1"
-    SRC_INTLOC="$2"
-    SNAP="snap-${DATE}-$(echo "$SRC_FS" | awk '{print tolower($0)}' | sed 's/[^a-z0-9]/_/g')-$(echo "$SRC_INTLOC" | awk '{print tolower($0)}' | sed 's/[^a-z0-9]/_/g')"
-    lvcreate -L 32G -s -n "${LVGRP}/$SNAP" "$SRC_FS"
-    mkdir -p "/tmp/$SNAP"
-    MOUNTPOINT="/tmp/$SNAP"
-    mount -o nouuid "/dev/$LVGRP/$SNAP" "$MOUNTPOINT"
-    echo "$MOUNTPOINT/$SRC_INTLOC"
-}
-
-cleanup
+SELECTED=""
+if [ "$#" -eq 1 ]; then
+    SELECTED="$1"
+fi
 
 ENVIRONMENT_FILE=$HOME/.backup
-BACKUP_NAMES=$(cat "$ENVIRONMENT_FILE" | jq -r ._name)
+BACKUP_NAMES=$(cat "$ENVIRONMENT_FILE" | jq -r .BACKUPARG_RESTIC_REPOSITORY_NAME)
 for BACKUP_NAME in $BACKUP_NAMES; do
-    LOCATIONS="$(cat "$ENVIRONMENT_FILE" | jq -r "select(._name == \"$BACKUP_NAME\") | .locations[].location")"
-    for LOCATION in $LOCATIONS; do
-        if [ "$#" -gt 0 ] && [ "$LOCATION" != "$1" ]; then
-            continue
-        fi
-        LINE="$(cat "$ENVIRONMENT_FILE" | jq "select(._name == \"$BACKUP_NAME\")")"
-        echo ">> $BACKUP_NAME -> $LOCATION"
-        JSON="$(echo "$LINE" | jq ". + (.locations[] | select(.location == \"$LOCATION\") | .info) + {\"method\":(.locations[] | select(.location == \"$LOCATION\") | .method)} | del(.locations)")"
-        . ndjson-env -a "$JSON"
-        # . ndjson-env -f "$ENVIRONMENT_FILE" "$BACKUP_NAME"
-        export RESTIC_DIRECTORY="$(do_mount "/dev/$LVGRP/${LOGICAL_VOLUME}" "$INTERNAL_DIRECTORY" | tail -n1)"
-        echo ">>> $BACKUP_NAME $RESTIC_DIRECTORY"
-        backup_$method "$BACKUP_NAME" "$RESTIC_DIRECTORY"
-        cleanup
-    done
+
+    if [ "$SELECTED" != "" ] && [ "$SELECTED" != "$BACKUP_NAME" ]; then
+        continue
+    fi
+
+
+    LINE="$(cat "$ENVIRONMENT_FILE" | jq "select(.BACKUPARG_RESTIC_REPOSITORY_NAME == \"$BACKUP_NAME\")")"
+    echo ">> $BACKUP_NAME = $LINE"
+    . ndjson-env -a "$LINE"
+
+    # BACKUPARG_SUBVOL=""                 # FROM ndjson
+    # BACKUPARG_INTERNAL_DIRECTORY=""     # FROM ndjson
+    # BACKUPARG_RESTIC_REPOSITORY_NAME="" # FROM ndjson
+    # BACKUPARG_LOGICAL_VOLUME=""         # FROM ndjson
+
+    export BACKUPARG_VOLUME_GROUP="store"
+    export BACKUPARG_SNAP_PRE="baksnap"
+    export BACKUPARG_DEVICE="/dev/$BACKUPARG_VOLUME_GROUP/$BACKUPARG_LOGICAL_VOLUME"
+    export BACKUPARG_DEVICE_MOUNTPOINT="/mnt/baksnap"
+    export BACKUPARG_RESTIC_REPOSITORY_ROOT="sftp://badmin@b.lang.speechmarks.com://mnt/restic_sftp"
+    export BACKUPARG_METHOD=sftp
+
+    backup_worker
 done
+

@@ -1,0 +1,1 @@
+pass ls Backup/ | sed '1d' | sed 's/.* //' | parallel -j 1 pass show Backup/{} '|' awk -v PASSWORD_NAME=RESTIC_PASSWORD -v PRE=BACKUPARG_ -f serialize_gnu_pass.awk BACKUPARG_RESTIC_REPOSITORY_NAME={=s/.*://=} > ~/.backup
