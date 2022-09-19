@@ -9,6 +9,11 @@ if [ "$#" -eq 1 ]; then
     SELECTED="$1"
 fi
 
+if [ -z "$PGPASSWORD" ]; then
+    echo "Must also have postgresql env vars"
+    exit 1
+fi
+
 ENVIRONMENT_FILE=$HOME/.backup
 BACKUP_NAMES=$(cat "$ENVIRONMENT_FILE" | jq -r .BACKUPARG_RESTIC_REPOSITORY_NAME)
 for BACKUP_NAME in $BACKUP_NAMES; do
@@ -34,6 +39,49 @@ for BACKUP_NAME in $BACKUP_NAMES; do
     export BACKUPARG_RESTIC_REPOSITORY_ROOT="sftp://badmin@b.lang.speechmarks.com://mnt/restic_sftp"
     export BACKUPARG_METHOD=sftp
 
+    SQL="insert into backup_location (volume_group, logical_volume, subvol, internal_directory) values
+        ('$BACKUPARG_VOLUME_GROUP', '$BACKUPARG_LOGICAL_VOLUME', '$BACKUPARG_SUBVOL', '$BACKUPARG_INTERNAL_DIRECTORY')
+        on conflict do nothing"
+
+    echo "$SQL" | psql
+
+
+    function insert_snapshot() {
+        JSON_LINE="$@"
+        echo "
+            WITH
+                x (j, volume_group, logical_volume, subvol, internal_directory) AS (
+                    SELECT
+                        '$JSON_LINE'::jsonb,
+                        '$BACKUPARG_VOLUME_GROUP',
+                        '$BACKUPARG_LOGICAL_VOLUME',
+                        '$BACKUPARG_SUBVOL',
+                        '$BACKUPARG_INTERNAL_DIRECTORY'),
+                y as (
+                    select
+                        (
+                            select backup_location_id from backup_location
+                            where (volume_group, logical_volume, subvol, internal_directory) = (x.volume_group, x.logical_volume, x.subvol, x.internal_directory)
+                        ) as backup_location_id,
+                        jsonb_path_query(j, '$.id') as snapshot_restic_id,
+                        jsonb_path_query(j, '$.tree') as tree,
+                        cast(cast(jsonb_path_query(j, '$.time.datetime()') as varchar) as timestamp with time zone) as backup_date from x
+                )
+                insert into backup_snapshot (backup_location_id, snapshot_restic_id, tree, backup_date)
+                    select backup_location_id, snapshot_restic_id, tree, backup_date from  y
+            " | psql
+
+    }
+    export -f insert_snapshot
+
     backup_worker
+    restic -r "$BACKUPARG_RESTIC_REPOSITORY_ROOT/${BACKUPARG_RESTIC_REPOSITORY_NAME}" forget --prune --keep-within 3w --keep-last 3 --keep-weekly 3 --keep-monthly 6 --keep-yearly 10
+    restic --json -r "$BACKUPARG_RESTIC_REPOSITORY_ROOT/${BACKUPARG_RESTIC_REPOSITORY_NAME}" snapshots | \
+        mlr --ijson --ojsonl put '$time = sub($time,"\.[0-9]+","")' | parallel -j 1 insert_snapshot {}
+
+
+
+
+
 done
 
