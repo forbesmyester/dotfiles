@@ -1,0 +1,42 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+DAYS="$(
+    echo "
+        select
+            max(days_since_backup) as max_days_since_last_backup
+        from (
+            select
+                backup_location.backup_location_id,
+                volume_group,
+                logical_volume,
+                subvol,
+                internal_directory,
+                extract(day from now() - max(backup_date)) as days_since_backup
+            from backup_location
+            left join backup_snapshot on backup_snapshot.backup_location_id = backup_location.backup_location_id
+            group by
+                backup_location.backup_location_id,
+                volume_group,
+                logical_volume,
+                subvol,
+                internal_directory
+        ) x " | psql-out -f ndjson | jq -c -r .max_days_since_last_backup
+)"
+
+COLOR='0 255 0'
+RATE=2
+if [ "$DAYS" -gt 7 ]; then
+    COLOR='255 64 0'
+fi
+if [ "$DAYS" -gt 14 ]; then
+    COLOR='255 0 0'
+fi
+if [ "$DAYS" -gt 14 ]; then
+    RATE=4
+fi
+LED="LED=usr1;STATUS=${RATE};COLOR=${COLOR}"
+if ! beanstool put --tube=lang_sys_status --host=logo.lang.speechmarks.com:11300 --body "$LED" 2>&1 > /dev/null; then
+    echo "Error queuing message: $LED"
+fi
