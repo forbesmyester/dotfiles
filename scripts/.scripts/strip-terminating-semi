@@ -1,0 +1,26 @@
+#!/bin/bash
+
+REMOVE_JSON=' | .sql'
+
+show_help() {
+    echo "$1"
+    echo ""
+    echo "-j Print JSON object (one line) instead of just the SQL"
+    echo "-h = Display this help"
+    echo ""
+    exit 0
+}
+
+while getopts "hj" opt; do
+    case "$opt" in
+        h)
+            show_help
+            exit 0
+            ;;
+        j)
+            REMOVE_JSON=""
+            ;;
+    esac
+done
+
+jo sql=@/dev/stdin  | jq -r -M -c '{"sql": .sql | sub("[\t\n ]*;[\n\t ]*$"; ""; "m")} '"$REMOVE_JSON"
