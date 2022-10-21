@@ -1,27 +1,12 @@
-# The following commands must be ran
-#
-# ln -s "~/.local/share/kak/autoload" "autoload/standard-library"
-# git clone -q https://github.com/kakounedotcom/prelude.kak.git "autoload/prelude.kak"
-# git clone -q https://github.com/kakounedotcom/connect.kak.git "autoload/connect.kak"
-
-
-evaluate-commands %sh{
-    plugins="$kak_config/plugins"
-    mkdir -p "$plugins"
-    [ ! -e "$plugins/plug.kak" ] && \
-    git clone -q https://github.com/andreyorst/plug.kak.git "$plugins/plug.kak"
-    printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
-}
-
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
+
 plug "kakounedotcom/prelude.kak"
 plug "kakounedotcom/connect.kak"
 
 # kak-lsp
 
-    plug "kak-lsp/kak-lsp" do %{
-        cargo install --locked --force --path .
-    }
+    plug "kak-lsp/kak-lsp"
     map global user , ' :lsp-hover<ret>' -docstring 'lsp-hover'
     map global user l ' :enter-user-mode lsp<ret>' -docstring 'lsp-mode'
     set-option global lsp_auto_highlight_references true
@@ -272,9 +257,5 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 map global normal x '<a-x>'
 map global normal '<a-x>' '<a-:>J<a-L>'
 map global normal '<a-X>' '<a-:><a-;>K'
-# map global normal '<ret>' ' ;'
-# map global normal '#' '`'
-# map global normal '<a-`>' '~'
-# map global normal '¬' '~'
 map global normal '#' '`'
-# map global normal "'" "," # Seems to be free - use instead of comma?
+map global normal '`' ','
