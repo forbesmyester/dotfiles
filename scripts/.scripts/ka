@@ -1,12 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-get_name() {
-    local PROSP
-    PROSP="$( [ -n "$KAKOUNE_SESSION" ] && echo "$KAKOUNE_SESSION" || git rev-parse --show-toplevel 2> /dev/null | sed 's/.*\///' || echo "$PWD" )"
-    echo $PROSP | tr '[:upper:]' '[:lower:]' | sed 's/[^A-Za-z0-9]/_/g' | sed 's/^_\+//' | sed 's/__\+/_/' | sed 's/_\+$//'
-}
+ONLY_PRINT=0
 
-_KAK_NAME="$( get_name )"
+_KAK_NAME="$( get_directory_identity )"
 
 show_help() {
     echo "$1"
@@ -15,17 +11,21 @@ show_help() {
     echo "-l = List kakoune sessions"
     echo "-K SESSION_NAME = Pick a kakoune session to destroy"
     echo "-k = Pick a kakoune session to destroy"
+    echo "-p = Print the SESSION_NAME"
     echo "-t = Create a temporary kakoune session (it just runs kak!)"
     echo "-h = Display this help"
     echo ""
     exit 0
 }
 
-while getopts "hlkts:K:" opt; do
+while getopts "hlktps:K:" opt; do
     case "$opt" in
         h)
             show_help
             exit 0
+            ;;
+        p)
+            ONLY_PRINT=1
             ;;
         s)
             _KAK_NAME="$OPTARG"
@@ -56,6 +56,9 @@ done
 shift $(( OPTIND - 1 ))
 
 echo "KAK_NAME: $_KAK_NAME"
+if [ "$ONLY_PRINT" -gt 0 ]; then
+    exit
+fi
 kak -clear
 # [ -z "$(kak -l | grep -F -x "$_KAK_NAME")" ] && setsid kak -d -s "$_KAK_NAME" &
 # while ! kak -l | grep -F -x "$_KAK_NAME"; do

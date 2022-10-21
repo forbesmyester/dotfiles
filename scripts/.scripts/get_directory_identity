@@ -1,0 +1,15 @@
+function get_name_basis() {
+    local PROSP
+    if [ -n "$KAKOUNE_SESSION" ]; then
+        echo $KAKOUNE_SESSION
+        exit
+    fi
+    GIT_OUT="$(git rev-parse --show-toplevel 2> /dev/null | sed 's/.*\///')"
+    if [ -z "$GIT_OUT" ]; then
+        echo "$PWD"
+        exit
+    fi
+    echo "$GIT_OUT"
+}
+
+get_name_basis | tr '[:upper:]' '[:lower:]' | sed 's/[^A-Za-z0-9]/_/g' | sed 's/^_\+//' | sed 's/__\+/_/' | sed 's/_\+$//'

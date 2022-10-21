@@ -1,12 +1,6 @@
 #!/bin/bash
 
 
-get_name() {
-    local PROSP
-    PROSP="$( [ -n "$KAKOUNE_SESSION" ] && echo "$KAKOUNE_SESSION" || git rev-parse --show-toplevel 2> /dev/null || echo "$PWD" )"
-    echo $PROSP | tr '[:upper:]' '[:lower:]' | sed 's/[^A-Za-z0-9]/_/g' | sed 's/^_\+//' | sed 's/__\+/_/' | sed 's/_\+$//'
-}
-
 show_help() {
     echo "$1 <TMUX_SESSION> [TMUX_WINDOW]"
     echo ""
@@ -26,9 +20,7 @@ done
 shift $(( OPTIND - 1 ))
 
 
-
-
-TMUX_SESSION="$(get_name)"
+TMUX_SESSION="$(get_directory_identity)"
 if [ "$#" -gt 0 ]; then
     TMUX_SESSION="$1"
 fi
