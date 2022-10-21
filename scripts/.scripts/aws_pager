@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+aws_pager() {
+    local MORE=""
+    local NEXTTOKENARG1=""
+    local NEXTTOKENARG2=""
+    local OUT=""
+    while [ "$MORE" != "null" ]; do
+        OUT="$(aws $@ $NEXTTOKENARG1 $NEXTTOKENARG2)"
+        echo "$OUT" | jq -c ".${CONTENTS_KEY:-Z} | .[]"
+        MORE="$(echo "$OUT" | jq -r .${NEXT_TOKEN_KEY:-Z})"
+        NEXTTOKENARG1="--starting-token"
+        NEXTTOKENARG2="$MORE"
+    done
+}
+
+export CONTENTS_KEY="${CONTENTS_KEY:-Contents}"
+export NEXT_TOKEN_KEY="${NEXT_TOKEN_KEY:-NextToken}"
+
+aws_pager $@
+
+# USAGE: aws_pager s3api list-objects-v2 --max-items 100 --bucket "${SOME_S3_ROOT}" --output json
+
