@@ -7,16 +7,11 @@ plug "kakounedotcom/connect.kak"
 # kak-lsp
 
     plug "kak-lsp/kak-lsp"
-    map global user , ' :lsp-hover<ret>' -docstring 'lsp-hover'
-    map global user l ' :enter-user-mode lsp<ret>' -docstring 'lsp-mode'
-    set-option global lsp_auto_highlight_references true
+    map global user '<space>' %{:lsp-hover<ret>} -docstring 'lsp-hover'
+    map global user l %{:enter-user-mode lsp<ret>} -docstring "LSP mode"
+    # set-option global lsp_auto_highlight_references true
 
     # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-    hook global WinSetOption filetype=(rust|javascript|typescript) %{
-        lsp-enable-window
-        # lsp-auto-signature-help-enable
-    }
-
     # hook global WinSetOption filetype=rust %{
     #   hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
     #   hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
@@ -35,18 +30,23 @@ plug "kakounedotcom/connect.kak"
     #   }
     # }
 
+    hook global WinSetOption filetype=(rust|javascript|typescript) %{
+        lsp-enable-window
+        # lsp-auto-signature-help-enable
+    }
+
     hook global WinSetOption filetype=rust %{
         # Enable LSP
-        lsp-enable-window
+        # lsp-enable-window
 
         # Auto-formatting on save
-        hook window BufWritePre .* lsp-formatting-sync
+        # hook window BufWritePre .* lsp-formatting-sync
 
         # Configure inlay hints (only on save)
-        hook window -group rust-inlay-hints BufWritePost .* rust-analyzer-inlay-hints
-        hook -once -always window WinSetOption filetype=.* %{
-            remove-hooks window rust-inlay-hints
-        }
+        # hook window -group rust-inlay-hints BufWritePost .* rust-analyzer-inlay-hints
+        # hook -once -always window WinSetOption filetype=.* %{
+        #     remove-hooks window rust-inlay-hints
+        # }
     }
 
     hook global WinSetOption filetype=lsp-goto %{
@@ -89,6 +89,39 @@ plug "kakounedotcom/connect.kak"
     set-option global tabstop 4
     set-option global indentwidth 4
 
+# Git
+
+    plug 'jordan-yee/kakoune-git-mode' config %{
+        # Set structured commit message options here
+        # set-option global git_mode_use_structured_quick_commit true
+        # set-option git_mode_commit_prefixes 'feat::fix::docs::refactor::build::test::style::BREAKING CHANGE::'
+        # set-option git_mode_branch_label_regex 'SCRUM-[0-9]+'
+
+        # Declare git mode with default set of mappings
+        declare-git-mode
+
+        # Suggested user mode mapping
+        map global user g ': enter-user-mode git<ret>' -docstring "git mode"
+        hook global BufWritePost .* %{
+            git-mode-show-diff
+            git-mode-update-diff
+        }
+        # hook global NormalIdle %{
+        #     git-mode-show-diff
+        #     git-mode-update-diff
+        # }
+        hook buffer NormalIdle .* %{ git-mode-show-diff } 
+        hook global WinCreate .* %{ evaluate-commands %sh{
+            if [ $kak_buffile != $kak_bufname ] && git ls-files --error-unmatch "$kak_buffile" > /dev/null 2>&1; then
+                echo "git-mode-show-diff"
+            fi
+        }}
+        # hook global ModeChange .*:insert %{
+        #     git-mode-show-diff
+        #     git-mode-update-diff
+        # }
+    }
+
 # Filetypes
 
     hook global WinSetOption filetype=sh %{
@@ -119,8 +152,8 @@ plug "forbesmyester/set-run-after-write.kak"
     require-module prelude
     require-module connect
     # map global user f ' :connect-terminal sh -c '':e "$(broot --color yes --conf /home/fozz/Projects/dotfiles/broot/select.toml)"''<ret>' -docstring 'files'
-    map global user f ' :connect-terminal sh -c '':e "$(fzf)"''<ret>' -docstring 'files'
-    map global user g ' :connect-terminal sh -c '':e "$(rg . | fzf | sed "s/\:.*//")"''<ret>' -docstring 'search'
+    map global user f %{:connect-terminal sh -c ':e "$(fzf)"'<ret> }% -docstring 'files'
+    map global user F %{:connect-terminal sh -c ':e "$(rg . | fzf | sed "s/\:.*//")"'<ret>}% -docstring 'search'
 
 
 plug "Delapouite/kakoune-registers"
@@ -160,7 +193,7 @@ map global clipboard P 'yp|xclip -selection clipboard -o<ret>' -docstring 'paste
 map global clipboard y '<a-|>xclip -selection clipboard -i<ret>' -docstring 'yank into clipboard'
 map global user c ':enter-user-mode clipboard<ret>' -docstring "Clipboard"
 map global user y '<a-|>xclip -selection clipboard -i<ret>' -docstring 'yank into clipboard'
-map global normal y 'y,y'
+map global normal y 'y<space>y'
 map global user R '|xclip -selection clipboard -o<ret>' -docstring 'paste over from clipboard'
 map global user p 'yP|xclip -selection clipboard -o<ret>' -docstring 'paste after from clipboard'
 map global user P 'yp|xclip -selection clipboard -o<ret>' -docstring 'paste before from clipboard'
@@ -185,10 +218,10 @@ map global xmux ';' ':xmux-lines-default ";"<ret>'
 
 # plug "https://gitlab.com/Screwtapello/kakoune-shellcheck"
 
-plug 'delapouite/kakoune-mirror' %{
-  # Suggested mapping
-  # map global normal "'" ': enter-user-mode mirror<ret>'
-}
+# plug 'delapouite/kakoune-mirror' %{
+#   # Suggested mapping
+#   # map global normal "'" ': enter-user-mode mirror<ret>'
+# }
 
 # plug 'alexherbo2/surround.kak' %{
 #     require-module surround
@@ -254,8 +287,12 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
     }
 
 
-map global normal x '<a-x>'
-map global normal '<a-x>' '<a-:>J<a-L>'
-map global normal '<a-X>' '<a-:><a-;>K'
+# map global normal x '<a-x>'
+# map global normal '<a-x>' '<a-:>J<a-L>'
+# map global normal '<a-X>' '<a-:><a-;>K'
 map global normal '#' '`'
 map global normal '`' ','
+map global normal X 'xJ'
+map global normal '<a-X>' 'x<a-:><a-;>K'
+
+
