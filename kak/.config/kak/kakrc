@@ -195,8 +195,8 @@ map global user c ':enter-user-mode clipboard<ret>' -docstring "Clipboard"
 map global user y '<a-|>xclip -selection clipboard -i<ret>' -docstring 'yank into clipboard'
 map global normal y 'y<space>y'
 map global user R '|xclip -selection clipboard -o<ret>' -docstring 'paste over from clipboard'
-map global user p 'yP|xclip -selection clipboard -o<ret>' -docstring 'paste after from clipboard'
-map global user P 'yp|xclip -selection clipboard -o<ret>' -docstring 'paste before from clipboard'
+map global user P 'yP|xclip -selection clipboard -o<ret>' -docstring 'paste after from clipboard'
+map global user p 'yp|xclip -selection clipboard -o<ret>' -docstring 'paste before from clipboard'
 map global user s ':enter-user-mode mirror<ret>' -docstring "Surround"
 map global user x ':enter-user-mode xmux<ret>' -docstring "XMUX"
 map global xmux p '<a-i>p:xmux-lines-default<ret>' -docstring 'Send Paragraph'
