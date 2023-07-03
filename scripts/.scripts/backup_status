@@ -37,6 +37,7 @@ if [ "$DAYS" -gt 14 ]; then
     RATE=4
 fi
 LED="LED=usr1;STATUS=${RATE};COLOR=${COLOR}"
+echo "$RATE / $COLOR" > ~/.backup_status
 if ! beanstool put --tube=lang_sys_status --host=logo.lang.speechmarks.com:11300 --body "$LED" 2>&1 > /dev/null; then
     echo "Error queuing message: $LED"
 fi

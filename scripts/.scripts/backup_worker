@@ -68,8 +68,8 @@ function restic_sftp_backup {
     RESTIC_REPOSITORY_NAME="$5"
 
     cd "$DEVICE_MOUNTPOINT/$SNAPSHOT_ROOT/$RESTIC_SUBDIR"
-    echo restic -r "$RESTIC_REPOSITORY_ROOT/${RESTIC_REPOSITORY_NAME}" backup .
-    restic -r "$RESTIC_REPOSITORY_ROOT/${RESTIC_REPOSITORY_NAME}" backup .
+    echo restic -r "$RESTIC_REPOSITORY_ROOT/${RESTIC_REPOSITORY_NAME}" backup ./
+    restic  -r "$RESTIC_REPOSITORY_ROOT/${RESTIC_REPOSITORY_NAME}" backup  --exclude-caches $PWD
 }
 
 # BACKUPARG_LOGICAL_VOLUME="$2"

@@ -35,9 +35,10 @@ for BACKUP_NAME in $BACKUP_NAMES; do
     export BACKUPARG_VOLUME_GROUP="$BACKUPARG_VOLUME_GROUP"
     export BACKUPARG_SNAP_PRE="baksnap"
     export BACKUPARG_DEVICE="/dev/$BACKUPARG_VOLUME_GROUP/$BACKUPARG_LOGICAL_VOLUME"
-    export BACKUPARG_DEVICE_MOUNTPOINT="/mnt/baksnap"
-    export BACKUPARG_RESTIC_REPOSITORY_ROOT="sftp://badmin@b.lang.speechmarks.com://mnt/restic_sftp"
     export BACKUPARG_METHOD=sftp
+    export BACKUPARG_DEVICE_MOUNTPOINT="/tmp/baksnap-$(date --iso-8601=seconds | sed 's/\+.*//')"
+    export BACKUPARG_RESTIC_REPOSITORY_ROOT="sftp://badmin@10.111.222.2:2222//mnt/restic_sftp"
+    mkdir "$BACKUPARG_DEVICE_MOUNTPOINT"
 
     SQL="insert into backup_location (volume_group, logical_volume, subvol, internal_directory) values
         ('$BACKUPARG_VOLUME_GROUP', '$BACKUPARG_LOGICAL_VOLUME', '$BACKUPARG_SUBVOL', '$BACKUPARG_INTERNAL_DIRECTORY')
@@ -75,9 +76,9 @@ for BACKUP_NAME in $BACKUP_NAMES; do
     export -f insert_snapshot
 
     backup_worker
-    restic -r "$BACKUPARG_RESTIC_REPOSITORY_ROOT/${BACKUPARG_RESTIC_REPOSITORY_NAME}" forget --prune --keep-within 3w --keep-last 3 --keep-weekly 3 --keep-monthly 6 --keep-yearly 10
+    restic -r "$BACKUPARG_RESTIC_REPOSITORY_ROOT/${BACKUPARG_RESTIC_REPOSITORY_NAME}" forget --prune --keep-within 21d --keep-last 3 --keep-weekly 3 --keep-monthly 6 --keep-yearly 10
     restic --json -r "$BACKUPARG_RESTIC_REPOSITORY_ROOT/${BACKUPARG_RESTIC_REPOSITORY_NAME}" snapshots | \
-        mlr --ijson --ojsonl put '$time = sub($time,"\.[0-9]+","")' | parallel -j 1 insert_snapshot {}
+        mlr --ijson --ojsonl put '$time = sub(sub($time,"\..+",""), "T", " ")' | parallel -j 1 insert_snapshot {}
 
 
 
